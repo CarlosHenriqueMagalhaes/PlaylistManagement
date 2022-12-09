@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.repository.PlaylistRepository;
 
@@ -16,16 +17,28 @@ public class PlaylistService {
 	@Autowired
 	private PlaylistRepository repo;
 
-	//busca uma playlist pelo id Get
+	//find one playlist for id (GET)
 	public Playlist find(Integer id) {
 		Optional<Playlist> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"ObjectNotFound! This Playlist Id:" + id + ", does not exist! " + "Type: " + Playlist.class.getName()));
 	}
 	
-	//busca todas as playlists
+	//find all registered playlists (GET)
 	public List<Playlist> findAllPlaylist() {
 		return repo.findAll();
+	}
+	
+	//Insert a new Playlist (POST)
+	public Playlist insert (Playlist obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	// helper method that instantiates a category from a DTO (used in the POST)
+	
+	public Playlist fromDTO(PlaylistDTO objDto) {
+		return new Playlist(objDto.getId(),objDto.getPlaylistName());
 	}
 
 }
