@@ -1,12 +1,15 @@
 package br.inatel.project.playlist.management.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Playlist implements Serializable{
@@ -18,7 +21,10 @@ public class Playlist implements Serializable{
 	
 	private String playlistName;
 	
-	//Constructor
+	@ManyToMany (mappedBy = "playlists")
+	private List <Song> songs = new ArrayList<>();
+	
+	//Constructors
 	
 	public Playlist() {
 		super();
@@ -30,7 +36,7 @@ public class Playlist implements Serializable{
 		this.playlistName = playlistName;
 	}
 
-	//Getters e Setters
+	//Getters and Setters
 
 	public Integer getId() {
 		return id;
@@ -39,7 +45,7 @@ public class Playlist implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getPlaylistName() {
 		return playlistName;
 	}
@@ -48,6 +54,16 @@ public class Playlist implements Serializable{
 		this.playlistName = playlistName;
 	}
 
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
+	
+	//HashCode and Equals
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.inatel.project.playlist.management.domain.Playlist;
-import br.inatel.project.playlist.management.service.PlaylistService;
+import br.inatel.project.playlist.management.domain.Song;
+import br.inatel.project.playlist.management.service.SongService;
 
 @RestController
-@RequestMapping("/playlists")
-public class PlaylistResource {
+@RequestMapping("/songs")
+public class SongResource {
 
 	@Autowired
-	private PlaylistService playlistService;
+	private SongService playlistService;
 
 	//busca uma playlist pelo id
 	@GetMapping ("/{id}")
-	public ResponseEntity<Playlist> find(@PathVariable Integer id) {
-		Playlist obj = playlistService.find(id);
+	public ResponseEntity<Song> find(@PathVariable Integer id) {
+		Song obj = playlistService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
