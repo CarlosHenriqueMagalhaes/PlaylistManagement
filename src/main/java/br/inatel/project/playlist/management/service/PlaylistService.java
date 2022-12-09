@@ -23,10 +23,9 @@ public class PlaylistService {
 				"ObjectNotFound! This Playlist Id:" + id + ", does not exist! " + "Type: " + Playlist.class.getName()));
 	}
 	
-//	public List<Playlist> listAllPlaylist() {
-//		List<Playlist> playlists = repo.findAll();
-//		playlists.forEach(s -> s.getSongs().size());
-//		return playlists;
-//	}
+	//busca todas as playlists
+	public List<Playlist> findAllPlaylist() {
+		return repo.findAll();
+	}
 
 }
