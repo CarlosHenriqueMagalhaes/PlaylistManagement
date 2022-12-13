@@ -17,28 +17,39 @@ public class PlaylistService {
 	@Autowired
 	private PlaylistRepository repo;
 
-	//find one playlist for id (GET)
+	// find one playlist for id (GET)
 	public Playlist find(Integer id) {
 		Optional<Playlist> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"ObjectNotFound! This Playlist Id:" + id + ", does not exist! " + "Type: " + Playlist.class.getName()));
 	}
-	
-	//find all registered playlists (GET)
+
+	// find all registered playlists (GET)
 	public List<Playlist> findAllPlaylist() {
 		return repo.findAll();
 	}
-	
-	//Insert a new Playlist (POST)
-	public Playlist insert (Playlist obj) {
+
+	// Insert a new Playlist (POST)
+	public Playlist insert(Playlist obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
-	// helper method that instantiates a category from a DTO (used in the POST)
-	
+
+	// add metodo de retornar erro caso o nome da playlist ja exista
+
+	// helper method that instantiates a playlist from a DTO (used in the POST)
 	public Playlist fromDTO(PlaylistDTO objDto) {
-		return new Playlist(objDto.getId(),objDto.getPlaylistName());
+		return new Playlist(objDto.getId(), objDto.getPlaylistName());
 	}
 
+	// Delete a Playlist (DELETE)
+	public String delete(Integer id) {
+		find(id);
+		repo.deleteById(id);
+		return ("The playlist id: " + id + " is successfully deleted");
+	}
+
+	public Playlist saveAndFlush(Playlist playInserida) {
+		return repo.saveAndFlush(playInserida);
+	}
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.inatel.project.playlist.management.domain.Playlist;
 
 @Repository
-public interface PlaylistRepository extends JpaRepository <Playlist,Integer> {
+public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
 
 }

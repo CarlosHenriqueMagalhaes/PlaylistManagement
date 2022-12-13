@@ -3,14 +3,19 @@ package br.inatel.project.playlist.management.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.inatel.project.playlist.management.domain.Song;
+import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.service.SongService;
 
@@ -27,17 +32,6 @@ public class SongResource {
 		Song obj = songService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-//Tentando lançar BadRequestIdException caso o id fornecido for zero	
-//	@GetMapping("/{id}")
-//	public ResponseEntity<Song> find(@PathVariable Integer id) {
-//		try {
-//		Song obj = songService.find(id);
-//		return ResponseEntity.ok().body(obj);
-//		}catch (BadRequest e){
-//			throw new BadRequestIdException("This Id is invalid, please use only numbers"+ "Type: " + Song.class.getName());
-//		}
-//	}
-	
 
 	// find all Songs in my bank (GET)
 	@GetMapping
@@ -46,4 +40,16 @@ public class SongResource {
 		List<SongDTO> listDTO = list.stream().map(obj -> new SongDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
+
+	//fazer  busca uma musica em uma playlist
+
+	// add a song to a playlist (POST)
+	@PostMapping("/addSong/{songId}")
+	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId,
+			@RequestBody PlaylistDTO playlistDTO) {
+		songService.addSongToPlaylist(songId, playlistDTO);
+		return ResponseEntity.accepted().build();
+
+	}
+
 }

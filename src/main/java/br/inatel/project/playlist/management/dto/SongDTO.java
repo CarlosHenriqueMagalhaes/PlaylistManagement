@@ -2,11 +2,14 @@ package br.inatel.project.playlist.management.dto;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
+
 import br.inatel.project.playlist.management.domain.Song;
 
 public class SongDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Valid
 	private Integer id;
 	
 	private String music;
@@ -62,5 +65,6 @@ public class SongDTO implements Serializable{
 	public void setKindOfMusic(String kindOfMusic) {
 		this.kindOfMusic = kindOfMusic;
 	}
-	
+
+
 }

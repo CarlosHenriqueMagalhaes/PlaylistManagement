@@ -9,5 +9,5 @@ import br.inatel.project.playlist.management.domain.Song;
 
 @Repository
 public interface SongRepository extends JpaRepository <Song,Integer> {
-	
+		
 }
