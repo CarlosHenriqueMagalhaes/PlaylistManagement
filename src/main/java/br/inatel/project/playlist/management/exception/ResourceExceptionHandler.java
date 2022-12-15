@@ -31,5 +31,11 @@ public class ResourceExceptionHandler {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
-
+	
+	// For object not found:
+		@ExceptionHandler(NullObjectNotFoundException.class)
+		public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
+			StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+		}
 }

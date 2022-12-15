@@ -1,16 +1,52 @@
 package br.inatel.project.playlist.management.domain;
 
-public class User {
-	
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	private String name;
-	
-	private String email;
-	
-	private String password;
-	
-	
-	
-	//Getters e Setters
+
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "user")
+//	private List<Playlist> playlists = new ArrayList<>();
+
+	@OneToOne(mappedBy = "user")
+	private Logon logon;
+
+	// Constructors
+
+	public User() {
+		super();
+	}
+
+	public User(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	// Getters and setters
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -20,21 +56,39 @@ public class User {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+//	public List<Playlist> getPlaylists() {
+//		return playlists;
+//	}
+//
+//	public void setPlaylists(List<Playlist> playlists) {
+//		this.playlists = playlists;
+//	}
+
+	public Logon getLogon() {
+		return logon;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLogon(Logon logon) {
+		this.logon = logon;
 	}
 
-	public String getPassword() {
-		return password;
+	// HashCode and Equals
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(id, other.id);
 	}
 
-	
 }

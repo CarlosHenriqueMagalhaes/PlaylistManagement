@@ -26,6 +26,10 @@ public class Playlist implements Serializable {
 
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
+	
+//	@ManyToOne
+//	@JoinColumn(name = "user_id")
+//	private User user;
 
 	// Constructors
 
@@ -68,6 +72,14 @@ public class Playlist implements Serializable {
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+	
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	// HashCode and Equals
 
