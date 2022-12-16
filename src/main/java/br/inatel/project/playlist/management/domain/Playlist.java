@@ -26,9 +26,10 @@ public class Playlist implements Serializable {
 
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
-	
+
 //	@ManyToOne
-//	@JoinColumn(name = "user_id")
+//	@JoinColumn(name= "user_id", nullable = true)
+//	@JsonBackReference
 //	private User user;
 
 	// Constructors
@@ -37,6 +38,13 @@ public class Playlist implements Serializable {
 		super();
 	}
 
+	public Playlist(Integer id, String playlistName, Client user) {
+		super();
+		this.id = id;
+		this.playlistName = playlistName;
+//		this.user = user;
+	}
+	
 	public Playlist(Integer id, String playlistName) {
 		super();
 		this.id = id;
@@ -65,14 +73,6 @@ public class Playlist implements Serializable {
 		this.playlistName = playlistName;
 	}
 
-	public List<Song> getSongs() {
-		return songs;
-	}
-
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
-	}
-	
 //	public User getUser() {
 //		return user;
 //	}
@@ -80,6 +80,14 @@ public class Playlist implements Serializable {
 //	public void setUser(User user) {
 //		this.user = user;
 //	}
+
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
 
 	// HashCode and Equals
 

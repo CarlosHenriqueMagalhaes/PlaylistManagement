@@ -50,7 +50,7 @@ public class PlaylistService {
 	}
 
 	//saveAndFlush
-	public Playlist saveAndFlush(Playlist playInserida) {
-		return repo.saveAndFlush(playInserida);
+	public Playlist saveAndFlush(Playlist playInsert) {
+		return repo.saveAndFlush(playInsert);
 	}
 }
