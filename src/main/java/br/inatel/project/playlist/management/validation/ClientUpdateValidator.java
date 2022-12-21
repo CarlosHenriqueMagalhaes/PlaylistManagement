@@ -16,11 +16,11 @@ import br.inatel.project.playlist.management.dto.ClientDTO;
 import br.inatel.project.playlist.management.exception.FieldMessage;
 import br.inatel.project.playlist.management.repository.ClientRepository;
 
-//Classe Validador da Anotação:
+//Annotation Validator Class:
 
 public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, ClientDTO> {
 	
-	//A função HttpServletRequest que permite obter o parâmetro da URI!
+	//The HttpServletRequest function that lets you get the URI parameter!
 	@Autowired
 	private HttpServletRequest request;
 	

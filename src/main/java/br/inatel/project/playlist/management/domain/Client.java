@@ -1,6 +1,8 @@
 package br.inatel.project.playlist.management.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class Client implements Serializable {
@@ -27,13 +31,19 @@ public class Client implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-//	@OneToMany(mappedBy="user")
-//	private List <Playlist> playlists = new ArrayList<>();
-//	
+	@OneToMany(mappedBy="client")
+	private List <Playlist> playlists = new ArrayList<>();
+	
 	// Constructors
 
 	public Client() {
 		super();
+	}
+	
+	public Client(Integer id, String name, String password) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
 	}
 
 	public Client(Integer id, String name, String email, String password) {
@@ -77,13 +87,14 @@ public class Client implements Serializable {
 		this.password = password;
 	}
 
-//	public List<Playlist> getPlaylists() {
-//		return playlists;
-//	}
-//
-//	public void setPlaylists(List<Playlist> playlists) {
-//		this.playlists = playlists;
-//	}
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+	
 
 	// HashCode and Equals
 

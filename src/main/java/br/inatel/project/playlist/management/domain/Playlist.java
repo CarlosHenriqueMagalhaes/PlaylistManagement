@@ -10,7 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 
@@ -27,22 +31,15 @@ public class Playlist implements Serializable {
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
 
-//	@ManyToOne
-//	@JoinColumn(name= "user_id", nullable = true)
-//	@JsonBackReference
-//	private User user;
+	@ManyToOne
+	@JoinColumn(name= "client_id", nullable = true)
+	@JsonBackReference
+	private Client client;
 
 	// Constructors
 
 	public Playlist() {
 		super();
-	}
-
-	public Playlist(Integer id, String playlistName, Client user) {
-		super();
-		this.id = id;
-		this.playlistName = playlistName;
-//		this.user = user;
 	}
 	
 	public Playlist(Integer id, String playlistName) {
@@ -73,14 +70,6 @@ public class Playlist implements Serializable {
 		this.playlistName = playlistName;
 	}
 
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-
 	public List<Song> getSongs() {
 		return songs;
 	}
@@ -106,6 +95,15 @@ public class Playlist implements Serializable {
 			return false;
 		Playlist other = (Playlist) obj;
 		return Objects.equals(id, other.id);
+		
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 }

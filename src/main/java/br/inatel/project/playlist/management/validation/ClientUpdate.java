@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-//Classe Anotação:
+//Annotation Class:
 
 @Constraint(validatedBy = ClientUpdateValidator.class)
 @Target({ ElementType.TYPE })

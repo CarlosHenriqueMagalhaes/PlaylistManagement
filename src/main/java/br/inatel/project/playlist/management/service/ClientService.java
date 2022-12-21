@@ -16,6 +16,11 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
+	
+		public ClientService(ClientRepository repo) {
+		super();
+		this.repo = repo;
+	}
 
 	// find one user for id (GET)
 	public Client find(Integer id) {
@@ -31,25 +36,40 @@ public class ClientService {
 
 	// Insert a new User (POST)
 	public Client insert(Client obj) {
-		obj.setId(null);
 		return repo.save(obj);
 	}
 
 	public Client saveNewUser(ClientDTO userDTO) {
 
 		Client obj = fromDTO(userDTO);
+		obj.setId(null);// uso o set null aqui para ele adicionar o proximo id livre
 		obj = insert(obj);
 		return obj;
 
-	}
-
-	// helper method that instantiates a user from a DTO (used in the POST)
-	public Client fromDTO(ClientDTO objDto) {
-		return new Client(null, objDto.getName(), objDto.getEmail(), objDto.getPassword());
 	}
 
 	// saveAndFlush
 	public Client saveAndFlush(Client userInsert) {
 		return repo.saveAndFlush(userInsert);
 	}
+
+	// // Method PUT - Change a customer's name and password by Client ID
+	public Client update(Client obj) {
+		Client newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+
+	// PUT helper method (allows changing user name and password)
+
+	private void updateData(Client newObj, Client obj) {
+		newObj.setName(obj.getName());
+		newObj.setPassword(obj.getPassword());
+	}
+	
+	// helper method that instantiates a user from a DTO (used in the POST and in the PUT)
+	public Client fromDTO(ClientDTO objDto) {
+		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), objDto.getPassword());
+	}
+	
 }

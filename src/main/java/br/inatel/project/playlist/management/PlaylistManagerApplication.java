@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.inatel.project.playlist.management.domain.Song;
+import br.inatel.project.playlist.management.repository.ClientRepository;
 import br.inatel.project.playlist.management.repository.SongRepository;
 
 @SpringBootApplication
@@ -17,6 +18,8 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 //	private PlaylistRepository playlistRepository;
 	@Autowired
 	private SongRepository songRepository;
+	
+	@Autowired ClientRepository clientRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PlaylistManagerApplication.class, args);
@@ -54,7 +57,8 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 //	
 //	playlistRepository.saveAll(Arrays.asList(pl1,pl2,pl3,pl4));
 	songRepository.saveAll(Arrays.asList(sgn1, sgn2, sgn3, sgn4, sgn5, sgn6, sgn7));
+	}
 	
 }
 
-}
+

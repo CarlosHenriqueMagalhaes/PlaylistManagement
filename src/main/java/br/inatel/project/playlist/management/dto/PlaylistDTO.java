@@ -18,7 +18,7 @@ public class PlaylistDTO implements Serializable {
 
 	@NotNull
 	@NotEmpty(message = "filling in this field is mandatory")
-	@Length(min = 2, max = 80, message = "The length of your playlist name must be between 1 and 80 characters")
+	@Length(min = 2, max = 50, message = "The length of your playlist name must be between 1 and 50 characters")
 	private String playlistName;
 
 	// Constructors

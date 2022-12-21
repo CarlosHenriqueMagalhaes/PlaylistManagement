@@ -17,6 +17,11 @@ public class PlaylistService {
 	@Autowired
 	private PlaylistRepository repo;
 
+	public PlaylistService(PlaylistRepository repo) {
+		super();
+		this.repo = repo;
+	}
+
 	// find one playlist for id (GET)
 	public Playlist find(Integer id) {
 		Optional<Playlist> obj = repo.findById(id);
