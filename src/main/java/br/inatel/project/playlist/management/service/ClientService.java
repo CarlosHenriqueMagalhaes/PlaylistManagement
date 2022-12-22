@@ -16,9 +16,8 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
-	
-		public ClientService(ClientRepository repo) {
-		super();
+
+	public ClientService(ClientRepository repo) {
 		this.repo = repo;
 	}
 
@@ -66,10 +65,11 @@ public class ClientService {
 		newObj.setName(obj.getName());
 		newObj.setPassword(obj.getPassword());
 	}
-	
-	// helper method that instantiates a user from a DTO (used in the POST and in the PUT)
+
+	// helper method that instantiates a user from a DTO (used in the POST and in
+	// the PUT)
 	public Client fromDTO(ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), objDto.getPassword());
 	}
-	
+
 }

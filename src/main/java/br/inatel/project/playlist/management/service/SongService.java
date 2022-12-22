@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.domain.PlaylistSong;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
@@ -24,13 +25,13 @@ public class SongService {
 	@Autowired
 	private PlaylistService playService;
 
-//	@Autowired
-//	private SongPlaylistRepository songPlaylistRepository;
+	@Autowired
+	private PlaylistSongService playlisSongService;
 
-	public SongService(SongRepository repo, PlaylistService playService) {
+	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlisSongService) {
 		this.repo = repo;
 		this.playService = playService;
-//		this.songPlaylistRepository = songPlaylistRepository;
+		this.playlisSongService = playlisSongService;
 	}
 
 	// find one song by id (GET)
@@ -92,21 +93,24 @@ public class SongService {
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
 		try {
+
+			// chamar o service novo
+			
+			PlaylistSong findByPlayIdAndfSongId = playlisSongService.findByPlayIdAndSongId(playlistId, songId);
+
 			Playlist playlist = playService.find(playlistId);
 			Song song = find(songId);
-
 			playlist.getSongs().remove(song);
 			song.getPlaylists().remove(playlist);
 
 			playlist = playService.saveAndFlush(playlist);
 			song = repo.saveAndFlush(song);
 
-			return ("The song id: " + songId + " has been successfully removed from the playlist id: " + playlistId );
+			return ("The song id: " + songId + " has been successfully removed from the playlist id: " + playlistId);
 
 		} catch (Exception e) {
 			throw new NullObjectNotFoundException("This song is not in this playlist or this playlist does not exist");
 		}
-	
-	
-}
+
+	}
 }

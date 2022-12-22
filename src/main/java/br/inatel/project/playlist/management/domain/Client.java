@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,15 +30,15 @@ public class Client implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@OneToMany(mappedBy="client")
-	private List <Playlist> playlists = new ArrayList<>();
-	
+	@OneToMany(mappedBy = "client")
+	private List<Playlist> playlists = new ArrayList<>();
+
 	// Constructors
 
 	public Client() {
 		super();
 	}
-	
+
 	public Client(Integer id, String name, String password) {
 		this.id = id;
 		this.name = name;
@@ -94,7 +93,6 @@ public class Client implements Serializable {
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
-	
 
 	// HashCode and Equals
 

@@ -18,7 +18,6 @@ public class PlaylistService {
 	private PlaylistRepository repo;
 
 	public PlaylistService(PlaylistRepository repo) {
-		super();
 		this.repo = repo;
 	}
 

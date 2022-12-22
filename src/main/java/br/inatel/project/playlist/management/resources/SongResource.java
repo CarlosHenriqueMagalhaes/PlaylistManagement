@@ -27,6 +27,11 @@ public class SongResource {
 
 	@Autowired
 	private SongService songService;
+	
+	public SongResource(SongService songService) {
+		super();
+		this.songService = songService;
+	}
 
 	// find one Song by id (GET)
 	@GetMapping("/{id}")

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,12 +22,16 @@ public class Song implements Serializable{
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
 	
+	@Column(name = "music")
 	private String music;
 	
+	@Column(name = "artist")
 	private String artist;
 	
+	@Column(name = "kindOfMusic")
 	private String kindOfMusic;
 	
 	@ManyToMany

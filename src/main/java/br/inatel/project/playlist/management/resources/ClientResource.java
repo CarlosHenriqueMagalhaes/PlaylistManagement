@@ -28,6 +28,10 @@ public class ClientResource {
 	@Autowired
 	private ClientService clientService;
 
+	public ClientResource(ClientService clientService) {
+		this.clientService = clientService;
+	}
+
 	// find one user for id (GET)
 	@GetMapping("/{id}")
 	public ResponseEntity<Client> find(@PathVariable Integer id) {
@@ -61,12 +65,5 @@ public class ClientResource {
 		obj = clientService.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
-//	@PostMapping
-//	public ResponseEntity<ClientDTO> autenticar(@RequestBody LoginData loginData,
-//			@RequestHeader String Authorization) {
-//		Client user = clientService.authenticate(loginData, Authorization);
-//		return new ResponseEntity<ClientDTO>(ClientDTO.toDTO(user, "Bearer "), HttpStatus.ACCEPTED);
-//	}
 
 }
