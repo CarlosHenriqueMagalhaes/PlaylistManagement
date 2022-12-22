@@ -22,8 +22,7 @@ public class PlaylistSongService {
 	// find one song by id (GET)
 	public PlaylistSong findByPlayIdAndSongId(Integer idPlaylist, Integer idSong) {
 		Optional<PlaylistSong> obj = repo.findByPlaylistIdAndSongId(idPlaylist, idSong);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("chegou " 
-				+ ", does not exist or is not registered! " + "Type: " ));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("This Song does not existis in this Playlist"));
 	}
 
 }

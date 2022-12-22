@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -28,7 +30,8 @@ public class Playlist implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "playlistName")
+	@NotEmpty (message = "filling in this field is mandatory")
+	@Column(unique = true, name = "playlistName")
 	private String playlistName;
 
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)

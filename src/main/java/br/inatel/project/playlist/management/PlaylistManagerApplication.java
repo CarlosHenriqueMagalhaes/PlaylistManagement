@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.repository.ClientRepository;
 import br.inatel.project.playlist.management.repository.SongRepository;
 
-@SpringBootApplication
+@SpringBootApplication (exclude = SecurityAutoConfiguration.class)
 public class PlaylistManagerApplication implements CommandLineRunner {
 
 //	@Autowired
@@ -24,10 +28,15 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(PlaylistManagerApplication.class, args);
 	}
+	
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
+	}
 
 	@Override
 	public void run(String... args) throws Exception {		
-	
 		
 //	Playlist pl1 = new Playlist (null, "My Top Five");
 //	Playlist pl2 = new Playlist (null, "National");
@@ -58,6 +67,8 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 //	playlistRepository.saveAll(Arrays.asList(pl1,pl2,pl3,pl4));
 	songRepository.saveAll(Arrays.asList(sgn1, sgn2, sgn3, sgn4, sgn5, sgn6, sgn7));
 	}
+	
+
 	
 }
 

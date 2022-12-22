@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -16,7 +15,6 @@ public class PlaylistDTO implements Serializable {
 	@Valid
 	private Integer id;
 
-	@NotNull
 	@NotEmpty(message = "filling in this field is mandatory")
 	@Length(min = 2, max = 50, message = "The length of your playlist name must be between 1 and 50 characters")
 	private String playlistName;

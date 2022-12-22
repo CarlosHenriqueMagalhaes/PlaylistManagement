@@ -41,7 +41,7 @@ public class ResourceExceptionHandler {
 		}
 		
 		@ExceptionHandler(ConstraintViolationException.class)
-		public ResponseEntity<StandardError> validation(ConstraintViolationException e, HttpServletRequest request) {
+		public ResponseEntity<StandardError> constraintException (ConstraintViolationException e, HttpServletRequest request) {
 			StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		}

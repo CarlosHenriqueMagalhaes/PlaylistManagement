@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.inatel.project.playlist.management.domain.Playlist;
-import br.inatel.project.playlist.management.domain.PlaylistSong;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
@@ -93,10 +92,9 @@ public class SongService {
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
 		try {
-
-			// chamar o service novo
 			
-			PlaylistSong findByPlayIdAndfSongId = playlisSongService.findByPlayIdAndSongId(playlistId, songId);
+			// chamar o service novo
+			playlisSongService.findByPlayIdAndSongId(playlistId, songId);
 
 			Playlist playlist = playService.find(playlistId);
 			Song song = find(songId);
