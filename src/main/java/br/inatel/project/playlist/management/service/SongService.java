@@ -47,12 +47,12 @@ public class SongService {
 
 	// add a song to a playlist (POST)
 	public void addSongToPlaylist(@Valid Integer songId, PlaylistDTO playlistDTO) {
-//		 busco a música pelo id 
+//		 search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
 
 		if (songOptional != null && songOptional.isPresent()) {
 			Song song = songOptional.get();
-			// esse if é usado qdo o usuário informa uma playlist existente
+			// this "if" is used when the user informs an existing playlist
 			if (playlistDTO.getId() != null) {
 				Playlist playlist = playService.find(playlistDTO.getId());
 				if (playlist != null) {
@@ -63,9 +63,9 @@ public class SongService {
 				}
 			}
 
-			// esse else é utilizado para salvar uma playlist antes de fazer a associação da
-			// música a playlist ela só ocorre se o id for null, se eu colocar um id
-			// onde não há playlist cadastrada, ele retorna objectNotFound
+			// this else is used to save a playlist before associating the song in the playlist,
+			// it only happens if the id is null, if I put an id where there is no registered
+			// playlist, it returns objectNotFound
 			else {
 				Playlist createdPlaylist = new Playlist();
 				createdPlaylist.setPlaylistName(playlistDTO.getPlaylistName());
@@ -76,11 +76,6 @@ public class SongService {
 
 				insertedPlaylist = playService.saveAndFlush(insertedPlaylist);
 				song = repo.save(song);
-
-				// fazer:
-				// ao colocar um id de musica invalido no postman, ele retorna o status accepted
-				// e não salva nada na lista (pq não existe mesmo!), mas ele deveria retornar
-				// erro.
 
 			}
 
@@ -93,7 +88,7 @@ public class SongService {
 
 		try {
 			
-			// chamar o service novo
+			// Call playlistSongService 
 			playlisSongService.findByPlayIdAndSongId(playlistId, songId);
 
 			Playlist playlist = playService.find(playlistId);

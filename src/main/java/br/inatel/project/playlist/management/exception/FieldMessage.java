@@ -1,7 +1,7 @@
 package br.inatel.project.playlist.management.exception;
 
 import java.io.Serializable;
-//Essa classe manipula a saida das anotações da classe playlistdto ao dar erro no POST
+//This class handles the output of playlistdto class annotations when giving POST error
 //This class helps to handle the exception regarding
 //@ExceptionHandler(MethodArgumentNotValidException) validation
 //referring to the annotations(@) of the playListDTO class

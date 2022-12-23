@@ -10,12 +10,13 @@ import br.inatel.project.playlist.management.domain.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
-	// método "findBy" automaticamente o Spring Data vai detectar buscar e
-	// implementar
-	// o método, nesse caso para o Email
-	//@Transactional(readOnly = true)
-	//Client findByEmail(String email);
-	
+	// "findBy" method automatically Spring Data will detect fetch and 
+	//to implement the method, in this case for the Email
+		
 	public Optional<Client> findByEmail (String email);
+	
+	//I changed this method to Optional (described above)
+	//@Transactional(readOnly = true)
+		//Client findByEmail(String email);
 
 }

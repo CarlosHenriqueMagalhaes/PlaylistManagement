@@ -60,7 +60,6 @@ public class PlaylistResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	// add metodo de retornar erro caso o nome da playlist ja exista
 
 	// Delete a playlist
 	@DeleteMapping("/{id}")

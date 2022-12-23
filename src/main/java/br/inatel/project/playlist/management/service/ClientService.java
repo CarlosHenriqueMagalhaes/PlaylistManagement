@@ -41,7 +41,7 @@ public class ClientService {
 	public Client saveNewUser(ClientDTO userDTO) {
 
 		Client obj = fromDTO(userDTO);
-		obj.setId(null);// uso o set null aqui para ele adicionar o proximo id livre
+		obj.setId(null);// I use set null here to add the next free id
 		obj = insert(obj);
 		return obj;
 

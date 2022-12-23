@@ -10,7 +10,7 @@ public class StandardError implements Serializable {
 	private String msg;
 	private Long timeStamp;
 	
-	//Construtores
+	//constructors
 	
 	public StandardError() {
 	}
@@ -21,7 +21,7 @@ public class StandardError implements Serializable {
 		this.timeStamp = timeStamp;
 	}
 	
-	//Acessores
+	//Getters and setters
 
 	public Integer getStatus() {
 		return status;

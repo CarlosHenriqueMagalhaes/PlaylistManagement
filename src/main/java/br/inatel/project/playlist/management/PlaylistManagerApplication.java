@@ -15,11 +15,12 @@ import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.repository.ClientRepository;
 import br.inatel.project.playlist.management.repository.SongRepository;
 
-@SpringBootApplication (exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication //(exclude = SecurityAutoConfiguration.class)
 public class PlaylistManagerApplication implements CommandLineRunner {
 
 //	@Autowired
 //	private PlaylistRepository playlistRepository;
+	
 	@Autowired
 	private SongRepository songRepository;
 	
@@ -29,12 +30,14 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 		SpringApplication.run(PlaylistManagerApplication.class, args);
 	}
 	
+	// encrypt the password:
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
 	}
-
+	
+	//mock data:
 	@Override
 	public void run(String... args) throws Exception {		
 		

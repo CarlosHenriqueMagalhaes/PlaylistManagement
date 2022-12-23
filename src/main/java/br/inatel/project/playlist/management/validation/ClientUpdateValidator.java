@@ -32,43 +32,39 @@ public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, 
 	public void initialize(ClientUpdate ann) {
 	}
 
-	// isValid é um método da ConstraintValidator, que verifica se nosso tipo (o
-	// ClienteDTO) no caso se ele vai ser válido ou não!(ele retorna true
+	// isValid is a method of ConstraintValidator, which checks whether our type (the
+	// ClienteDTO) in case if it will be valid or not! (it returns true
 	// ou false por isso ele é um boolean!
 
-	// Uma lista vazia é instanciada de objetos do tipo FieldMessage (verifique essa
-	// classe) que foi criada no resource exception para carregar o nome do
-	// campo e a mensagem de erro desse campo
+	// An empty list is instantiated of objects of type FieldMessage (check this class)
+	// which was created in the resource exception to load the field name 
+	// and the error message of that field
 
 	@Override
 	public boolean isValid(ClientDTO objDto, ConstraintValidatorContext context) {
-		// Pega um map de variaveis de URI que estão na requisição:
+		// Get a map of URI variables that are in the request:
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request
 				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Integer uriId = Integer.parseInt(map.get("id"));
-		// O HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE) pega um map de variáveis
-		// da URI que estão na requisiçao
-		// resumindo o caminho que uso para acessar http://localhost:8099/clientes/2 ele
-		// pega a chave id que é o 2
-		// nesse exemplo. Integer.parseInt converte para Inteiro
-
+		// O HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE) takes a map of URI variables
+		// that are in the request summarizing the path
+		// I use to access http://localhost:8099/clientes/2 it takes the key id which is 2 in this example. 
+		// Integer.parseInt converts to Integer
+		
 		List<FieldMessage> list = new ArrayList<>();
 
-		// inclua os testes aqui, inserindo erros na lista:
+		// method for email validation when using update:
 
-		// método para validação do e-mail ao usar update:
-
-		// esse método serve para que se eu for alterar o email de um cliente, para um
-		// email que ja tenha outro cliente cadastrado, exiba um erro e não cadastra
-
+		// this method is so that if I change the email of a customer, to an email that already
+		// has another customer registered, it displays an error and does not register
 		Optional<Client> clienteOptional = repo.findByEmail(objDto.getEmail());
 		// Client aux = repo.findByEmail(objDto.getEmail());
 		if (clienteOptional != null && clienteOptional.isPresent() && !clienteOptional.get().getId().equals(uriId)) {
 			list.add(new FieldMessage("email", "already existing email"));
 		}
 
-		// método da classe
+		// class method
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
@@ -77,16 +73,17 @@ public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, 
 		}
 		return list.isEmpty();
 
-		// O método isValid retorna verdadeiro, porém se houver algum erro essa lista
-		// não vai estar vazia e o meu pétodo vai retornar Falso!
-		// O for: é para percorrer minha lista de FieldMessage e para cada objeto na
-		// minha lista, eu vou adicionar um erro correspondente em minha lista de
-		// erros do framework que são os comandos
-		// context.disableDefaultConstraintViolation
-		// e context.buildConstraintViolationWithTemplate, então esses dois comandos me
-		// permite transportar os meus erros personalizados para a lista de erros
-		// do framework.Essa lista do framework é tratada e mostrada na classe
-		// ResourceExceptionHandler no método MethodArgumentNotValidException
+		// The isValid method returns true, however if there is an error this list will not be empty 
+		// and my method will return False!
+		
+		// The for: is to loop through my FieldMessage list and for each object in my list,
+		// I'm going to add a corresponding error in my framework error list which is 
+		// context.disableDefaultConstraintViolation and
+		// context.buildConstraintViolationWithTemplate,  so these two commands
+		// get me allows transporting my custom errors to the framework's error list. 
+		
+		// This framework list is handled and shown in the ResourceExceptionHandler class
+		// in the MethodArgumentNotValidException method
 
 	}
 }

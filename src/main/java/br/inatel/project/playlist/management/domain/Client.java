@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +29,7 @@ public class Client implements Serializable {
 	@Column(unique = true, name = "email")
 	private String email;
 
+	@JsonProperty(access =JsonProperty.Access.WRITE_ONLY)//does not display password on return (get)
 	@Column(name = "password")
 	private String password;
 

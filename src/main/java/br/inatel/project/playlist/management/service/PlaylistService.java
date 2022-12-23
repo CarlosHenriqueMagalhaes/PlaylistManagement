@@ -39,8 +39,6 @@ public class PlaylistService {
 		return repo.save(obj);
 	}
 
-	// add metodo de retornar erro caso o nome da playlist ja exista: FEITO COM ANOTAÇÃO
-
 	// helper method that instantiates a playlist from a DTO (used in the POST)
 	public Playlist fromDTO(PlaylistDTO objDto) {
 		return new Playlist(objDto.getId(), objDto.getPlaylistName());
