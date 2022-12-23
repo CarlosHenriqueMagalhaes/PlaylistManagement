@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+//Classe que valida o token criado
 public class JWTValidateFilter extends BasicAuthenticationFilter {
 	
 	public static final String HEADER_ATTRIBUTE = "Authorization";
@@ -47,7 +48,7 @@ public class JWTValidateFilter extends BasicAuthenticationFilter {
 		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		chain.doFilter(request, response);
 	}
-
+	//faz a leitura do token e retorna o usuário, garantindo que ele é um usuario valido
 	private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
 		
 		String user = JWT.require(Algorithm.HMAC512(JWTAuthenticationFilter.TOKEN_KEY))

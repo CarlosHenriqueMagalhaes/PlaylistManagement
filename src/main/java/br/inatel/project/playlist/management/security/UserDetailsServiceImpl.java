@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import br.inatel.project.playlist.management.domain.Client;
 import br.inatel.project.playlist.management.repository.ClientRepository;
 
+//classe de serviço padrão do spring security para consulta e validação da senha do usuario
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
@@ -23,10 +24,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
 	//faz a consulta do usuario
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Client>user = repo.findByEmail(username);
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		Optional<Client>user = repo.findByEmail(userName);
 		if(user.isEmpty()) {
-			throw new UsernameNotFoundException ("Login email " + username +"  not found");
+			throw new UsernameNotFoundException ("Login email " + userName +"  not found");
 		}
 		
 		return new UserDataDetails(user);

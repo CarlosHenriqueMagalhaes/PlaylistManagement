@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.inatel.project.playlist.management.domain.Client;
 
+//Classe onde o token JWT é criado
+//responsavel por autenticar o usuario e fazer a geração do toke JWT
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
 	//30 minutos
@@ -37,11 +39,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		this.authenticationManager = authenticationManager;
 	}
 
+	//Esse metodo abaixo, é uma sobreescrita que efetivamente Executa a autenticação
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
 		try {
-			Client user = new ObjectMapper().readValue(request.getInputStream(), Client.class);
+			Client user = new ObjectMapper().readValue(request.getInputStream(), Client.class);//valor lido no corpo da requisição
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),
 					user.getPassword(),new ArrayList<>()));
 		} catch (IOException e) {
@@ -49,6 +52,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		}
 	}
 	
+	//Caso ocorra sucesso na autenticação, esse método diz o que ele deve fazer 
+	//aqui é adicionado o tempo de expiração e a senha (key) do token
+	//add dependencia com.auth0 para esse método
 	@Override
 	protected void successfulAuthentication (HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult ) throws IOException, ServletException{
