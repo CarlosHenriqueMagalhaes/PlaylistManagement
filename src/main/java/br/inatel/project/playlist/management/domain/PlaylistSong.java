@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Song_Playlist")
+@Table(name = "Song_Playlist")
 public class PlaylistSong implements Serializable {
 	private static final long serialVersionUID = 1L;
 

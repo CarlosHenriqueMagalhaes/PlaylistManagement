@@ -21,27 +21,29 @@ public class ClientDTO implements Serializable {
 	private String name;
 
 	@NotEmpty(message = "filling in this field is mandatory")
-	@Email (message = "Invalid email")
+	@Email(message = "Invalid email")
 	private String email;
 
 	@NotEmpty(message = "filling in this field is mandatory")
-	@Length(min = 4, max = 10, message = "The length of your password must be between 4 and 10 characters")
+	@Length(min = 4, max = 20, message = "The length of your password must be between 4 and 20 characters")
 	private String password;
+
+	private String role;
 
 	// Constructors
 
 	public ClientDTO() {
 		super();
 	}
-	
+
 	public ClientDTO(Client obj) {
 		super();
 		id = obj.getId();
 		name = obj.getName();
 		email = obj.getEmail();
 		password = obj.getPassword();
+		role = obj.getRoles().getDescricao();
 	}
-	
 
 	// Getters and setters
 
@@ -76,5 +78,13 @@ public class ClientDTO implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 }

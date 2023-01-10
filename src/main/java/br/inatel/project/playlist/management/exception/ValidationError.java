@@ -10,24 +10,24 @@ import java.util.List;
 public class ValidationError extends StandardError {
 	private static final long serialVersionUID = 1L;
 
-	private List<FieldMessage>errors = new ArrayList<>();
-	
-	//Constructors
-	
+	private List<FieldMessage> errors = new ArrayList<>();
+
+	// Constructors
+
 	public ValidationError(Integer status, String msg, Long timeStamp) {
 		super(status, msg, timeStamp);
 	}
 
-	//Getters and Setters
-	
+	// Getters and Setters
+
 	public List<FieldMessage> getErrors() {
 		return errors;
 	}
 
-	//auterated setter:
-	//was changed because we don't want to add an entire list at once,
+	// auterated setter:
+	// was changed because we don't want to add an entire list at once,
 	// but one error at a time
 	public void addError(String fieldName, String messagem) {
-		errors.add(new FieldMessage(fieldName,messagem));
+		errors.add(new FieldMessage(fieldName, messagem));
 	}
 }

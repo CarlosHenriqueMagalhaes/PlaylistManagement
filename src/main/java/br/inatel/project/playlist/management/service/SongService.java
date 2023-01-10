@@ -25,12 +25,12 @@ public class SongService {
 	private PlaylistService playService;
 
 	@Autowired
-	private PlaylistSongService playlisSongService;
+	private PlaylistSongService playlistSongService;
 
-	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlisSongService) {
+	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlistSongService) {
 		this.repo = repo;
 		this.playService = playService;
-		this.playlisSongService = playlisSongService;
+		this.playlistSongService = playlistSongService;
 	}
 
 	// find one song by id (GET)
@@ -47,14 +47,19 @@ public class SongService {
 
 	// add a song to a playlist (POST)
 	public void addSongToPlaylist(@Valid Integer songId, PlaylistDTO playlistDTO) {
-//		 search for music by id:
+		// search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
+//       make sure the music exists
+		songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
+				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
+		//
 
 		if (songOptional != null && songOptional.isPresent()) {
 			Song song = songOptional.get();
 			// this "if" is used when the user informs an existing playlist
 			if (playlistDTO.getId() != null) {
 				Playlist playlist = playService.find(playlistDTO.getId());
+
 				if (playlist != null) {
 					playlist.getSongs().add(songOptional.get());
 					song.getPlaylists().add(playlist);
@@ -63,19 +68,23 @@ public class SongService {
 				}
 			}
 
-			// this else is used to save a playlist before associating the song in the playlist,
-			// it only happens if the id is null, if I put an id where there is no registered
+			// this else is used to save a playlist before associating the song in the
+			// playlist,
+			// it only happens if the id is null, if I put an id where there is no
+			// registered
 			// playlist, it returns objectNotFound
 			else {
-				Playlist createdPlaylist = new Playlist();
-				createdPlaylist.setPlaylistName(playlistDTO.getPlaylistName());
-				Playlist insertedPlaylist = playService.insert(createdPlaylist);
+				throw new ObjectNotFoundException(
+						"this playlist does not exist, you must create a playlist before inserting a song or insert the song in an existing playlist");
 
-				insertedPlaylist.getSongs().add(songOptional.get());
-				song.getPlaylists().add(insertedPlaylist);
-
-				insertedPlaylist = playService.saveAndFlush(insertedPlaylist);
-				song = repo.save(song);
+//				Playlist createdPlaylist = new Playlist();
+//				createdPlaylist.setPlaylistName(playlistDTO.getPlaylistName());
+//				Playlist insertedPlaylist = playService.insert(createdPlaylist);
+//				insertedPlaylist.getSongs().add(songOptional.get());
+//				song.getPlaylists().add(insertedPlaylist);
+//
+//				insertedPlaylist = playService.saveAndFlush(insertedPlaylist);
+//				song = repo.save(song);
 
 			}
 
@@ -87,9 +96,9 @@ public class SongService {
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
 		try {
-			
-			// Call playlistSongService 
-			playlisSongService.findByPlayIdAndSongId(playlistId, songId);
+
+			// Call playlistSongService
+			playlistSongService.findByPlayIdAndSongId(playlistId, songId);
 
 			Playlist playlist = playService.find(playlistId);
 			Song song = find(songId);

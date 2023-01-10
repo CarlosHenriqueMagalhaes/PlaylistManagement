@@ -51,7 +51,7 @@ public class PlaylistService {
 		return ("The playlist id: " + id + " is successfully deleted");
 	}
 
-	//saveAndFlush
+	// saveAndFlush
 	public Playlist saveAndFlush(Playlist playInsert) {
 		return repo.saveAndFlush(playInsert);
 	}

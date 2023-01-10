@@ -6,33 +6,33 @@ import javax.validation.Valid;
 
 import br.inatel.project.playlist.management.domain.Song;
 
-public class SongDTO implements Serializable{
+public class SongDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Valid
 	private Integer id;
-	
+
 	private String music;
-	
+
 	private String artist;
-	
+
 	private String kindOfMusic;
-	
-	//Constructors
+
+	// Constructors
 
 	public SongDTO() {
 		super();
 	}
 
 	public SongDTO(Song obj) {
-		
+
 		id = obj.getId();
 		music = obj.getMusic();
 		artist = obj.getArtist();
 		kindOfMusic = obj.getKindOfMusic();
 	}
-	
-	//Getters and setters
+
+	// Getters and setters
 
 	public Integer getId() {
 		return id;
@@ -65,6 +65,5 @@ public class SongDTO implements Serializable{
 	public void setKindOfMusic(String kindOfMusic) {
 		this.kindOfMusic = kindOfMusic;
 	}
-
 
 }

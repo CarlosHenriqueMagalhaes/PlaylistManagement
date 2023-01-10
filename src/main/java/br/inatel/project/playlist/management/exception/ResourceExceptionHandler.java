@@ -32,17 +32,20 @@ public class ResourceExceptionHandler {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
-	
+
 	// For object not found:
-		@ExceptionHandler(NullObjectNotFoundException.class)
-		public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
-			StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
-		}
-		
-		@ExceptionHandler(ConstraintViolationException.class)
-		public ResponseEntity<StandardError> constraintException (ConstraintViolationException e, HttpServletRequest request) {
-			StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-		}
+	@ExceptionHandler(NullObjectNotFoundException.class)
+	public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
+		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+
+	// For email and playlist is already registered
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<StandardError> constraintException(ConstraintViolationException e,
+			HttpServletRequest request) {
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), "This record already exists in the bank",
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
 }

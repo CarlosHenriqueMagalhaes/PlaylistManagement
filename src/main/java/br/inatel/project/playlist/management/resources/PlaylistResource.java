@@ -27,11 +27,11 @@ public class PlaylistResource {
 
 	@Autowired
 	private PlaylistService playlistService;
-	
+
 	public PlaylistResource() {
 		super();
 	}
-	
+
 	public PlaylistResource(PlaylistService playlistService) {
 		super();
 		this.playlistService = playlistService;

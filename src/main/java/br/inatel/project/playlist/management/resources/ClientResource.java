@@ -12,9 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,20 +59,30 @@ public class ClientResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	// Insert a new Client (POST)
+	// Insert a new Client Listener (POST)
 	@PostMapping
 	public ResponseEntity<?> insert(@Valid @RequestBody ClientDTO objDto) {
 		objDto.setPassword(encoder.encode(objDto.getPassword()));// criptografa a senha
-		Client obj = clientService.saveNewUser(objDto);
+		Client obj = clientService.saveNewUser(objDto, false);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+
+	// Insert a new ADMIN (POST)
+	// role mapping for only the admin to have access to this endpoint
+	// because only an administrator can register another admin
+	@PostMapping("/insertAdmin")
+	public ResponseEntity<?> insertAdmin(@Valid @RequestBody ClientDTO objDto) {
+		objDto.setPassword(encoder.encode(objDto.getPassword()));// encrypt the password
+		Client obj = clientService.saveNewUser(objDto, true);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	// Method PUT - Change a customer's name and password by Client ID
-
-	@PutMapping("/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO objDto, @PathVariable Integer id) {
-		objDto.setPassword(encoder.encode(objDto.getPassword()));// criptografa a senha
+		objDto.setPassword(encoder.encode(objDto.getPassword()));// encrypt the password
 		Client obj = clientService.fromDTO(objDto);
 		obj.setId(id);
 		obj = clientService.update(obj);
@@ -89,7 +99,7 @@ public class ClientResource {
 		}
 
 		Client client = optClient.get();
-		boolean valid = encoder.matches(password, client.getPassword());//maches compara senha aberta com compactada
+		boolean valid = encoder.matches(password, client.getPassword());// maches compara senha aberta com compactada
 
 		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
 		return ResponseEntity.status(status).body(valid);

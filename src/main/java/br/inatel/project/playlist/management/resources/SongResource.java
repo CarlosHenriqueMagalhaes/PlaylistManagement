@@ -27,7 +27,7 @@ public class SongResource {
 
 	@Autowired
 	private SongService songService;
-	
+
 	public SongResource(SongService songService) {
 		super();
 		this.songService = songService;
@@ -50,16 +50,18 @@ public class SongResource {
 
 	// add a song to a playlist (POST)
 	@PostMapping("/addSong/{songId}")
-	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId, @RequestBody PlaylistDTO playlistDTO) {
+	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId,
+			@RequestBody PlaylistDTO playlistDTO) {
 		songService.addSongToPlaylist(songId, playlistDTO);
 		return ResponseEntity.accepted().build();
 	}
-	
+
 	// Remove a song in a playlist
-		@DeleteMapping("/removeSong")
-		public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,@RequestParam ("songId") Integer songId ) throws Exception {
-			ResponseEntity.noContent().build();
-			return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));			
-		}
+	@DeleteMapping("/removeSong")
+	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
+			@RequestParam("songId") Integer songId) throws Exception {
+		ResponseEntity.noContent().build();
+		return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));
+	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.inatel.project.playlist.enums.Roles;
 import br.inatel.project.playlist.management.domain.Client;
 import br.inatel.project.playlist.management.dto.ClientDTO;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
@@ -35,12 +36,19 @@ public class ClientService {
 
 	// Insert a new User (POST)
 	public Client insert(Client obj) {
+		obj.setId(null);
 		return repo.save(obj);
 	}
 
-	public Client saveNewUser(ClientDTO userDTO) {
-
+	public Client saveNewUser(ClientDTO userDTO, boolean admin) {
 		Client obj = fromDTO(userDTO);
+		if (admin) {
+			// setting the admin role to your user
+			obj.setRoles(Roles.A);
+		} else {
+			// setting your user the listener role
+			obj.setRoles(Roles.L);
+		}
 		obj.setId(null);// I use set null here to add the next free id
 		obj = insert(obj);
 		return obj;
@@ -52,7 +60,7 @@ public class ClientService {
 		return repo.saveAndFlush(userInsert);
 	}
 
-	// // Method PUT - Change a customer's name and password by Client ID
+	// Method PUT - Change a customer's name and password by Client ID
 	public Client update(Client obj) {
 		Client newObj = find(obj.getId());
 		updateData(newObj, obj);

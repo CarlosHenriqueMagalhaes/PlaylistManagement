@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.inatel.project.playlist.enums.Roles;
+
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,12 +31,15 @@ public class Client implements Serializable {
 	@Column(unique = true, name = "email")
 	private String email;
 
-	@JsonProperty(access =JsonProperty.Access.WRITE_ONLY)//does not display password on return (get)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // does not display password on return (get)
 	@Column(name = "password")
 	private String password;
 
 	@OneToMany(mappedBy = "client")
 	private List<Playlist> playlists = new ArrayList<>();
+
+	// enum that determines the role of the user
+	private Roles roles;
 
 	// Constructors
 
@@ -95,6 +100,14 @@ public class Client implements Serializable {
 
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
+	}
+
+	public Roles getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Roles roles) {
+		this.roles = roles;
 	}
 
 	// HashCode and Equals

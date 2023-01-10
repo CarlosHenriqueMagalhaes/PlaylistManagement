@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
@@ -30,7 +29,7 @@ public class Playlist implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 
-	@NotEmpty (message = "filling in this field is mandatory")
+	@NotEmpty(message = "filling in this field is mandatory")
 	@Column(unique = true, name = "playlistName")
 	private String playlistName;
 
@@ -38,7 +37,7 @@ public class Playlist implements Serializable {
 	private List<Song> songs = new ArrayList<>();
 
 	@ManyToOne
-	@JoinColumn(name= "client_id", nullable = true)
+	@JoinColumn(name = "client_id", nullable = true)
 	@JsonBackReference
 	private Client client;
 
@@ -47,14 +46,14 @@ public class Playlist implements Serializable {
 	public Playlist() {
 		super();
 	}
-	
+
 	public Playlist(Integer id, String playlistName) {
 		super();
 		this.id = id;
 		this.playlistName = playlistName;
 	}
 
-	// create a playlist through a DTO object 
+	// create a playlist through a DTO object
 	public Playlist(PlaylistDTO playlistDTO) {
 		this.playlistName = playlistDTO.getPlaylistName();
 	}
@@ -101,7 +100,7 @@ public class Playlist implements Serializable {
 			return false;
 		Playlist other = (Playlist) obj;
 		return Objects.equals(id, other.id);
-		
+
 	}
 
 	public Client getClient() {

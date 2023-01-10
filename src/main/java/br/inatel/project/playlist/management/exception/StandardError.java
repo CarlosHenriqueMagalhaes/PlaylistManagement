@@ -3,15 +3,15 @@ package br.inatel.project.playlist.management.exception;
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer status;
 	private String msg;
 	private Long timeStamp;
-	
-	//constructors
-	
+
+	// constructors
+
 	public StandardError() {
 	}
 
@@ -20,8 +20,8 @@ public class StandardError implements Serializable {
 		this.msg = msg;
 		this.timeStamp = timeStamp;
 	}
-	
-	//Getters and setters
+
+	// Getters and setters
 
 	public Integer getStatus() {
 		return status;
@@ -46,10 +46,5 @@ public class StandardError implements Serializable {
 	public void setTimeStamp(Long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
-	
-	
-	
-	
 
 }

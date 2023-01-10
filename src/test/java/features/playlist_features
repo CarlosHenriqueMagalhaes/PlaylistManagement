@@ -1,0 +1,50 @@
+Feature:  find one playlist for id
+Scenario:sucesso ao executar a busca
+Given:Possuir o Id de uma Playlist
+And: A Playlist deve existir no banco
+When:Quando eu informar uma Id valida (usando o GET) em http://localhost:8070/playlists/{id}
+Then:retorna o status 200 OK e a lista com o Id correspondente
+
+Feature:  find one playlist for id
+Scenario:falha ao encontrar a playlist
+Given:Possuir o Id de uma Playlist
+When:Quando eu informar um Id invalido (usando o GET) http://localhost:8070/playlists/{id}
+Then:retorna o erro 404 ObjectNotFound! e mensagem com a descrição do erro
+
+Feature:  findAllPlaylist 
+Scenario:sucesso ao buscar todas as playlists cadastradas
+Given:
+When:Quando eu acessar(usando o GET) em http://localhost:8070/playlists
+Then:retorna o status 200 OK e todas as Playlists cadastradas
+
+Feature:  Create a new Playlist 
+Scenario:sucesso ao criar uma nova Playlist
+Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
+When:Quando eu informar um nome válido para a playlist(usando o POST) em http://localhost:8070/playlists
+Then:retorna o status 201 Created
+
+Feature:  Create a new Playlist 
+Scenario:Erro ao criar uma nova Playlist
+Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
+When:Quando eu não informar um nome para a Playlist
+Then:retorna o status 400 Bad Request, e mensagem com a descrição do erro
+
+Feature:  Create a new Playlist 
+Scenario:Erro ao criar uma nova Playlist
+Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
+When:Quando eu Iserir um nome para a Playlist com mais de 50 Caracteres
+Then:retorna o status 400 Bad Request, e mensagem com a descrição do erro
+
+Feature:  Delete a Playlist 
+Scenario: sucesso ao deletar uma playlist
+Given:Possuir o Id de uma Playlist existente
+When:Quando eu informar uma Id valida (usando o DELETE) em http://localhost:8070/playlists/{id}
+Then:retorna o status 200 OK, e mensagem informando a Playlist deletada
+
+Feature:  Delete a Playlist 
+Scenario: Erro ao deletar uma playlist
+Given:Possuir o Id de uma Playlist existente
+When:Quando eu informar uma Id de uma playlist que não existe (usando o DELETE) em http://localhost:8070/playlists/{id}
+Then:retorna o erro 404 ObjectNotFound! e mensagem com a descrição do erro
+
+

@@ -1,0 +1,55 @@
+Feature:  find one Song for id
+Scenario:sucesso ao executar a busca
+Given:Possuir o Id de um Song valido
+And: A Song deve existir no banco
+When:Quando eu informar uma Id valida (usando o GET) em http://localhost:8070/songs/{id}
+Then:retorna o status 200 OK e a musica com o Id correspondente e suas descrições
+
+Feature:  find one Song for id
+Scenario:erro ao executar a busca
+Given:Possuir o Id de uma Musica
+When:Quando eu informar uma Id invalida (usando o GET) em http://localhost:8070/songs/{id}
+Then:retorna o status 404 Not Found e a e mensagem com a descrição do erro.
+
+Feature:  Exibe todas as musicas no meu banco
+Scenario:sucesso ao executar a busca
+Given:
+When:Quando eu acessar(usando o GET) em http://localhost:8070/songs
+Then:retorna o status 200 OK e todas as musicas cadastradas no meu banco
+
+Feature:  Adiciona uma musica de uma playlist
+Scenario:sucesso ao adicionar
+Given:
+When:
+Then:
+
+Feature:  Adiciona uma musica de uma playlist
+Scenario: erro ao adicionar
+Given:
+When: Song não existe no banco de dados
+Then:
+
+Feature:  Adiciona uma musica de uma playlist
+Scenario: erro ao adicionar
+Given:
+When: Playlist não existe no banco de dados
+Then:
+
+Feature:  Remove uma Song de Uma Playlist
+Scenario: sucesso ao remover
+Given:
+When:
+Then:
+
+Feature: Remove uma Song de Uma Playlist
+Scenario: erro ao remover
+Given:
+When: erro ao informar uma musica que não existe na playlist
+Then:
+
+Feature:  Remove uma Song de Uma Playlist
+Scenario: erro ao remover
+Given:
+When: erro ao informar uma musica em uma playlist que não existe 
+Then:
+

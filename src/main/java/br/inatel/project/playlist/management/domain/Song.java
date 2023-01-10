@@ -17,42 +17,42 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Song implements Serializable{
+public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@Column(name = "music")
 	private String music;
-	
+
 	@Column(name = "artist")
 	private String artist;
-	
+
 	@Column(name = "kindOfMusic")
 	private String kindOfMusic;
-	
+
 	@ManyToMany
-	@JoinTable(name="Song_Playlist", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-	private List <Playlist> playlists = new ArrayList<>();
-	
-	//Constructors
+	@JoinTable(name = "Song_Playlist", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+	private List<Playlist> playlists = new ArrayList<>();
+
+	// Constructors
 
 	public Song() {
 		super();
 	}
 
-	public Song(Integer id,String music, String artist, String kindOfMusic) {
+	public Song(Integer id, String music, String artist, String kindOfMusic) {
 		super();
 		this.id = id;
 		this.music = music;
 		this.artist = artist;
 		this.kindOfMusic = kindOfMusic;
 	}
-	
-	//Getters and setters
+
+	// Getters and setters
 
 	public Integer getId() {
 		return id;
@@ -87,16 +87,16 @@ public class Song implements Serializable{
 	}
 
 	@JsonIgnore
-	public List <Playlist> getPlaylists() {
+	public List<Playlist> getPlaylists() {
 		return playlists;
 	}
 
-	public void setPlaylists(List <Playlist> playlists) {
+	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 
-	//hashCode Equals
-	
+	// hashCode Equals
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -113,5 +113,5 @@ public class Song implements Serializable{
 		Song other = (Song) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }
