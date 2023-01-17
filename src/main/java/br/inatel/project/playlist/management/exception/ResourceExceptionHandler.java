@@ -2,7 +2,6 @@ package br.inatel.project.playlist.management.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -38,14 +37,5 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
 		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
-	}
-
-	// For email and playlist is already registered
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<StandardError> constraintException(ConstraintViolationException e,
-			HttpServletRequest request) {
-		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), "This record already exists in the bank",
-				System.currentTimeMillis());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 }

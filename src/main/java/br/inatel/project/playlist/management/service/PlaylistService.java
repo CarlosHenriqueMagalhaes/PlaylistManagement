@@ -38,8 +38,21 @@ public class PlaylistService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
+	
+	// Method PUT - Change a customer's Playlist name by ID
+		public Playlist update(Playlist obj) {
+			Playlist newObj = find(obj.getId());
+			updateData(newObj, obj);
+			return repo.save(newObj);
+		}
 
-	// helper method that instantiates a playlist from a DTO (used in the POST)
+		// PUT helper method (allows changing Playlist name)
+
+		private void updateData(Playlist newObj, Playlist obj) {
+			newObj.setPlaylistName(obj.getPlaylistName());
+		}
+	
+	// helper method that instantiates a playlist from a DTO (used in the POST and Patch)
 	public Playlist fromDTO(PlaylistDTO objDto) {
 		return new Playlist(objDto.getId(), objDto.getPlaylistName());
 	}

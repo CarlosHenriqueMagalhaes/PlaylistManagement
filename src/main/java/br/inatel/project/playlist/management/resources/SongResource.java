@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.inatel.project.playlist.management.domain.Form;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.SongDTO;
@@ -62,6 +63,12 @@ public class SongResource {
 			@RequestParam("songId") Integer songId) throws Exception {
 		ResponseEntity.noContent().build();
 		return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));
+	}
+	
+	@PostMapping("/find")
+	public ResponseEntity<?> getTrack (@RequestBody Form form){
+		return ResponseEntity.ok(songService.getTrack(form));
+		
 	}
 
 }

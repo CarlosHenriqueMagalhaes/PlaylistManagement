@@ -11,12 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 
@@ -30,16 +26,11 @@ public class Playlist implements Serializable {
 	private Integer id;
 
 	@NotEmpty(message = "filling in this field is mandatory")
-	@Column(unique = true, name = "playlistName")
+	@Column(name = "playlistName") //(unique = true) 
 	private String playlistName;
 
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
-
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = true)
-	@JsonBackReference
-	private Client client;
 
 	// Constructors
 
@@ -102,13 +93,4 @@ public class Playlist implements Serializable {
 		return Objects.equals(id, other.id);
 
 	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
 }

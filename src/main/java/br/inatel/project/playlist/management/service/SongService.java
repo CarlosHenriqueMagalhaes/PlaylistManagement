@@ -8,12 +8,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.inatel.project.playlist.management.domain.Form;
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.repository.SongRepository;
+import br.inatel.project.playlist.management.rest.Track;
 
 @Service
 public class SongService {
@@ -26,6 +28,9 @@ public class SongService {
 
 	@Autowired
 	private PlaylistSongService playlistSongService;
+	
+	@Autowired
+	private Adapter adapterService;
 
 	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlistSongService) {
 		this.repo = repo;
@@ -67,24 +72,9 @@ public class SongService {
 					song = repo.save(song);
 				}
 			}
-
-			// this else is used to save a playlist before associating the song in the
-			// playlist,
-			// it only happens if the id is null, if I put an id where there is no
-			// registered
-			// playlist, it returns objectNotFound
 			else {
 				throw new ObjectNotFoundException(
 						"this playlist does not exist, you must create a playlist before inserting a song or insert the song in an existing playlist");
-
-//				Playlist createdPlaylist = new Playlist();
-//				createdPlaylist.setPlaylistName(playlistDTO.getPlaylistName());
-//				Playlist insertedPlaylist = playService.insert(createdPlaylist);
-//				insertedPlaylist.getSongs().add(songOptional.get());
-//				song.getPlaylists().add(insertedPlaylist);
-//
-//				insertedPlaylist = playService.saveAndFlush(insertedPlaylist);
-//				song = repo.save(song);
 
 			}
 
@@ -115,4 +105,12 @@ public class SongService {
 		}
 
 	}
+	
+	public Track getTrack (Form form) {
+		String s = form.getBand();
+		String t = form.getTrack();
+        Track track = adapterService.getTrack(s, t);
+        return track;
+		
+	 }
 }
