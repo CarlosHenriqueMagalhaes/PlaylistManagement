@@ -1,5 +1,6 @@
 package br.inatel.project.playlist.management.service;
 
+import br.inatel.project.playlist.management.rest.Rest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -10,26 +11,23 @@ import br.inatel.project.playlist.management.rest.Track;
 @Service
 public class Adapter {
 
-	@Value("${X-RapidAPI-Key}")
+	@Value("${API-Key}")
 	private String key;
 
-	@Value("${X-RapidAPI-Host}")
-	private String host;
+	@Value("${API-Url}")
+	private String url;
 
-	@Value("${X-RapidAPI-URI}")
-	private String uri;
-
-	public Track getTrack(String s, String t) {
-		return WebClient.builder().baseUrl(uri).build().get()
+	public Rest getRest(String track, String artist) {
+		return WebClient.builder().baseUrl(url).build().get()
 				.uri(uriBuilder -> uriBuilder
-						.queryParam("s", s)
-						.queryParam("t", t)
+						.queryParam("api_key", key)
+						.queryParam("artist", artist)
+						.queryParam("track", track)
+						.queryParam("format", "json")
 						.build())
 				.accept(MediaType.APPLICATION_JSON)
-				.header("X-RapidAPI-Key",key)
-				.header("X-RapidAPI-Host",host)
 				.retrieve()
-				.bodyToMono(Track.class)
+				.bodyToMono(Rest.class)
 				.block();
 	}
 }

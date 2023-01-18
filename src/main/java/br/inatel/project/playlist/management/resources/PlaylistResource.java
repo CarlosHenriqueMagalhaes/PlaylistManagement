@@ -25,7 +25,6 @@ import br.inatel.project.playlist.management.service.PlaylistService;
 @RestController
 @RequestMapping("/playlists")
 public class PlaylistResource {
-
 	@Autowired
 	private PlaylistService playlistService;
 
@@ -49,7 +48,7 @@ public class PlaylistResource {
 	@GetMapping
 	public ResponseEntity<List<PlaylistDTO>> findAll() {
 		List<Playlist> list = playlistService.findAllPlaylist();
-		List<PlaylistDTO> listDTO = list.stream().map(obj -> new PlaylistDTO(obj)).collect(Collectors.toList());
+		List<PlaylistDTO> listDTO = list.stream().map(PlaylistDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
@@ -63,12 +62,11 @@ public class PlaylistResource {
 	}
 
 	// Method PUT - Change a customer's name of playlist
-		@PutMapping 
-		public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto) {
-			Playlist obj = playlistService.fromDTO(objDto);
-	
-			obj = playlistService.update(obj);
-			return ResponseEntity.noContent().build();
+	@PutMapping
+	public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto) {
+		Playlist obj = playlistService.fromDTO(objDto);
+		obj = playlistService.update(obj);
+		return ResponseEntity.noContent().build();
 		}
 			
 	// Delete a playlist

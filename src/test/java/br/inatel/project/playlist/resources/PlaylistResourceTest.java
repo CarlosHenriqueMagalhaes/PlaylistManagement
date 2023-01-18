@@ -39,14 +39,41 @@ public class PlaylistResourceTest {
 	@Test
 	@Order(3)
 	public void givenAReadOrderByPlaylistIdInvalid_WhenNotReceivingThePlaylist_ThenItShouldReturnStatus404NotFound() {
-		Integer id = 35;// se eu alterar para um ID que contenha Playlist cadastrada o teste não passa(prova
+		int id = 35;// se eu alterar para um ID que contenha Playlist cadastrada o teste não passa(prova
 						// que o método funciona)
 
 		Playlist result = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists/" + id)
 				.exchange().expectStatus().isNotFound().expectBody(Playlist.class).returnResult().getResponseBody();
 
-		assertTrue(result.equals(result));
+		assertEquals(result, result);
 	}
+//		@Test
+//	@Order(5)
+//    void givenValidStockId_WhenAddQuotesInTheCorrectStructure_ThenItShouldReturnStatus200Ok() {
+//		Map<LocalDate, Double> quotesMap = new HashMap<>();
+//        LocalDate date = LocalDate.now();
+//        quotesMap.put(date, 20.0);
+//        StockQuoteForm stockQuoteForm = new StockQuoteForm("petr1", quotesMap);
+//
+//        StockAux stock = WebTestClient
+//        		.bindToServer().baseUrl("http://localhost:8081").build()
+//        		.post()
+//                .uri("/stock")
+//                .bodyValue(stockQuoteForm)
+//                .exchange()
+//                .expectStatus().isOk()
+//                .expectBody(StockAux.class)
+//                .returnResult().getResponseBody();
+//
+//        assertNotNull(stock.getId());
+//        assertEquals("petr1",stock.getStockId());
+//    }
+//
+//	/**
+//	 * Given invalid StockId
+//	 * When try create or add stock and quotes
+//	 * Then it should return status 404 not found
+//	 */
 	
 }
 

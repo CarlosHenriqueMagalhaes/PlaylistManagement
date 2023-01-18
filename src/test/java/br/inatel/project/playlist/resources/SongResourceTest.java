@@ -38,13 +38,13 @@ public class SongResourceTest {
 	@Test
 	@Order(3)
 	public void givenAReadOrderBySongIdInvalid_WhenNotReceivingTheSong_ThenItShouldReturnStatus404NotFound() {
-		Integer id = 35;// se eu alterar para um ID que contenha Song cadastrada o teste não passa(prova
+		int id = 35;// se eu alterar para um ID que contenha Song cadastrada o teste não passa(prova
 						// que o método funciona)
 
 		Song result = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/songs/" + id)
 				.exchange().expectStatus().isNotFound().expectBody(Song.class).returnResult().getResponseBody();
 
-		assertTrue(result.equals(result));
+		assertEquals(result, result);
 	}
 
 //	@Test

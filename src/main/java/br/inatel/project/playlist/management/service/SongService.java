@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import br.inatel.project.playlist.management.dto.TrackDTO;
+import br.inatel.project.playlist.management.mapper.Mapper;
+import br.inatel.project.playlist.management.rest.Rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,14 +107,12 @@ public class SongService {
 		} catch (Exception e) {
 			throw new NullObjectNotFoundException("This song is not in this playlist or this playlist does not exist");
 		}
-
 	}
-	
-	public Track getTrack (TrackForm form) {
-		String s = form.getBand();
-		String t = form.getTrack();
-        Track track = adapterService.getTrack(s, t);
-        return track;
+
+	public TrackDTO getTrack (TrackForm form) {
+		String artist = form.getArtist();
+		String track = form.getTrack();
+		return Mapper.convertRestToDto(adapterService.getRest(track , artist));
 		
 	 }
 }

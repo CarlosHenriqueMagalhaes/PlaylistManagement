@@ -2,16 +2,16 @@ package br.inatel.project.playlist.management.form;
 
 public class TrackForm {
 	
-	private String band;
+	private String artist;
 	
 	private String track;
 
-	public String getBand() {
-		return band;
+	public String getArtist() {
+		return artist;
 	}
 
-	public void setBand(String band) {
-		this.band = band;
+	public void setArtist(String band) {
+		this.artist = band;
 	}
 
 	public String getTrack() {
