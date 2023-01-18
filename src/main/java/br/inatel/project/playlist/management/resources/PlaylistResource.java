@@ -62,7 +62,7 @@ public class PlaylistResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	// Method PUT - Change a customer's name and password by Client ID
+	// Method PUT - Change a customer's name of playlist
 		@PutMapping 
 		public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto) {
 			Playlist obj = playlistService.fromDTO(objDto);

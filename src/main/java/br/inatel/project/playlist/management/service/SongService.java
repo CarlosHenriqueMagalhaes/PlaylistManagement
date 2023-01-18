@@ -8,12 +8,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.inatel.project.playlist.management.domain.Form;
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
+import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.repository.SongRepository;
 import br.inatel.project.playlist.management.rest.Track;
 
@@ -32,11 +32,12 @@ public class SongService {
 	@Autowired
 	private Adapter adapterService;
 
-	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlistSongService) {
-		this.repo = repo;
-		this.playService = playService;
-		this.playlistSongService = playlistSongService;
-	}
+//	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlistSongService, Adapter adapterService) {
+//		this.repo = repo;
+//		this.playService = playService;
+//		this.playlistSongService = playlistSongService;
+//		this.adapterService = adapterService;
+//	}
 
 	// find one song by id (GET)
 	public Song find(Integer id) {
@@ -106,7 +107,7 @@ public class SongService {
 
 	}
 	
-	public Track getTrack (Form form) {
+	public Track getTrack (TrackForm form) {
 		String s = form.getBand();
 		String t = form.getTrack();
         Track track = adapterService.getTrack(s, t);

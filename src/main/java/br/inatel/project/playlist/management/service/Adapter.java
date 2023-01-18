@@ -21,7 +21,8 @@ public class Adapter {
 
 	public Track getTrack(String s, String t) {
 		return WebClient.builder().baseUrl(uri).build().get()
-				.uri(uriBuilder -> uriBuilder.queryParam("s", s)
+				.uri(uriBuilder -> uriBuilder
+						.queryParam("s", s)
 						.queryParam("t", t)
 						.build())
 				.accept(MediaType.APPLICATION_JSON)

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.inatel.project.playlist.management.domain.Form;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.SongDTO;
+import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.service.SongService;
 
 @RestController
@@ -49,13 +49,22 @@ public class SongResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
+//	// add a song to a playlist (POST)
+//	@PostMapping("/addSong/{songId}")
+//	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId,
+//			@RequestBody PlaylistDTO playlistDTO) {
+//		songService.addSongToPlaylist(songId, playlistDTO);
+//		return ResponseEntity.accepted().build();
+//	}
+//	
 	// add a song to a playlist (POST)
-	@PostMapping("/addSong/{songId}")
-	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId,
+	@PostMapping("/addSong")
+	public ResponseEntity<Void> insert(@Valid @RequestParam("songId") Integer songId,
 			@RequestBody PlaylistDTO playlistDTO) {
 		songService.addSongToPlaylist(songId, playlistDTO);
 		return ResponseEntity.accepted().build();
 	}
+	
 
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
@@ -66,7 +75,7 @@ public class SongResource {
 	}
 	
 	@PostMapping("/find")
-	public ResponseEntity<?> getTrack (@RequestBody Form form){
+	public ResponseEntity<?> getTrack (@RequestBody TrackForm form){
 		return ResponseEntity.ok(songService.getTrack(form));
 		
 	}

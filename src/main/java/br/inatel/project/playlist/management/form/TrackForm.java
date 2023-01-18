@@ -1,6 +1,6 @@
-package br.inatel.project.playlist.management.domain;
+package br.inatel.project.playlist.management.form;
 
-public class Form {
+public class TrackForm {
 	
 	private String band;
 	

@@ -32,8 +32,9 @@ public class PlaylistDTO implements Serializable {
 		id = obj.getId();
 		playlistName = obj.getPlaylistName();
 	}
-
+	
 	// Getters and setters
+
 
 	public Integer getId() {
 		return id;
