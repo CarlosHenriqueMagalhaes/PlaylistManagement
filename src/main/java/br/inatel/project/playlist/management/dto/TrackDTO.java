@@ -1,20 +1,12 @@
 package br.inatel.project.playlist.management.dto;
-//https://rapidapi.com/theaudiodb/api/theaudiodb
 
-//https://theaudiodb.com/
+//https://www.last.fm/api/show/album.getInfo
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-/**
- * DTO (Data transfer object) for Stock Manager
- * 
- * @author carlos.magalhaes
- * @since
- */
 @Data
 @Builder
 public class TrackDTO implements Serializable {

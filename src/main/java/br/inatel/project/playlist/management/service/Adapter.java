@@ -6,8 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import br.inatel.project.playlist.management.rest.Track;
-
 @Service
 public class Adapter {
 
@@ -16,6 +14,7 @@ public class Adapter {
 
 	@Value("${API-Url}")
 	private String url;
+
 
 	public Rest getRest(String track, String artist) {
 		return WebClient.builder().baseUrl(url).build().get()

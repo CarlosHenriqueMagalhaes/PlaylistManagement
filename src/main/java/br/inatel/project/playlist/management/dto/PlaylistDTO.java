@@ -24,11 +24,9 @@ public class PlaylistDTO implements Serializable {
 	// Constructors
 
 	public PlaylistDTO() {
-		super();
 	}
 
 	public PlaylistDTO(Playlist obj) {
-		super();
 		id = obj.getId();
 		playlistName = obj.getPlaylistName();
 	}

@@ -28,15 +28,6 @@ public class PlaylistResource {
 	@Autowired
 	private PlaylistService playlistService;
 
-	public PlaylistResource() {
-		super();
-	}
-
-	public PlaylistResource(PlaylistService playlistService) {
-		super();
-		this.playlistService = playlistService;
-	}
-
 	// find one playlist for id (GET)
 	@GetMapping("/{id}")
 	public ResponseEntity<Playlist> find(@PathVariable Integer id) {
@@ -63,7 +54,7 @@ public class PlaylistResource {
 
 	// Method PUT - Change a customer's name of playlist
 	@PutMapping
-	public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto) {
+	public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto)throws Exception {
 		Playlist obj = playlistService.fromDTO(objDto);
 		obj = playlistService.update(obj);
 		return ResponseEntity.noContent().build();

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import br.inatel.project.playlist.management.dto.TrackDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,11 +30,6 @@ public class SongResource {
 	@Autowired
 	private SongService songService;
 
-	public SongResource(SongService songService) {
-		super();
-		this.songService = songService;
-	}
-
 	// find one Song by id (GET)
 	@GetMapping("/{id}")
 	public ResponseEntity<Song> find(@PathVariable Integer id) {
@@ -45,7 +41,7 @@ public class SongResource {
 	@GetMapping
 	public ResponseEntity<List<SongDTO>> findAll() {
 		List<Song> list = songService.findAllSongs();
-		List<SongDTO> listDTO = list.stream().map(obj -> new SongDTO(obj)).collect(Collectors.toList());
+		List<SongDTO> listDTO = list.stream().map(SongDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
@@ -64,7 +60,6 @@ public class SongResource {
 		songService.addSongToPlaylist(songId, playlistDTO);
 		return ResponseEntity.accepted().build();
 	}
-	
 
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
@@ -73,11 +68,13 @@ public class SongResource {
 		ResponseEntity.noContent().build();
 		return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));
 	}
-	
+
+	//POST que busca na API externa a musica e dados sobre ela persistindo a música na base de dados
 	@PostMapping("/find")
-	public ResponseEntity<?> getTrack (@RequestBody TrackForm form){
-		return ResponseEntity.ok(songService.getTrack(form));
-		
+	public ResponseEntity<?> getTrack (@RequestBody TrackForm form)throws Exception{
+		TrackDTO trackDTO =  songService.getTrack(form);
+		songService.addSongToBase(trackDTO);
+		return ResponseEntity.ok(trackDTO);
 	}
 
 }

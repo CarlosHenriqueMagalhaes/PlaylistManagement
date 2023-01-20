@@ -14,9 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import br.inatel.project.playlist.management.dto.TrackDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +36,12 @@ public class Song implements Serializable {
 
 	@Column(name = "music")
 	private String music;
-
 	@Column(name = "artist")
 	private String artist;
-
+	@Column(name = "duration")
+	private String songDuration;
+	@Column(name = "album")
+	private String songAlbum;
 	@Column(name = "kindOfMusic")
 	private String kindOfMusic;
 
@@ -40,78 +51,21 @@ public class Song implements Serializable {
 
 	// Constructors
 
-	public Song() {
-		super();
-	}
-
-	public Song(Integer id, String music, String artist, String kindOfMusic) {
-		super();
+	public Song(Integer id, String music,String artist,String songDuration, String songAlbum, String kindOfMusic) {
 		this.id = id;
 		this.music = music;
+		this.songDuration = songDuration;
 		this.artist = artist;
+		this.songAlbum = songAlbum;
 		this.kindOfMusic = kindOfMusic;
 	}
 
-	// Getters and setters
-
-	public Integer getId() {
-		return id;
+	public Song(TrackDTO trackDTO) {
+		this.id = null;
+		this.music = trackDTO.getTitle();
+		this.artist = trackDTO.getArtist();
+		this.songDuration = trackDTO.getDuration();
+		this.songAlbum =trackDTO.getAlbum();
+		this.kindOfMusic = trackDTO.getGenre();
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getMusic() {
-		return music;
-	}
-
-	public void setMusic(String music) {
-		this.music = music;
-	}
-
-	public String getArtist() {
-		return artist;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-
-	public String getKindOfMusic() {
-		return kindOfMusic;
-	}
-
-	public void setKindOfMusic(String kindOfMusic) {
-		this.kindOfMusic = kindOfMusic;
-	}
-
-	@JsonIgnore
-	public List<Playlist> getPlaylists() {
-		return playlists;
-	}
-
-	public void setPlaylists(List<Playlist> playlists) {
-		this.playlists = playlists;
-	}
-
-	// hashCode Equals
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Song other = (Song) obj;
-		return Objects.equals(id, other.id);
-	}
-
 }

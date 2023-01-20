@@ -3,6 +3,7 @@ package br.inatel.project.playlist.management.service;
 import java.util.List;
 import java.util.Optional;
 
+import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,6 @@ public class PlaylistService {
 
 	@Autowired
 	private PlaylistRepository repo;
-
-	public PlaylistService(PlaylistRepository repo) {
-		this.repo = repo;
-	}
 
 	// find one playlist for id (GET)
 	public Playlist find(Integer id) {
@@ -41,17 +38,21 @@ public class PlaylistService {
 	
 	// Method PUT - Change a customer's Playlist name by ID
 		public Playlist update(Playlist obj) {
-			Playlist newObj = find(obj.getId());
-			updateData(newObj, obj);
-			return repo.save(newObj);
+			try {
+				Playlist newObj = find(obj.getId());
+				updateData(newObj, obj);
+				return repo.save(newObj);
+			} catch (Exception e) {
+				throw new NullObjectNotFoundException("The playlist id:" + obj.getId() +" does not exist");
+			}
 		}
 
 		// PUT helper method (allows changing Playlist name)
 
 		private void updateData(Playlist newObj, Playlist obj) {
-			newObj.setPlaylistName(obj.getPlaylistName());
+				newObj.setPlaylistName(obj.getPlaylistName());
 		}
-	
+
 	// helper method that instantiates a playlist from a DTO (used in the POST and Patch)
 	public Playlist fromDTO(PlaylistDTO objDto) {
 		return new Playlist(objDto.getId(), objDto.getPlaylistName());

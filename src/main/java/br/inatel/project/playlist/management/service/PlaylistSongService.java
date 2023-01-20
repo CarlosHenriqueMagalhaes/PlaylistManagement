@@ -15,14 +15,10 @@ public class PlaylistSongService {
 	@Autowired
 	private PlaylistSongRepository repo;
 
-	public PlaylistSongService(PlaylistSongRepository repo) {
-		this.repo = repo;
-	}
-
 	// find one song by id (GET)
 	public PlaylistSong findByPlayIdAndSongId(Integer idPlaylist, Integer idSong) {
 		Optional<PlaylistSong> obj = repo.findByPlaylistIdAndSongId(idPlaylist, idSong);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("This Song does not existis in this Playlist"));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("This Song does not exist in this Playlist"));
 	}
 
 }

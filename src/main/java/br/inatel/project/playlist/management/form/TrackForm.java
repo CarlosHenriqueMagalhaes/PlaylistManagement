@@ -1,9 +1,9 @@
 package br.inatel.project.playlist.management.form;
 
 public class TrackForm {
-	
+
 	private String artist;
-	
+
 	private String track;
 
 	public String getArtist() {

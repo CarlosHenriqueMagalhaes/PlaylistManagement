@@ -1,46 +1,32 @@
 package br.inatel.project.playlist.management.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import br.inatel.project.playlist.management.dto.TrackDTO;
-import br.inatel.project.playlist.management.mapper.Mapper;
-import br.inatel.project.playlist.management.rest.Rest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
+import br.inatel.project.playlist.management.dto.TrackDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.form.TrackForm;
+import br.inatel.project.playlist.management.mapper.Mapper;
 import br.inatel.project.playlist.management.repository.SongRepository;
-import br.inatel.project.playlist.management.rest.Track;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SongService {
 
 	@Autowired
 	private SongRepository repo;
-
 	@Autowired
 	private PlaylistService playService;
-
 	@Autowired
 	private PlaylistSongService playlistSongService;
-	
 	@Autowired
 	private Adapter adapterService;
-
-//	public SongService(SongRepository repo, PlaylistService playService, PlaylistSongService playlistSongService, Adapter adapterService) {
-//		this.repo = repo;
-//		this.playService = playService;
-//		this.playlistSongService = playlistSongService;
-//		this.adapterService = adapterService;
-//	}
 
 	// find one song by id (GET)
 	public Song find(Integer id) {
@@ -75,8 +61,7 @@ public class SongService {
 					playlist = playService.saveAndFlush(playlist);
 					song = repo.save(song);
 				}
-			}
-			else {
+			} else {
 				throw new ObjectNotFoundException(
 						"this playlist does not exist, you must create a playlist before inserting a song or insert the song in an existing playlist");
 
@@ -90,10 +75,8 @@ public class SongService {
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
 		try {
-
 			// Call playlistSongService
 			playlistSongService.findByPlayIdAndSongId(playlistId, songId);
-
 			Playlist playlist = playService.find(playlistId);
 			Song song = find(songId);
 			playlist.getSongs().remove(song);
@@ -109,10 +92,30 @@ public class SongService {
 		}
 	}
 
-	public TrackDTO getTrack (TrackForm form) {
-		String artist = form.getArtist();
-		String track = form.getTrack();
-		return Mapper.convertRestToDto(adapterService.getRest(track , artist));
-		
-	 }
+	//POST que busca na API externa a musica e dados sobre ela
+	public TrackDTO getTrack(TrackForm form) throws Exception {
+		try {
+			String artist = form.getArtist();
+			String track = form.getTrack();
+			return Mapper.convertRestToDto(adapterService.getRest(track, artist));
+		} catch (Exception e) {
+			throw new NullObjectNotFoundException("The artist and track fields must exist and cannot be null.");
+		}
+	}
+
+	public Song saveSong(TrackDTO trackDTO) {
+		Song song = new Song(trackDTO);
+		return repo.save(song);
+	}
+
+	public void addSongToBase(TrackDTO trackDTO) {
+		//fazer a verificação se a musica do artista tal existe no banco
+		//se não existir salva
+
+		Song song = repo.findByMusicAndArtist(trackDTO.getTitle(), trackDTO.getArtist());
+
+		if ( song == null){
+			saveSong(trackDTO);
+		}
+	}
 }

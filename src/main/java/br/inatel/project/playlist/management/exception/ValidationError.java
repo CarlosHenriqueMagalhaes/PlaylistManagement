@@ -5,7 +5,7 @@ import java.util.List;
 
 //This is an auxiliary class for handling exceptions regarding validation 
 //@ExceptionHandler(MethodArgumentNotValidException) 
-//This is a class that inherits data from StandartError
+//This is a class that inherits data from StandardError
 
 public class ValidationError extends StandardError {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class ValidationError extends StandardError {
 		return errors;
 	}
 
-	// auterated setter:
+	// adulterated setter:
 	// was changed because we don't want to add an entire list at once,
 	// but one error at a time
 	public void addError(String fieldName, String messagem) {
