@@ -68,4 +68,9 @@ public class Song implements Serializable {
 		this.songAlbum =trackDTO.getAlbum();
 		this.kindOfMusic = trackDTO.getGenre();
 	}
+//Getters and setters
+	@JsonIgnore
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
 }

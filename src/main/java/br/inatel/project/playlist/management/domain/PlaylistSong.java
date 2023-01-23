@@ -35,4 +35,5 @@ public class PlaylistSong implements Serializable {
 	@Column(name = "playlist_id")
 	private Integer playlistId;
 
+
 }

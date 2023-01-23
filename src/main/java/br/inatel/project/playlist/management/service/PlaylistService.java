@@ -33,7 +33,7 @@ public class PlaylistService {
 	// Insert a new Playlist (POST)
 	public Playlist insert(Playlist obj) {
 		obj.setId(null);
-		return repo.save(obj);
+			return repo.save(obj);
 	}
 	
 	// Method PUT - Change a customer's Playlist name by ID

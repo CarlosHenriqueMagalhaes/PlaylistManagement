@@ -54,7 +54,6 @@ public class SongService {
 			// this "if" is used when the user informs an existing playlist
 			if (playlistDTO.getId() != null) {
 				Playlist playlist = playService.find(playlistDTO.getId());
-
 				if (playlist != null) {
 					playlist.getSongs().add(songOptional.get());
 					song.getPlaylists().add(playlist);
@@ -92,7 +91,7 @@ public class SongService {
 		}
 	}
 
-	//POST que busca na API externa a musica e dados sobre ela
+//	POST que busca na API externa a musica e dados sobre ela
 	public TrackDTO getTrack(TrackForm form) throws Exception {
 		try {
 			String artist = form.getArtist();

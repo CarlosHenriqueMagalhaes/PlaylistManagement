@@ -8,14 +8,7 @@ import javax.validation.Valid;
 import br.inatel.project.playlist.management.dto.TrackDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
@@ -31,8 +24,15 @@ public class SongResource {
 	private SongService songService;
 
 	// find one Song by id (GET)
-	@GetMapping("/{id}")
-	public ResponseEntity<Song> find(@PathVariable Integer id) {
+//	@GetMapping("/{id}")
+//	public ResponseEntity<Song> find(@PathVariable Integer id) {
+//		Song obj = songService.find(id);
+//		return ResponseEntity.ok().body(obj);
+//	}
+
+	//@GetMapping("/{id}")
+	@GetMapping("/byId")
+	public ResponseEntity<Song> find(@RequestParam Integer id) {
 		Song obj = songService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -45,21 +45,14 @@ public class SongResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-//	// add a song to a playlist (POST)
-//	@PostMapping("/addSong/{songId}")
-//	public ResponseEntity<Void> insert(@Valid @PathVariable("songId") Integer songId,
-//			@RequestBody PlaylistDTO playlistDTO) {
-//		songService.addSongToPlaylist(songId, playlistDTO);
-//		return ResponseEntity.accepted().build();
-//	}
-//	
 	// add a song to a playlist (POST)
-	@PostMapping("/addSong")
+	@PostMapping("/addSongAtPlaylist")
 	public ResponseEntity<Void> insert(@Valid @RequestParam("songId") Integer songId,
 			@RequestBody PlaylistDTO playlistDTO) {
 		songService.addSongToPlaylist(songId, playlistDTO);
 		return ResponseEntity.accepted().build();
 	}
+
 
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
@@ -76,5 +69,12 @@ public class SongResource {
 		songService.addSongToBase(trackDTO);
 		return ResponseEntity.ok(trackDTO);
 	}
+
+//	@PostMapping("/find")
+//	public ResponseEntity<?> getTrack (@RequestParam ("Song")TrackForm trackForm, @RequestParam ("Artist") TrackForm artistForm)throws Exception{
+//		TrackDTO trackDTO =  songService.getTrack(trackForm,artistForm);
+//		songService.addSongToBase(trackDTO);
+//		return ResponseEntity.ok(trackDTO);
+//	}
 
 }
