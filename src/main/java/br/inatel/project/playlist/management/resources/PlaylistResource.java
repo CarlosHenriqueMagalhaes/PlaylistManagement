@@ -22,14 +22,14 @@ public class PlaylistResource {
 	private PlaylistService playlistService;
 
 	// find one playlist for id (GET)
-	@GetMapping("/findById")
+	@GetMapping
 	public ResponseEntity<Playlist> find(@RequestParam Integer id) {
 		Playlist obj = playlistService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	// find all registered playlists (GET)
-	@GetMapping
+	@GetMapping("listAll")
 	public ResponseEntity<List<PlaylistDTO>> findAll() {
 		List<Playlist> list = playlistService.findAllPlaylist();
 		List<PlaylistDTO> listDTO = list.stream().map(PlaylistDTO::new).collect(Collectors.toList());

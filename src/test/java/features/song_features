@@ -1,55 +1,60 @@
-Feature:  find one Song for id
-Scenario:sucesso ao executar a busca
-Given:Possuir o Id de um Song valido
-And: A Song deve existir no banco
-When:Quando eu informar uma Id valida (usando o GET) em http://localhost:8070/songs/{id}
-Then:retorna o status 200 OK e a musica com o Id correspondente e suas descrições
+Feature:  Testing API
 
-Feature:  find one Song for id
-Scenario:erro ao executar a busca
-Given:Possuir o Id de uma Musica
-When:Quando eu informar uma Id invalida (usando o GET) em http://localhost:8070/songs/{id}
-Then:retorna o status 404 Not Found e a e mensagem com a descrição do erro.
+Background:
+    * def url_base = 'http://localhost:8070/songs'
 
-Feature:  Exibe todas as musicas no meu banco
-Scenario:sucesso ao executar a busca
-Given:
-When:Quando eu acessar(usando o GET) em http://localhost:8070/songs
-Then:retorna o status 200 OK e todas as musicas cadastradas no meu banco
+    Scenario: sucesso ao logar
+    When: quando eu preencher campos
+    And:a senha cadastrada
+    Then: eu logo com sucesso e recebo 200 OK
 
-Feature:  Adiciona uma musica de uma playlist
-Scenario:sucesso ao adicionar
-Given:
+(1)
+Scenario: List All Songs in my bank
+When: given a read order Get method on url "/listAll"
+Then: status 200 Ok
+
+(2)
+Scenario: Success find one Song for id
+When: given a read order Get method By a Valid id on the url
+Then: Status 200 Ok
+
+(3)
+Scenario: Fail find one Song for id
+When: given a read order Get method By a Invalid id on de url
+Then: Status 404 Not Found
+
+(4)
+Scenario: Success add a Song at Playlist
 When:
-Then:
+And:
+Then: Status 202 Accepted
 
-Feature:  Adiciona uma musica de uma playlist
-Scenario: erro ao adicionar
-Given:
-When: Song não existe no banco de dados
-Then:
-
-Feature:  Adiciona uma musica de uma playlist
-Scenario: erro ao adicionar
-Given:
-When: Playlist não existe no banco de dados
-Then:
-
-Feature:  Remove uma Song de Uma Playlist
-Scenario: sucesso ao remover
-Given:
+(5)
+Scenario: Fail add a Song at Playlist
 When:
-Then:
+And:
+Then: Status 404 Not Found
 
-Feature: Remove uma Song de Uma Playlist
-Scenario: erro ao remover
-Given:
-When: erro ao informar uma musica que não existe na playlist
-Then:
+(6)
+Scenario: Success remove a Song at Playlist
+When:
+And:
+Then: Status 200 Ok
 
-Feature:  Remove uma Song de Uma Playlist
-Scenario: erro ao remover
-Given:
-When: erro ao informar uma musica em uma playlist que não existe 
-Then:
+(7)
+Scenario: Fail remove a Song at Playlist
+When:
+And:
+Then: Status 404 Not Found
 
+(8)
+Scenario: Success find a Song (Api externa)
+When:
+And:
+Then: Status 200 Ok
+
+(9)
+Scenario: Fail find a Song (Api externa)
+When:
+And: /Or
+Then: Status 404 Not Found

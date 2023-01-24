@@ -3,57 +3,55 @@ Feature:  Testing API
 Background:
     * def url_base = 'http://localhost:8070/playlists'
 
+    Scenario: sucesso ao logar
+    When: quando eu preencher campos
+    And:a senha cadastrada
+    Then: eu logo com sucesso e recebo 200 OK
+
 (1)
-Scenario: sucesso ao realizar a busca
-Given: given A Read Order
-When: Get method
+Scenario: List All Playlists
+When: given a read order Get method on url "/listAll"
 Then: status 200 Ok
 
 (2)
-Scenario: find one playlist for id
-Given: given A Read Order By a Valid PlaylistId on the url
-When: Get Method
+Scenario: Success find one playlist for id
+When: given a read order Get method By a Valid PlaylistId on the url
 Then: Status 200 Ok
 
 (3)
-Scenario: fail in find one playlist for id
-Given: given A Read Order By a Invalid PlaylistId on de url
-When: Get Method
+Scenario: Fail find one playlist for id
+When: given a read order Get method By a Invalid PlaylistId on de url
 Then: Status 404 ObjectNotFound
 
 (4)
-Scenario: Create a new Playlist
-Given: given Post A New Playlist
-When: Post method with valid playlist name in the body
+Scenario: Success Create a new Playlist
+When: Given a read order Post method with valid playlist name in the body
 Then: Status 201 Created
 
 (5)
-Scenario: Create a new Playlist
-Given: Fail to given Post A New Playlist
-When: Post method with invalid playlist name in the body
+Scenario: Fail Create a new Playlist
+When: Given a read order Post method with invalid playlist name in the body
 Then: Status 400 Bad Request
 
 (6)
-Scenario: Delete a Playlist
-Given: To given Delete A Playlist
-When: Delete method with valid playlistId on url
+Scenario: Success Delete a Playlist
+When: Given a read order Delete method with valid playlistId on url
 Then: Status 200 Ok
 
 (7)
-Scenario: Delete a Playlist
-Given: Fail To given Delete A Playlist
-When: Delete method with invalid playlistId on url
+Scenario: Fail Delete a Playlist
+When: Given a read order Delete method with invalid playlistId on url
 Then: Status 404 Not Found
 
 (8)
-Scenario: Rename a Playlist name
-Given: To given A Playlist name with your Id and your new playlist name
-When: Put method with valid playlist name and valid playlistId in the body
+Scenario: Success Rename a Playlist name
+When: Given a read order Put method with valid playlist name in the body
+And:  valid playlistId in the body
 Then: Status 204 No Content
 
 (9)
-Scenario: Rename a Playlist name
-Given: To provide an invalid playlist ID name and/or your new invalid playlist name
-When: Put method with invalid playlist name and/or invalid playlistId in the body
+Scenario: Fail Rename a Playlist name
+When: Given a read order Put method with invalid playlist name in the body
+And: /Or invalid playlistId in the body
 Then: Status 404 Bad Request
 

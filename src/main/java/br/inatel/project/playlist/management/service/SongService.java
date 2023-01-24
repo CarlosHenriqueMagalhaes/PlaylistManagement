@@ -47,9 +47,8 @@ public class SongService {
 //       make sure the music exists
 		songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
 				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
-		//
 
-		if (songOptional != null && songOptional.isPresent()) {
+				if (songOptional != null && songOptional.isPresent()) {
 			Song song = songOptional.get();
 			// this "if" is used when the user informs an existing playlist
 			if (playlistDTO.getPlaylistId() != null) {

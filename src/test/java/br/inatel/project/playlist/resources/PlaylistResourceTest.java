@@ -18,7 +18,7 @@ public class PlaylistResourceTest {
 	public PlaylistDTO createPlaylistDTO() {
 		PlaylistDTO obj = new PlaylistDTO();
 		obj.setPlaylistId(1);
-		obj.setPlaylistName("novaPlaylist");
+		obj.setPlaylistName("Ada'sPlaylist");
 		return obj;
 	}
 
@@ -32,7 +32,7 @@ public class PlaylistResourceTest {
 	@Test
 	@Order(1)
 	public void givenAReadOrder_WhenReceivingAllThePlaylists_ThenItShouldReturnStatus200Ok() {
-		WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists").exchange()
+		WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists/listAll").exchange()
 				.expectHeader().contentType(MediaType.APPLICATION_JSON).expectStatus().isOk();
 	}
 
@@ -42,7 +42,7 @@ public class PlaylistResourceTest {
 	public void givenAReadOrderByValidPlaylistId_WhenReceivingThePlaylist_ThenItShouldReturnStatus200Ok() {
 		Integer id = 1;
 
-		Playlist playlist = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists/findById?id=" + id)
+		Playlist playlist = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists?id=" + id)
 				.exchange().expectStatus().isOk().expectBody(Playlist.class).returnResult().getResponseBody();
 
 		assertNotNull(playlist);
@@ -55,7 +55,7 @@ public class PlaylistResourceTest {
 		int id = 35;// se eu alterar para um ID que contenha Playlist cadastrada o teste não passa(prova
 		// que o método funciona)
 
-		Playlist result = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists/findById?id=" + id)
+		Playlist result = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build().get().uri("/playlists?id=" + id)
 				.exchange().expectStatus().isNotFound().expectBody(Playlist.class).returnResult().getResponseBody();
 
 		assertEquals(result, result);

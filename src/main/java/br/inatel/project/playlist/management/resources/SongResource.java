@@ -23,22 +23,14 @@ public class SongResource {
 	@Autowired
 	private SongService songService;
 
-	// find one Song by id (GET)
-//	@GetMapping("/{id}")
-//	public ResponseEntity<Song> find(@PathVariable Integer id) {
-//		Song obj = songService.find(id);
-//		return ResponseEntity.ok().body(obj);
-//	}
-
-	//@GetMapping("/{id}")
-	@GetMapping("/byId")
+	@GetMapping
 	public ResponseEntity<Song> find(@RequestParam Integer id) {
 		Song obj = songService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	// find all Songs in my bank (GET)
-	@GetMapping
+	@GetMapping("/listAll")
 	public ResponseEntity<List<SongDTO>> findAll() {
 		List<Song> list = songService.findAllSongs();
 		List<SongDTO> listDTO = list.stream().map(SongDTO::new).collect(Collectors.toList());
@@ -53,7 +45,6 @@ public class SongResource {
 		return ResponseEntity.accepted().build();
 	}
 
-
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
 	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
@@ -63,7 +54,7 @@ public class SongResource {
 	}
 
 	//POST que busca na API externa a musica e dados sobre ela persistindo a música na base de dados
-	@PostMapping("/find")
+	@PostMapping("/findSong")
 	public ResponseEntity<?> getTrack (@RequestBody TrackForm form)throws Exception{
 		TrackDTO trackDTO =  songService.getTrack(form);
 		songService.addSongToBase(trackDTO);
