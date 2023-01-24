@@ -14,7 +14,7 @@ public class PlaylistDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Valid
-	private Integer id;
+	private Integer PlaylistId;
 
 	@NotNull(message = "filling in this field is mandatory")
 	@NotEmpty(message = "filling in this field is mandatory")
@@ -27,19 +27,19 @@ public class PlaylistDTO implements Serializable {
 	}
 
 	public PlaylistDTO(Playlist obj) {
-		id = obj.getId();
+		PlaylistId = obj.getId();
 		playlistName = obj.getPlaylistName();
 	}
 	
 	// Getters and setters
 
 
-	public Integer getId() {
-		return id;
+	public Integer getPlaylistId() {
+		return PlaylistId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPlaylistId(Integer playlistId) {
+		this.PlaylistId = playlistId;
 	}
 
 	public String getPlaylistName() {

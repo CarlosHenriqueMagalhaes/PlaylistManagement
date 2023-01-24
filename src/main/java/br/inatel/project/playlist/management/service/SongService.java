@@ -52,8 +52,8 @@ public class SongService {
 		if (songOptional != null && songOptional.isPresent()) {
 			Song song = songOptional.get();
 			// this "if" is used when the user informs an existing playlist
-			if (playlistDTO.getId() != null) {
-				Playlist playlist = playService.find(playlistDTO.getId());
+			if (playlistDTO.getPlaylistId() != null) {
+				Playlist playlist = playService.find(playlistDTO.getPlaylistId());
 				if (playlist != null) {
 					playlist.getSongs().add(songOptional.get());
 					song.getPlaylists().add(playlist);

@@ -42,7 +42,7 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
 		
 		List<FieldMessage> list = new ArrayList<>();
 
-		Optional<Playlist> playlistOptional = repo.findById(objDto.getId());
+		Optional<Playlist> playlistOptional = repo.findById(objDto.getPlaylistId());
 		if (playlistOptional != null && playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
 			list.add(new FieldMessage("id", "already existing id"));
 		}

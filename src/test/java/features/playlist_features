@@ -1,50 +1,59 @@
-Feature:  find one playlist for id
-Scenario:sucesso ao executar a busca
-Given:Possuir o Id de uma Playlist
-And: A Playlist deve existir no banco
-When:Quando eu informar uma Id valida (usando o GET) em http://localhost:8070/playlists/{id}
-Then:retorna o status 200 OK e a lista com o Id correspondente
+Feature:  Testing API
 
-Feature:  find one playlist for id
-Scenario:falha ao encontrar a playlist
-Given:Possuir o Id de uma Playlist
-When:Quando eu informar um Id invalido (usando o GET) http://localhost:8070/playlists/{id}
-Then:retorna o erro 404 ObjectNotFound! e mensagem com a descrição do erro
+Background:
+    * def url_base = 'http://localhost:8070/playlists'
 
-Feature:  findAllPlaylist 
-Scenario:sucesso ao buscar todas as playlists cadastradas
-Given:
-When:Quando eu acessar(usando o GET) em http://localhost:8070/playlists
-Then:retorna o status 200 OK e todas as Playlists cadastradas
+(1)
+Scenario: sucesso ao realizar a busca
+Given: given A Read Order
+When: Get method
+Then: status 200 Ok
 
-Feature:  Create a new Playlist 
-Scenario:sucesso ao criar uma nova Playlist
-Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
-When:Quando eu informar um nome válido para a playlist(usando o POST) em http://localhost:8070/playlists
-Then:retorna o status 201 Created
+(2)
+Scenario: find one playlist for id
+Given: given A Read Order By a Valid PlaylistId on the url
+When: Get Method
+Then: Status 200 Ok
 
-Feature:  Create a new Playlist 
-Scenario:Erro ao criar uma nova Playlist
-Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
-When:Quando eu não informar um nome para a Playlist
-Then:retorna o status 400 Bad Request, e mensagem com a descrição do erro
+(3)
+Scenario: fail in find one playlist for id
+Given: given A Read Order By a Invalid PlaylistId on de url
+When: Get Method
+Then: Status 404 ObjectNotFound
 
-Feature:  Create a new Playlist 
-Scenario:Erro ao criar uma nova Playlist
-Given:Iserir um nome para a Playlist entre 1 e 50 caracteres
-When:Quando eu Iserir um nome para a Playlist com mais de 50 Caracteres
-Then:retorna o status 400 Bad Request, e mensagem com a descrição do erro
+(4)
+Scenario: Create a new Playlist
+Given: given Post A New Playlist
+When: Post method with valid playlist name in the body
+Then: Status 201 Created
 
-Feature:  Delete a Playlist 
-Scenario: sucesso ao deletar uma playlist
-Given:Possuir o Id de uma Playlist existente
-When:Quando eu informar uma Id valida (usando o DELETE) em http://localhost:8070/playlists/{id}
-Then:retorna o status 200 OK, e mensagem informando a Playlist deletada
+(5)
+Scenario: Create a new Playlist
+Given: Fail to given Post A New Playlist
+When: Post method with invalid playlist name in the body
+Then: Status 400 Bad Request
 
-Feature:  Delete a Playlist 
-Scenario: Erro ao deletar uma playlist
-Given:Possuir o Id de uma Playlist existente
-When:Quando eu informar uma Id de uma playlist que não existe (usando o DELETE) em http://localhost:8070/playlists/{id}
-Then:retorna o erro 404 ObjectNotFound! e mensagem com a descrição do erro
+(6)
+Scenario: Delete a Playlist
+Given: To given Delete A Playlist
+When: Delete method with valid playlistId on url
+Then: Status 200 Ok
 
+(7)
+Scenario: Delete a Playlist
+Given: Fail To given Delete A Playlist
+When: Delete method with invalid playlistId on url
+Then: Status 404 Not Found
+
+(8)
+Scenario: Rename a Playlist name
+Given: To given A Playlist name with your Id and your new playlist name
+When: Put method with valid playlist name and valid playlistId in the body
+Then: Status 204 No Content
+
+(9)
+Scenario: Rename a Playlist name
+Given: To provide an invalid playlist ID name and/or your new invalid playlist name
+When: Put method with invalid playlist name and/or invalid playlistId in the body
+Then: Status 404 Bad Request
 
