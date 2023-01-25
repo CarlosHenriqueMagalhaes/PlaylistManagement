@@ -39,16 +39,16 @@ public class SongResource {
 
 	// add a song to a playlist (POST)
 	@PostMapping("/addSongAtPlaylist")
-	public ResponseEntity<Void> insert(@Valid @RequestParam("songId") Integer songId,
-			@RequestBody PlaylistDTO playlistDTO) {
-		songService.addSongToPlaylist(songId, playlistDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestParam Integer songId,
+									   @RequestParam Integer playlistId) {
+		songService.addSongToPlaylist(songId, playlistId);
 		return ResponseEntity.accepted().build();
 	}
 
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
 	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
-			@RequestParam("songId") Integer songId) throws Exception {
+									@RequestParam("songId") Integer songId) throws Exception {
 		ResponseEntity.noContent().build();
 		return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));
 	}
@@ -60,12 +60,4 @@ public class SongResource {
 		songService.addSongToBase(trackDTO);
 		return ResponseEntity.ok(trackDTO);
 	}
-
-//	@PostMapping("/find")
-//	public ResponseEntity<?> getTrack (@RequestParam ("Song")TrackForm trackForm, @RequestParam ("Artist") TrackForm artistForm)throws Exception{
-//		TrackDTO trackDTO =  songService.getTrack(trackForm,artistForm);
-//		songService.addSongToBase(trackDTO);
-//		return ResponseEntity.ok(trackDTO);
-//	}
-
 }

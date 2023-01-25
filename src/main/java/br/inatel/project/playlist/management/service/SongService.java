@@ -1,6 +1,7 @@
 package br.inatel.project.playlist.management.service;
 
 import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.domain.PlaylistSong;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.TrackDTO;
@@ -8,6 +9,8 @@ import br.inatel.project.playlist.management.exception.NullObjectNotFoundExcepti
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.mapper.Mapper;
+import br.inatel.project.playlist.management.repository.PlaylistRepository;
+import br.inatel.project.playlist.management.repository.PlaylistSongRepository;
 import br.inatel.project.playlist.management.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,10 @@ public class SongService {
 	private PlaylistSongService playlistSongService;
 	@Autowired
 	private Adapter adapterService;
+	@Autowired
+	private PlaylistSongRepository plSgRepo;
+	@Autowired
+	private PlaylistRepository plRepo;
 
 	// find one song by id (GET)
 	public Song find(Integer id) {
@@ -40,34 +47,29 @@ public class SongService {
 		return repo.findAll();
 	}
 
-	// add a song to a playlist (POST)
-	public void addSongToPlaylist(@Valid Integer songId, PlaylistDTO playlistDTO) {
+	public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
 		// search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
 //       make sure the music exists
 		songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
 				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
+// search for Playlist by id:
+		Optional<Playlist> playlistOptional = plRepo.findById(playlistId);
+		//       make sure the music exists
+		playlistOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Playlist Id:" + playlistId
+				+ ", does not exist or is not registered! " + "Type: " + Playlist.class.getName()));
+// verifica se a relação existe
+		Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
 
-				if (songOptional != null && songOptional.isPresent()) {
+		if (verif.isEmpty()){
 			Song song = songOptional.get();
-			// this "if" is used when the user informs an existing playlist
-			if (playlistDTO.getPlaylistId() != null) {
-				Playlist playlist = playService.find(playlistDTO.getPlaylistId());
-				if (playlist != null) {
-					playlist.getSongs().add(songOptional.get());
-					song.getPlaylists().add(playlist);
-					playlist = playService.saveAndFlush(playlist);
+			Playlist playlist = playlistOptional.get();
+			song.getPlaylists().add(playlist);
+			playlist.getSongs().add(song);
+			playlist = playService.saveAndFlush(playlist);
 					song = repo.save(song);
 				}
-			} else {
-				throw new ObjectNotFoundException(
-						"this playlist does not exist, you must create a playlist before inserting a song or insert the song in an existing playlist");
-
-			}
-
 		}
-
-	}
 
 	// Remove a song in a playlist
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
@@ -90,7 +92,7 @@ public class SongService {
 		}
 	}
 
-//	POST que busca na API externa a musica e dados sobre ela
+	//	POST que busca na API externa a musica e dados sobre ela
 	public TrackDTO getTrack(TrackForm form) throws Exception {
 		try {
 			String artist = form.getArtist();

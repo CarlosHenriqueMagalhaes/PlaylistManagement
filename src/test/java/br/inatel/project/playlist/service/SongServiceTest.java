@@ -9,10 +9,12 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,6 +26,7 @@ import br.inatel.project.playlist.management.service.SongService;
 
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class SongServiceTest {
 		
 	private SongDTO songDto;
@@ -37,15 +40,15 @@ public class SongServiceTest {
 	@Mock
 	private Adapter adapter;
 	
-//	@BeforeEach
-//	public void init() {
-//		songDto = SongDTO.builder()
-//				.id(1)
-//				.music("Que Beleza")
-//				.artist("Tim Maia")
-//				.kindOfMusic("nacional")
-//				.build();
-//	}
+	@BeforeEach
+	public void init() {
+		songDto = SongDTO.builder()
+				.id(1)
+				.music("Que Beleza")
+				.artist("Tim Maia")
+				.kindOfMusic("nacional")
+				.build();
+	}
 	@Test
 	public void deveriaencontrarumamusicapeloid() {
 		Integer id = 1;

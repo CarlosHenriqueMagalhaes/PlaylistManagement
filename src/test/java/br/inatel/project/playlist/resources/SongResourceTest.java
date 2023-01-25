@@ -9,17 +9,25 @@ import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.rest.Track;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
-
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
+
+	@Autowired
+	private MockMvc mockMvc;
 
 	public TrackForm apiData() {
 		TrackForm obj = new TrackForm();

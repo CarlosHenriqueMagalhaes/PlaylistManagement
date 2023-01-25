@@ -1,17 +1,16 @@
 package br.inatel.project.playlist.management.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
+import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
+import br.inatel.project.playlist.management.repository.PlaylistRepository;
 import br.inatel.project.playlist.management.repository.PlaylistSongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.inatel.project.playlist.management.domain.Playlist;
-import br.inatel.project.playlist.management.dto.PlaylistDTO;
-import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
-import br.inatel.project.playlist.management.repository.PlaylistRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlaylistService {
@@ -35,6 +34,7 @@ public class PlaylistService {
 
 	// Insert a new Playlist (POST)
 	public Playlist insert(Playlist obj) {
+		obj.setId(null);
 			return repo.save(obj);
 	}
 

@@ -4,21 +4,30 @@ import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PlaylistResourceTest {
+
+	@Autowired
+	private MockMvc mockMvc;
 
 	public PlaylistDTO createPlaylistDTO() {
 		PlaylistDTO obj = new PlaylistDTO();
 		obj.setPlaylistId(1);
-		obj.setPlaylistName("Ada'sPlaylist");
+		obj.setPlaylistName("Ada's Playlist");
 		return obj;
 	}
 
