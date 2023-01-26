@@ -17,8 +17,13 @@ import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.FieldMessage;
 import br.inatel.project.playlist.management.repository.PlaylistRepository;
 
-//Annotation Validator Class:
 
+/**
+ * Annotation Validator Class:
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpdate, PlaylistDTO> {
 
 	@Autowired
@@ -31,6 +36,13 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
 	public void initialize(PlaylistUpdate ann) {
 	}
 
+	/**
+	 * Validator
+	 * @param objDto object to validate
+	 * @param context context in which the constraint is evaluated
+	 *
+	 * @return message with exception handling
+	 */
 	@Override
 	public boolean isValid(PlaylistDTO objDto, ConstraintValidatorContext context) {
 		

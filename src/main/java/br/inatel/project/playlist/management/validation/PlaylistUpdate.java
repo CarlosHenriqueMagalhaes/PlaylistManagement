@@ -8,8 +8,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-//Annotation Class:
-
+/**
+ * Annotation Class for exception handling
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @Constraint(validatedBy = PlaylistUpdateValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

@@ -11,6 +11,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Dto representing the information the user will see about Song
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

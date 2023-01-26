@@ -9,7 +9,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import br.inatel.project.playlist.management.domain.Playlist;
-
+/**
+ * Dto representing the information the user will see about playlist
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 public class PlaylistDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

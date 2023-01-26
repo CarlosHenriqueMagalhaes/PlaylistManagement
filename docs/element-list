@@ -1,0 +1,12 @@
+br.inatel.project.playlist.management
+br.inatel.project.playlist.management.config
+br.inatel.project.playlist.management.domain
+br.inatel.project.playlist.management.dto
+br.inatel.project.playlist.management.exception
+br.inatel.project.playlist.management.form
+br.inatel.project.playlist.management.mapper
+br.inatel.project.playlist.management.repository
+br.inatel.project.playlist.management.resources
+br.inatel.project.playlist.management.rest
+br.inatel.project.playlist.management.service
+br.inatel.project.playlist.management.validation

@@ -18,6 +18,12 @@ import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.service.SongService;
 
+/**
+ * Controller Song class. All endpoints of Song are built here.
+ *
+ * @author Carlos Magalhaes
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("/songs")
 public class SongResource {
@@ -28,13 +34,21 @@ public class SongResource {
 	@Autowired
 	private PlaylistService playlistService;
 
+	/**
+	 * Find a song by id
+	 * @param id
+	 * @return A song (endpoint)
+	 */
 	@GetMapping
 	public ResponseEntity<Song> find(@RequestParam Integer id) {
 		Song obj = songService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	// find all Songs in my bank (GET)
+	/**
+	 * find all Songs in my bank (GET)
+	 * @return all Songs in my bank (endpoint)
+	 */
 	@GetMapping("/listAll")
 	public ResponseEntity<List<SongDTO>> findAll() {
 		List<Song> list = songService.findAllSongs();
@@ -42,7 +56,12 @@ public class SongResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	// add a song to a playlist (POST)
+		/**
+	 * add a song to a playlist (POST)
+	 * @param songId
+	 * @param playlistId
+	 * @return add a song to a playlist (endpoint)
+	 */
 	@PostMapping("/addSongAtPlaylist")
 	public ResponseEntity<?> insert(@Valid @RequestParam Integer songId,
 									   @RequestParam Integer playlistId) {
@@ -51,7 +70,13 @@ public class SongResource {
 		return ResponseEntity.ok().body(pl);
 	}
 
-	// Remove a song in a playlist
+	/**
+	 * Remove a song in a playlist
+	 * @param playlistId
+	 * @param songId
+	 * @return Remove a song in a playlist (endpoint)
+	 * @throws Exception
+	 */
 	@DeleteMapping("/removeSong")
 	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
 									@RequestParam("songId") Integer songId) throws Exception {
@@ -59,7 +84,12 @@ public class SongResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	//POST que busca na API externa a musica e dados sobre ela persistindo a música na base de dados
+	/**
+	 * POST that searches the external API for music and data about it, persisting the music in the database
+	 * @param form
+	 * @return A Playlist
+	 * @throws Exception
+	 */
 	@PostMapping("/findSong")
 	public ResponseEntity<?> getTrack (@RequestBody TrackForm form)throws Exception{
 		TrackDTO trackDTO =  songService.getTrack(form);

@@ -5,7 +5,12 @@ import br.inatel.project.playlist.management.rest.Rest;
 import br.inatel.project.playlist.management.rest.Tag;
 
 import java.util.stream.Collectors;
-
+/**
+ * This class maps Entity to Dto
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 public class Mapper {
 
     public static TrackDTO convertRestToDto(Rest rest){

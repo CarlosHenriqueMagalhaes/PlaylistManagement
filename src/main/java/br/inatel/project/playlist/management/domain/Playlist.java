@@ -19,6 +19,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity that will be saved in the database.
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @Entity
 @Data
 @AllArgsConstructor

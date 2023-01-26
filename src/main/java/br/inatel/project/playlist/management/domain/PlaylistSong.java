@@ -15,6 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entity that will be saved in the database.
+ * this class is the representation of a relational table between Song and Playlist
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @Entity
 @Data
 @AllArgsConstructor

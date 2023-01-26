@@ -1,7 +1,11 @@
 package br.inatel.project.playlist.management.exception;
 
 import java.io.Serializable;
-
+/**
+ * Exception handling class
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 public class StandardError implements Serializable {
 
 	private static final long serialVersionUID = 1L;

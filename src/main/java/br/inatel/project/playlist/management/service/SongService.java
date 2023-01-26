@@ -18,7 +18,12 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Service class. Project logic implemented here.
+ *
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @Service
 public class SongService {
 
@@ -35,14 +40,25 @@ public class SongService {
 	@Autowired
 	private PlaylistRepository plRepo;
 
-	// find one song by id (GET)
+
+
+	/**
+	 * find one song by id (GET)
+	 * @param id
+	 * @return one song by id
+	 */
 	public Song find(Integer id) {
 		Optional<Song> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + id
 				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
 	}
 
-	// find all Songs in my bank (GET)
+
+
+	/**
+	 * find all Songs in my bank (GET)
+	 * @return All Songs present in my bank
+	 */
 	public List<Song> findAllSongs() {
 		return repo.findAll();
 	}
@@ -50,15 +66,15 @@ public class SongService {
 	public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
 		// search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
-//       make sure the music exists
+		// make sure the music exists
 		songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
 				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
-// search for Playlist by id:
+		// search for Playlist by id:
 		Optional<Playlist> playlistOptional = plRepo.findById(playlistId);
 		//       make sure the music exists
 		playlistOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Playlist Id:" + playlistId
 				+ ", does not exist or is not registered! " + "Type: " + Playlist.class.getName()));
-// verifica se a relação existe
+		// check if the relationship exists
 		Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
 
 		if (verif.isEmpty()){
@@ -71,7 +87,13 @@ public class SongService {
 				}
 		}
 
-	// Remove a song in a playlist
+	/**
+	 * Remove a song in a playlist
+	 * @param playlistId
+	 * @param songId
+	 * @return playlist without the song that was removed
+	 * @throws Exception
+	 */
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
 		try {
@@ -92,7 +114,12 @@ public class SongService {
 		}
 	}
 
-	//	POST que busca na API externa a musica e dados sobre ela
+	/**
+	 * POST that searches the external API for music and data about it
+	 * @param form
+	 * @return A song from the external api
+	 * @throws Exception
+	 */
 	public TrackDTO getTrack(TrackForm form) throws Exception {
 		try {
 			String artist = form.getArtist();
@@ -103,15 +130,21 @@ public class SongService {
 		}
 	}
 
+	/**
+	 *  Save song from API external in my bank
+	 * @param trackDTO
+	 * @return Song from API external
+	 */
 	public Song saveSong(TrackDTO trackDTO) {
 		Song song = new Song(trackDTO);
 		return repo.save(song);
 	}
 
+	/**
+	 * check if the artist's music exists in the bank if there is no save
+	 * @param trackDTO
+	 */
 	public void addSongToBase(TrackDTO trackDTO) {
-		//fazer a verificação se a musica do artista tal existe no banco
-		//se não existir salva
-
 		Song song = repo.findByMusicAndArtist(trackDTO.getTitle(), trackDTO.getArtist());
 		if ( song == null){
 			saveSong(trackDTO);

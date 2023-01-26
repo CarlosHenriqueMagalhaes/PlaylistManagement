@@ -13,6 +13,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.repository.SongRepository;
 
+/**
+ * PlaylistManagerAPI
+ * @author Carlos Magalhães
+ * @since 1.0
+ */
 @SpringBootApplication
 public class PlaylistManagerApplication implements CommandLineRunner {
 
@@ -25,7 +30,6 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(PlaylistManagerApplication.class, args);
 	}
-
 	@Override
 	public void run(String... args) throws Exception {
 
