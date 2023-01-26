@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.TrackDTO;
+import br.inatel.project.playlist.management.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,9 @@ public class SongResource {
 	@Autowired
 	private SongService songService;
 
+	@Autowired
+	private PlaylistService playlistService;
+
 	@GetMapping
 	public ResponseEntity<Song> find(@RequestParam Integer id) {
 		Song obj = songService.find(id);
@@ -39,18 +44,19 @@ public class SongResource {
 
 	// add a song to a playlist (POST)
 	@PostMapping("/addSongAtPlaylist")
-	public ResponseEntity<Void> insert(@Valid @RequestParam Integer songId,
+	public ResponseEntity<?> insert(@Valid @RequestParam Integer songId,
 									   @RequestParam Integer playlistId) {
 		songService.addSongToPlaylist(songId, playlistId);
-		return ResponseEntity.accepted().build();
+		Playlist pl = playlistService.find(playlistId);
+		return ResponseEntity.ok().body(pl);
 	}
 
 	// Remove a song in a playlist
 	@DeleteMapping("/removeSong")
 	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
 									@RequestParam("songId") Integer songId) throws Exception {
-		ResponseEntity.noContent().build();
-		return ResponseEntity.ok(songService.removeSongToPlaylist(playlistId, songId));
+		songService.removeSongToPlaylist(playlistId, songId);
+		return ResponseEntity.noContent().build();
 	}
 
 	//POST que busca na API externa a musica e dados sobre ela persistindo a música na base de dados

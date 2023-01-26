@@ -38,26 +38,26 @@ public class PlaylistResource {
 
 	// Insert a new Playlist (POST)
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody PlaylistDTO objDto) {
+	public ResponseEntity<Playlist> insert(@Valid @RequestBody PlaylistDTO objDto) {
 		Playlist obj = playlistService.fromDTO(objDto);
 		obj = playlistService.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+
+		return ResponseEntity.created(null).body(obj);
 	}
 
 	// Method PUT - Change a customer's name of playlist
 	@PutMapping
-	public ResponseEntity<Void> update(@Valid @RequestBody PlaylistDTO objDto)throws Exception {
+	public ResponseEntity<Playlist> update(@Valid @RequestBody PlaylistDTO objDto)throws Exception {
 		Playlist obj = playlistService.fromDTO(objDto);
 		obj = playlistService.update(obj);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok(obj);
 		}
 			
 	// Delete a playlist
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
-		ResponseEntity.noContent().build();
-		return ResponseEntity.ok(playlistService.delete(id));
+		playlistService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

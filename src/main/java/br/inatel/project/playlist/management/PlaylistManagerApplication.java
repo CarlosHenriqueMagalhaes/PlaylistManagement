@@ -24,15 +24,9 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Song sgn1 = new Song(null, "Que Beleza","Tim Maia", "30000","Que Beleza", "Nacional");
-//		Song sgn2 = new Song(null, "Last Kiss", "Pearl Jam", "Grunge");
-//		Song sgn3 = new Song(null, "Silent Running", "Gorillaz", "Rock Alternativo");
-//		Song sgn4 = new Song(null, "Man in the box", "Alice in Chains", "Grunge");
-//		Song sgn5 = new Song(null, "Dance of Death", "Iron Maiden", "Metal");
-//		Song sgn6 = new Song(null, "Somewhere I belong", "Linkin Park", "Rock Alternativo");
-//		Song sgn7 = new Song(null, "Invisible", "Linkin Park", "Rock Alternativo");
+		Song sgn1 = new Song(null, "O caminho do bem","Tim Maia", "30000","Tim Maia Racional", "Nacional, soul, 70s");
 		songRepository.saveAll(List.of(sgn1));
-//		songRepository.saveAll(Arrays.asList(sgn1, sgn2, sgn3, sgn4, sgn5, sgn6, sgn7));
+
 	}
 
 }
