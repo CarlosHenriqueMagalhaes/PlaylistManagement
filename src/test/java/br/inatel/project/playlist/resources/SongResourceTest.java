@@ -6,9 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.form.TrackForm;
+import br.inatel.project.playlist.management.repository.SongRepository;
 import br.inatel.project.playlist.management.rest.Track;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,25 +23,29 @@ import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
-@AutoConfigureMockMvc
+
+import java.util.List;
+
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
 
+	@Autowired
+	private SongRepository repo;
 
 	@Autowired
 	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public TrackForm apiData() {
 		TrackForm obj = new TrackForm();
-		obj.setTrack("Sunshine");
-		obj.setArtist("Aerosmith");
+		obj.setArtist("Metallica");
+		obj.setTrack("One");
 		return obj;
 	}
 
 	public SongDTO songDTO() {
 		SongDTO obj = new SongDTO();
-		obj.setId(5);
+		obj.setId(100);
 		obj.setMusic("The Great Gig in the Sky");
 		obj.setArtist("Pink Floyd");
 		obj.setKindOfMusic("Rock");
@@ -50,36 +56,42 @@ public class SongResourceTest {
 
 	public PlaylistDTO playlistDTO() {
 		PlaylistDTO obj = new PlaylistDTO();
-		obj.setPlaylistId(1);
+		obj.setPlaylistId(null);
 		obj.setPlaylistName("Best Songs");
 		return obj;
 	}
+
+	//givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created()
 //sucesso ao encontrar uma musica na API externa
 	@Test
 	@Order(1)
-	public void SuccessfindASongInAPIExternal_ThenItShouldReturnStatus200Ok() {
+	public void givenAPostOrder_WhenInsertAValidTrackAndAValidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus201Created() {
 		TrackForm ap = apiData();
 		Song song = webTestClient
 				.post()
-				.uri("/songs/find" )
-				.body(BodyInserters.fromValue(ap))
+				.uri("/songs/findSong" )
+				.bodyValue(ap)
 				.exchange()
 				.expectStatus()
-				.isOk()
+				.isCreated()
 				.expectBody(Song.class)
 				.returnResult()
 				.getResponseBody();
+
+		assertEquals(ap.getArtist(),"Metallica");
 	}
+
 
 	//falha em encontrar uma musica na API externa
 	@Test
 	@Order(2)
-	public void FailfindASongInAPIExternal_ThenItShouldReturnStatus404NotFound() {
+	public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
 		TrackForm ap = apiData();
+		ap.setTrack("null");
 		Song song = webTestClient
 				.post()
-				.uri("/songs/find" )
-				.body(BodyInserters.fromValue(ap))
+				.uri("/songs/findSong" )
+				.bodyValue(ap)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
@@ -103,7 +115,7 @@ public class SongResourceTest {
 	//sucesso ao encontrar uma musica pelo id
 	@Test
 	@Order(4)
-	public void givenAReadOrderBySongIdValid_WhenReceivingTheSong_ThenItShouldReturnStatus200Ok() {
+	public void givenAReadOrder_WhenInsertAValidSongId_ThenItShouldReturnStatus200Ok() {
 		Integer id = 1;
 
 		Song song = webTestClient
@@ -123,8 +135,8 @@ public class SongResourceTest {
 	//falha em encontrar uma musica pelo id
 	@Test
 	@Order(5)
-	public void givenAReadOrderBySongIdInvalid_WhenNotReceivingTheSong_ThenItShouldReturnStatus404NotFound() {
-		int id = 35;// se eu alterar para um ID que contenha Song cadastrada o teste não passa(prova
+	public void givenAReadOrder_WhenInsertAInvalidId_ThenItShouldReturnStatus404NotFound() {
+		int id = 0;// se eu alterar para um ID que contenha Song cadastrada o teste não passa(prova
 		// que o método funciona)
 
 		Song result = webTestClient
@@ -142,13 +154,14 @@ public class SongResourceTest {
 // sucesso em adicionar uma musica em uma playlist
 	@Test
 	@Order(6)
-	public void AdicinaUmaMusicaEmUmaPlaylist_ThenItShouldReturnStatus200Ok() {
+	public void givenAPostOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus200Ok() {
 		SongDTO sg = songDTO();
+		sg.setId(1);
 		PlaylistDTO pl = playlistDTO();
+		pl.setPlaylistId(1);//deixar uma playlist existente setado
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?songId=" + sg.getId())
-				.body(BodyInserters.fromValue(pl))
+				.uri("/songs/addSongAtPlaylist?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
 				.exchange()
 				.expectStatus()
 				.isOk()
@@ -158,13 +171,15 @@ public class SongResourceTest {
 	//falha em adicionar uma musica em uma playlist
 	@Test
 	@Order(7)
-	public void FalhaEmAdicionarUmaMusicaEmUmaPlaylist_ThenItShouldReturnStatus404NotFound() {
+	public void givenAPostOrder_WhenInsertAInvalidPlaylistIdAndOrAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
 		SongDTO sg = songDTO();
+		sg.setId(0);
 		PlaylistDTO pl = playlistDTO();
+		pl.setPlaylistId(0);
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?songId=" + sg.getId())
-				.body(BodyInserters.fromValue(pl))
+				.uri("/songs/addSongAtPlaylist?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
+				.bodyValue(pl)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
@@ -173,24 +188,28 @@ public class SongResourceTest {
 	//sucesso em remover uma musica de uma playlist
 	@Test
 	@Order(8)
-	public void DeleteASonginAPlayList_ThenItShouldReturnStatus204NoContent() {
+	public void givenADeleteOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus204NoContent() {
 		SongDTO sg = songDTO();
+		sg.setId(1);
 		PlaylistDTO pl = playlistDTO();
+		pl.setPlaylistId(1);//deixar uma playlist existente setado
 		webTestClient
 				.delete()
 				.uri("/songs/removeSong?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
 				.exchange()
 				.expectStatus()
-				.isOk()
+				.isNoContent()
 				.expectHeader();
 	}
 
 	//falha em remover uma musica de uma playlist
 	@Test
 	@Order(9)
-	public void FailDeleteASongInAPlayList_ThenItShouldReturnStatus404NotFound() {
+	public void givenADeleteOrder_WhenInsertAInvalidPlaylistIdAndAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
 		SongDTO sg = songDTO();
+		sg.setId(0);
 		PlaylistDTO pl = playlistDTO();
+		pl.setPlaylistId(0);
 		webTestClient
 				.delete()
 				.uri("/songs/removeSong?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())

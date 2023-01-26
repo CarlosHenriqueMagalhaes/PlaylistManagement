@@ -3,6 +3,8 @@ package br.inatel.project.playlist.management;
 import java.util.Arrays;
 import java.util.List;
 
+import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +19,9 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 	@Autowired
 	private SongRepository songRepository;
 
+	@Autowired
+	private PlaylistRepository playlistRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(PlaylistManagerApplication.class, args);
 	}
@@ -26,6 +31,9 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 
 		Song sgn1 = new Song(null, "O caminho do bem","Tim Maia", "30000","Tim Maia Racional", "Nacional, soul, 70s");
 		songRepository.saveAll(List.of(sgn1));
+
+		Playlist pl1 = new Playlist(null,"Default Playlist");
+		playlistRepository.saveAll(List.of(pl1));
 
 	}
 

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TrackDTO implements Serializable {
+public class TrackDTO {
 
     private String title;
     private String artist;
@@ -17,7 +17,11 @@ public class TrackDTO implements Serializable {
     private String album;
     private String genre;
 
-
-
-
+    public TrackDTO(String title, String artist, String duration, String album, String genre) {
+        this.title = title;
+        this.artist = artist;
+        this.duration = duration;
+        this.album = album;
+        this.genre = genre;
+    }
 }

@@ -113,7 +113,6 @@ public class SongService {
 		//se não existir salva
 
 		Song song = repo.findByMusicAndArtist(trackDTO.getTitle(), trackDTO.getArtist());
-
 		if ( song == null){
 			saveSong(trackDTO);
 		}

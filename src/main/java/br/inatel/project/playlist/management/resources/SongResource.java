@@ -64,6 +64,6 @@ public class SongResource {
 	public ResponseEntity<?> getTrack (@RequestBody TrackForm form)throws Exception{
 		TrackDTO trackDTO =  songService.getTrack(form);
 		songService.addSongToBase(trackDTO);
-		return ResponseEntity.ok(trackDTO);
+		return ResponseEntity.created(null).body(trackDTO);
 	}
 }
