@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bootdb
+    networks:
+      - inatel
+
+  playlist-management:
+    image: playlist-management
+    container_name: playlist-management
+    ports:
+      - 8070:8070
+    environment:
+      - SERVER_HOST=playlist-management
+      - SERVER_PORT=8070
+      - MYSQL_CONTAINER=mysql
+      - API_URL=http://ws.audioscrobbler.com/2.0/?method=track.getInfo
+      - API_KEY=3b761fedd45ea9749401d7f2edbdae44
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - inatel
+    depends_on:
+      - mysql
+
+networks:
+  inatel:
+    driver: bridge
+
