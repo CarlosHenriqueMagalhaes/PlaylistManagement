@@ -25,8 +25,6 @@ public class PlaylistService {
 	@Autowired
 	private PlaylistSongRepository plSgRepo;
 
-
-
 	/**
 	 * find one playlist for id (GET)
 	 * @param id
@@ -52,7 +50,6 @@ public class PlaylistService {
 	 * @return Create a new Playlist
 	 */
 	public Playlist insert(Playlist obj) {
-		obj.setId(null);
 			return repo.save(obj);
 	}
 

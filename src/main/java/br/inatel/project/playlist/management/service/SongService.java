@@ -3,7 +3,6 @@ package br.inatel.project.playlist.management.service;
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.domain.PlaylistSong;
 import br.inatel.project.playlist.management.domain.Song;
-import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.TrackDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
@@ -24,6 +23,7 @@ import java.util.Optional;
  * @author Carlos Magalhães
  * @since 1.0
  */
+
 @Service
 public class SongService {
 
@@ -53,8 +53,6 @@ public class SongService {
 				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
 	}
 
-
-
 	/**
 	 * find all Songs in my bank (GET)
 	 * @return All Songs present in my bank
@@ -62,6 +60,9 @@ public class SongService {
 	public List<Song> findAllSongs() {
 		return repo.findAll();
 	}
+
+
+
 
 	public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
 		// search for music by id:
@@ -94,8 +95,8 @@ public class SongService {
 	 * @return playlist without the song that was removed
 	 * @throws Exception
 	 */
-	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 
+	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 		try {
 			// Call playlistSongService
 			playlistSongService.findByPlayIdAndSongId(playlistId, songId);
@@ -150,4 +151,5 @@ public class SongService {
 			saveSong(trackDTO);
 		}
 	}
+
 }

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.TrackDTO;
+import br.inatel.project.playlist.management.service.Adapter;
 import br.inatel.project.playlist.management.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,9 @@ public class SongResource {
 
 	@Autowired
 	private PlaylistService playlistService;
+
+	@Autowired
+	private Adapter adapter;
 
 	/**
 	 * Find a song by id
@@ -95,5 +99,11 @@ public class SongResource {
 		TrackDTO trackDTO =  songService.getTrack(form);
 		songService.addSongToBase(trackDTO);
 		return ResponseEntity.created(null).body(trackDTO);
+	}
+
+	@DeleteMapping("/cache")
+	public ResponseEntity<?> deleteRecipeCache() {
+		adapter.deleteCache();
+		return ResponseEntity.noContent().build();
 	}
 }
