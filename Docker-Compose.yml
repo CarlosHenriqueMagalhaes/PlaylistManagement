@@ -19,7 +19,6 @@ services:
     ports:
       - 8070:8070
     environment:
-      - SERVER_HOST=playlist-management
       - SERVER_PORT=8070
       - MYSQL_CONTAINER=mysql
       - API_URL=http://ws.audioscrobbler.com/2.0/?method=track.getInfo
