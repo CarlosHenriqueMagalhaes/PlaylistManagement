@@ -1,0 +1,20 @@
+In PlaylistManagement the user can create playlists searching for their music,
+through the name of the song and the artist,
+
+Business rules:
+
+When creating a playlist:
+1 - The name of the Playlist cannot be null;
+2 - The name of the Playlist must contain between 2 and fifty characters;
+3 - Following the model of other Streams services (like Spotify) Playlists can have the same name;
+4 - It is possible to change the name of the playlist, as long as the new name respects the first and second rule;
+5 - It is possible to insert songs to the playlist, but not songs that are already in the playlist;
+6 - It is possible to remove a song from the playlist;
+7 - It is possible to delete a playlist, the songs in it are not removed from the database;
+
+When searching for a song:
+1 - When searching for a song, it is automatically saved in the database;
+2 - If the music already exists in the database it is not saved, so there is no way
+there are two identical songs in the database;
+3 - It is possible to add songs to the playlist, but not songs that are already in the playlist;
+4 - It is possible to remove a song from the playlist, but not from the database;

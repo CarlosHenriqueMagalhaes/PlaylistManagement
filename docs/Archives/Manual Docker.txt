@@ -1,0 +1,28 @@
+Para subir a aplicação do meu projeto no docker:
+
+Abrir bash na minha pasta do projeto: 
+
+Quando alterar algo no meu projeto
+git Bash:
+mvn clean install -DskipTests
+-----------------------------------------------
+Setar no Ubunto o caminho do meu projeto navegando com o "cd" e ls para listar
+/mnt/c/Projetos Inatel/Projeto2-PlaylisManagerPrinc/PlaylistManagement
+
+Obs.No IntelliJ ao clicar em terminal posso selecionar o Ubunto, assim ele ja vai 
+automaticamente para a pasta do meu projeto
+
+No Ubunto:
+sudo service docker start * Starting Docker: docker
+docker ps
+docker stop (o que estiver rodando)
+docker ps -a
+docker rm (inicial das ids a serem deletadas)                             
+docker images
+docker rmi (imagens a ser deletadas)
+
+------------------------------------------------
+No Ubunto:
+sudo service docker start * Starting Docker: docker
+docker build -t playlist-management .
+docker compose up

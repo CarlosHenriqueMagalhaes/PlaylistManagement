@@ -1,0 +1,19 @@
+Em PlaylistManagement o usuário pode criar playlists buscando suas musicas,
+atraves do nome da musica e o artista,
+
+Regras de negocio:
+Ao criar uma playlist:
+1 - O nome da Playlist não pode ser nulo;
+2 - O nome da Playlist deve conter entre 2 e 50 caracteres;
+3 - Seguindo o modelo de outros serviços Streams (como Spotify) Playlists podem ter o mesmo nome;
+4 - É possivel alterar o nome da playlist, desde que o novo nome respeite a primera e segunda regra;
+5 - É possivel adicionar musicas nas playlist, mas não musicas que ja estão na playlist;
+6 - É possivel remover uma musica da playlist;
+7 - É possivel deletar uma playlist, as musicas nela não são removidas do banco de dados;
+
+Ao buscar uma musica:
+1 - Ao buscar uma musica, ela automaticamente é salva no banco de dados;
+2 - Se a musica já existir no banco de dados ela não é salva, assim não há como 
+	existir duas musicas iguais no banco de dados;
+3 - É possivel adicionar musicas nas playlist, mas não musicas que ja estão na playlist;
+4 - É possivel remover uma musica da playlist, mas não do banco de dados;

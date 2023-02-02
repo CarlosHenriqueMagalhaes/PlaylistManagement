@@ -1,0 +1,24 @@
+{
+    "artist":"Aerosmith",
+    "track":"Sunshine"
+}
+------------------------------
+{
+    "artist":"Pink Floyd",
+    "track":"A great gig in the sky"
+}
+------------------------------
+{
+    "artist":"Nirvana",
+    "track":"Come as You Are"
+}
+------------------------------
+{
+    "artist":"Engenheiros do Havai",
+    "track":"Ritos de passagem"
+}
+------------------------------
+{
+    "artist":"Linkin Park",
+    "track":"Final Masquerade"
+}

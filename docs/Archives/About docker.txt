@@ -1,0 +1,23 @@
+Commands
+
+To start mysql (my database):
+sudo service docker start * Starting Docker: docker
+docker start mysql
+--------------------------------------------------------------------------------------------------------------
+docker container run --name mysql --network=inatel -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=bootdb -p 3306:3306 -p 33060:33060 -d mysql
+
+-------------------------------------------------------------------
+To create a rede:
+docker network create inatel
+
+------------------------------------------------------------------
+
+To start my API and mysql:
+sudo service docker start * Starting Docker: docker
+docker compose up
+
+---------------------------------------------------------------
+Others
+docker stop playlist-management (stop playlist management so mysql is running and I use IntelliJ for runing API)
+
+docker start playlist-management

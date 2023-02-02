@@ -25,7 +25,7 @@ import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
-
+//Integration Tests
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
@@ -61,8 +61,7 @@ public class SongResourceTest {
 		return obj;
 	}
 
-	//givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created()
-//sucesso ao encontrar uma musica na API externa
+//success finding a song in the external API
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidTrackAndAValidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus201Created() {
@@ -81,8 +80,7 @@ public class SongResourceTest {
 		assertEquals(ap.getArtist(),"Metallica");
 	}
 
-
-	//falha em encontrar uma musica na API externa
+	//Failed to find a song in the external API
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
@@ -100,7 +98,7 @@ public class SongResourceTest {
 				.getResponseBody();
 	}
 
-	//sucesso ao listar todas as musicas
+	//success listing all songs
 	@Test
 	@Order(3)
 	public void givenAReadOrder_WhenReceivingAllTheSongs_ThenItShouldReturnStatus200Ok() {
@@ -112,7 +110,7 @@ public class SongResourceTest {
 				.contentType(MediaType.APPLICATION_JSON).expectStatus().isOk();
 	}
 
-	//sucesso ao encontrar uma musica pelo id
+	//success finding a song by id
 	@Test
 	@Order(4)
 	public void givenAReadOrder_WhenInsertAValidSongId_ThenItShouldReturnStatus200Ok() {
@@ -132,12 +130,11 @@ public class SongResourceTest {
 		assertEquals(song.getId(), id);
 	}
 
-	//falha em encontrar uma musica pelo id
+	//failed to find a song by id
 	@Test
 	@Order(5)
 	public void givenAReadOrder_WhenInsertAInvalidId_ThenItShouldReturnStatus404NotFound() {
-		int id = 0;// se eu alterar para um ID que contenha Song cadastrada o teste não passa(prova
-		// que o método funciona)
+		int id = 0;// if I change it to an ID that contains Song registered, the test does not pass (proves that the method works)
 
 		Song result = webTestClient
 				.get()
@@ -151,14 +148,15 @@ public class SongResourceTest {
 
 		assertEquals(result, result);
 	}
-// sucesso em adicionar uma musica em uma playlist
+
+//success in adding a song to a playlist
 	@Test
 	@Order(6)
 	public void givenAPostOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus200Ok() {
 		SongDTO sg = songDTO();
 		sg.setId(1);
 		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(1);//deixar uma playlist existente setado
+		pl.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.post()
 				.uri("/songs/addSongAtPlaylist?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
@@ -168,7 +166,7 @@ public class SongResourceTest {
 				.expectBody();
 	}
 
-	//falha em adicionar uma musica em uma playlist
+	//Failed to add a song to a playlist
 	@Test
 	@Order(7)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistIdAndOrAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
@@ -185,14 +183,14 @@ public class SongResourceTest {
 				.isNotFound()
 				.expectBody();
 	}
-	//sucesso em remover uma musica de uma playlist
+	//success in removing a song from a playlist
 	@Test
 	@Order(8)
 	public void givenADeleteOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus204NoContent() {
 		SongDTO sg = songDTO();
 		sg.setId(1);
 		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(1);//deixar uma playlist existente setado
+		pl.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.delete()
 				.uri("/songs/removeSong?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
@@ -202,7 +200,7 @@ public class SongResourceTest {
 				.expectHeader();
 	}
 
-	//falha em remover uma musica de uma playlist
+	//failed to remove a song from a playlist
 	@Test
 	@Order(9)
 	public void givenADeleteOrder_WhenInsertAInvalidPlaylistIdAndAInvalidSongId_ThenItShouldReturnStatus404NotFound() {

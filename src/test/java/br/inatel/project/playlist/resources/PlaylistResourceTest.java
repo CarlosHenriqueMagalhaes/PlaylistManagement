@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-//@ActiveProfiles("test")
+//Integration Tests
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PlaylistResourceTest {
 
@@ -27,8 +26,7 @@ public class PlaylistResourceTest {
 		return obj;
 	}
 
-
-	// cria uma nova playlist valida
+	//create a new valid playlist
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created() {
@@ -45,7 +43,7 @@ public class PlaylistResourceTest {
 		assertEquals(nq.getPlaylistName(),"Ada's Playlist");
 	}
 
-	//tenta criar uma nova playlist com o nome null
+	//try to create a new playlist with the name null
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
@@ -61,7 +59,7 @@ public class PlaylistResourceTest {
 				.expectBody();
 	}
 
-	//Lista todas as playlists
+	//List all playlists
 	@Test
 	@Order(3)
 	public void givenAReadOrder_WhenReceivingAllThePlaylists_ThenItShouldReturnStatus200Ok() {
@@ -74,7 +72,7 @@ public class PlaylistResourceTest {
 				.expectStatus().isOk();
 	}
 
-	//Retorna Uma playlist com id valido
+	//Returns a playlist with a valid id
 	@Test
 	@Order(4)
 	public void givenAReadOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus200Ok() {
@@ -93,7 +91,7 @@ public class PlaylistResourceTest {
 		assertEquals(playlist.getId(), id);
 	}
 
-	//Altera o nome de uma playlist
+	//change the name of a playlist
 	@Test
 	@Order(5)
 	public void givenAPutOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus200Ok() {
@@ -111,7 +109,7 @@ public class PlaylistResourceTest {
 		assertEquals(nq.getPlaylistName(),"Test Playlist Order five");
 	}
 
-	//Erro ao Alterar o nome de uma playlist deixando o campo null
+	//Error when changing the name of a playlist leaving the field null
 	@Test
 	@Order(6)
 	public void givenAPutOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
@@ -127,7 +125,7 @@ public class PlaylistResourceTest {
 				.expectBody();
 	}
 
-	// Tenta mudar o nome de uma playlist que não existe
+	// Try to rename a playlist that doesn't exist
 	@Test
 	@Order(7)
 	public void givenAPutOrder_WhenInsertInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
@@ -143,7 +141,7 @@ public class PlaylistResourceTest {
 				.expectBody();
 	}
 
-	//Deleta uma playlist
+	//delete a playlist
 	@Test
 	@Order(8)
 	public void givenADeleteOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus204NoContent() {
@@ -157,12 +155,11 @@ public class PlaylistResourceTest {
 	}
 
 
-	//busca uma playlist pelo Id que não existe
+	//search for a playlist by id that does not exist
 	@Test
 	@Order(9)
 	public void givenAReadOrder_WhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
-		int id = 0;// se eu alterar para um ID que contenha Playlist cadastrada o teste não passa(prova
-		// que o método funciona)
+		int id = 0;// if I change it to an ID that contains a registered Playlist, the test does not pass (proves that the method works)
 		Playlist result = webTestClient
 				.get()
 				.uri("/playlists?id=" + id)
@@ -176,7 +173,7 @@ public class PlaylistResourceTest {
 		assertEquals(result, result);
 	}
 
-	//Tenta deletar uma playlist que não existe pelo seu id
+	//Tries to delete a playlist that doesn't exist by its id
 	@Test
 	@Order(10)
 	public void givenADeleteOrder_WWhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
