@@ -33,7 +33,7 @@ public class PlaylistService {
 	public Playlist find(Integer id) {
 		Optional<Playlist> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"ObjectNotFound! This Playlist Id:" + id + ", does not exist! " + "Type: " + Playlist.class.getName()));
+				"ObjectNotFound! This Playlist Id:" + id + ", does not exist!"));
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class PlaylistService {
 		find(id);
 		plSgRepo.deleteAllInBatch();
 		repo.deleteById(id);
-		return ("The playlist id: " + id + " is successfully deleted");
+		return ("The playlist id: " + id + " is successfully deleted");//rever
 	}
 //A linha : plSgRepo.deleteAllInBatch(); ensures that by the associative list I remove the songs from the playlist before
 // to delete it, so the songs are not deleted from the database, and only from the playlist

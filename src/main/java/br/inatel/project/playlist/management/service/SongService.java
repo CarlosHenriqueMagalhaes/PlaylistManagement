@@ -40,8 +40,6 @@ public class SongService {
 	@Autowired
 	private PlaylistRepository plRepo;
 
-
-
 	/**
 	 * find one song by id (GET)
 	 * @param id
@@ -50,7 +48,8 @@ public class SongService {
 	public Song find(Integer id) {
 		Optional<Song> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + id
-				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
+		+ ", does not exist or is not registered! "));
+		//+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
 	}
 
 	/**
@@ -61,20 +60,17 @@ public class SongService {
 		return repo.findAll();
 	}
 
-
-
-
 	public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
 		// search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
 		// make sure the music exists
 		songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
-				+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
+				+ ", does not exist or is not registered!"));
 		// search for Playlist by id:
 		Optional<Playlist> playlistOptional = plRepo.findById(playlistId);
 		//       make sure the music exists
 		playlistOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Playlist Id:" + playlistId
-				+ ", does not exist or is not registered! " + "Type: " + Playlist.class.getName()));
+				+ ", does not exist or is not registered!"));
 		// check if the relationship exists
 		Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
 
@@ -125,7 +121,7 @@ public class SongService {
 		try {
 			String artist = form.getArtist();
 			String track = form.getTrack();
-			return Mapper.convertRestToDto(adapterService.getRest(track, artist));
+			return Mapper.convertRestToDto(adapterService.getLastFm(track, artist));
 		} catch (Exception e) {
 			throw new NullObjectNotFoundException("The artist and track fields must exist and cannot be null.");
 		}

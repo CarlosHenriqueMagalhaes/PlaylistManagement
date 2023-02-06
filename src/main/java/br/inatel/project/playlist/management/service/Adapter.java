@@ -1,13 +1,13 @@
 package br.inatel.project.playlist.management.service;
 
-import br.inatel.project.playlist.management.rest.Rest;
+import br.inatel.project.playlist.management.rest.LastFm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.CacheEvict;
 
 
 
@@ -35,7 +35,7 @@ public class Adapter {
 	 * @return A Song innstace with all informations
 	 */
 	@Cacheable(value = "songsList")
-	public Rest getRest(String track, String artist) {
+	public LastFm getLastFm(String track, String artist) {
 		return WebClient.builder().baseUrl(url).build().get()
 				.uri(uriBuilder -> uriBuilder
 						.queryParam("api_key", key)
@@ -45,7 +45,7 @@ public class Adapter {
 						.build())
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
-				.bodyToMono(Rest.class)
+				.bodyToMono(LastFm.class)
 				.block();
 	}
 

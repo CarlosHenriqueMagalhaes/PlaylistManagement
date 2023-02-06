@@ -6,6 +6,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import br.inatel.project.playlist.management.domain.Playlist;
@@ -15,6 +19,11 @@ import br.inatel.project.playlist.management.domain.Playlist;
  * @author Carlos Magalhães
  * @since 1.0
  */
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PlaylistDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,31 +37,9 @@ public class PlaylistDTO implements Serializable {
 
 	// Constructors
 
-	public PlaylistDTO() {
-	}
-
 	public PlaylistDTO(Playlist obj) {
 		PlaylistId = obj.getId();
 		playlistName = obj.getPlaylistName();
-	}
-	
-	// Getters and setters
-
-
-	public Integer getPlaylistId() {
-		return PlaylistId;
-	}
-
-	public void setPlaylistId(Integer playlistId) {
-		this.PlaylistId = playlistId;
-	}
-
-	public String getPlaylistName() {
-		return playlistName;
-	}
-
-	public void setPlaylistName(String playlistName) {
-		this.playlistName = playlistName;
 	}
 
 }

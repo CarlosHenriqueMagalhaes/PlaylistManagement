@@ -35,8 +35,6 @@ public class SongResource {
 	@Autowired
 	private PlaylistService playlistService;
 
-	@Autowired
-	private Adapter adapter;
 
 	/**
 	 * Find a song by id
@@ -101,9 +99,4 @@ public class SongResource {
 		return ResponseEntity.created(null).body(trackDTO);
 	}
 
-	@DeleteMapping("/cache")
-	public ResponseEntity<?> deleteRecipeCache() {
-		adapter.deleteCache();
-		return ResponseEntity.noContent().build();
-	}
 }

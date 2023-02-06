@@ -8,6 +8,6 @@ import lombok.Data;
  * @since 1.0
  */
 @Data
-public class Rest {
+public class LastFm {
     private Track track;
 }
