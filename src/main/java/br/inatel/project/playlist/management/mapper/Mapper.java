@@ -1,7 +1,7 @@
 package br.inatel.project.playlist.management.mapper;
 
 import br.inatel.project.playlist.management.dto.TrackDTO;
-import br.inatel.project.playlist.management.rest.LastFm;
+import br.inatel.project.playlist.management.rest.FilterTrack;
 import br.inatel.project.playlist.management.rest.Tag;
 
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Mapper {
 
-    public static TrackDTO convertRestToDto(LastFm rest){
+    public static TrackDTO convertRestToDto(FilterTrack rest){
 
         return TrackDTO.builder()
                 .title(rest.getTrack().getName())

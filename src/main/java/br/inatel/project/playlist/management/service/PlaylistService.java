@@ -54,7 +54,7 @@ public class PlaylistService {
 	}
 
 	/**
-	 * Method PUT - Change a customer's Playlist name by ID
+	 * Method PATCH - Change a customer's Playlist name by ID
 	 * @param obj
 	 * @return Rename a PlaylistName
 	 */
@@ -70,7 +70,7 @@ public class PlaylistService {
 
 
 	/**
-	 * PUT helper method (allows changing Playlist name)
+	 * PATCH helper method (allows changing Playlist name)
 	 * @param newObj
 	 * @param obj
 	 */

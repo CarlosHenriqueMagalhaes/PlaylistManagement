@@ -18,8 +18,8 @@ public class ValidationError extends StandardError {
 
 	// Constructors
 
-	public ValidationError(Integer status, String msg, Long timeStamp) {
-		super(status, msg, timeStamp);
+	public ValidationError(Integer status, String msg) {
+		super(status, msg);
 	}
 
 	// Getters and Setters

@@ -12,17 +12,15 @@ public class StandardError implements Serializable {
 
 	private Integer status;
 	private String msg;
-	private Long timeStamp;
 
 	// constructors
 
 	public StandardError() {
 	}
 
-	public StandardError(Integer status, String msg, Long timeStamp) {
+	public StandardError(Integer status, String msg) {
 		this.status = status;
 		this.msg = msg;
-		this.timeStamp = timeStamp;
 	}
 
 	// Getters and setters
@@ -42,13 +40,4 @@ public class StandardError implements Serializable {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
-	public Long getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(Long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
 }

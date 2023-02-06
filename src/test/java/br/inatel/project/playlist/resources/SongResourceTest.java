@@ -65,11 +65,11 @@ public class SongResourceTest {
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidTrackAndAValidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus201Created() {
-		TrackForm ap = apiData();
+		TrackForm songAp = apiData();
 		Song song = webTestClient
 				.post()
 				.uri("/songs/findSong" )
-				.bodyValue(ap)
+				.bodyValue(songAp)
 				.exchange()
 				.expectStatus()
 				.isCreated()
@@ -77,19 +77,19 @@ public class SongResourceTest {
 				.returnResult()
 				.getResponseBody();
 
-		assertEquals(ap.getArtist(),"Metallica");
+		assertEquals(songAp.getArtist(),"Metallica");
 	}
 
 	//Failed to find a song in the external API
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
-		TrackForm ap = apiData();
-		ap.setTrack("null");
+		TrackForm songAp = apiData();
+		songAp.setTrack("null");
 		Song song = webTestClient
 				.post()
 				.uri("/songs/findSong" )
-				.bodyValue(ap)
+				.bodyValue(songAp)
 				.exchange()
 				.expectStatus()
 				.isNotFound()

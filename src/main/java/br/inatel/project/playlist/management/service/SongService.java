@@ -60,6 +60,11 @@ public class SongService {
 		return repo.findAll();
 	}
 
+	/**
+	 * Insert a song at Playlist
+	 * @param songId
+	 * @param playlistId
+	 */
 	public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
 		// search for music by id:
 		Optional<Song> songOptional = repo.findById(songId);
