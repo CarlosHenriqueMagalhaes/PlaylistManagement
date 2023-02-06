@@ -41,7 +41,7 @@ public class SongResource {
 	 * @param id
 	 * @return A song (endpoint)
 	 */
-	@GetMapping
+	@GetMapping ("/song")
 	public ResponseEntity<Song> find(@RequestParam Integer id) {
 		Song obj = songService.find(id);
 		return ResponseEntity.ok().body(obj);
@@ -51,7 +51,7 @@ public class SongResource {
 	 * find all Songs in my bank (GET)
 	 * @return all Songs in my bank (endpoint)
 	 */
-	@GetMapping("/listAll")
+	@GetMapping
 	public ResponseEntity<List<SongDTO>> findAll() {
 		List<Song> list = songService.findAllSongs();
 		List<SongDTO> listDTO = list.stream().map(SongDTO::new).collect(Collectors.toList());
