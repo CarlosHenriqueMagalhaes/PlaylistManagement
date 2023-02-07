@@ -37,28 +37,28 @@ public class SongResourceTest {
 	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public TrackForm apiData() {
-		TrackForm obj = new TrackForm();
-		obj.setArtist("Metallica");
-		obj.setTrack("One");
-		return obj;
+		TrackForm track = new TrackForm();
+		track.setArtist("Metallica");
+		track.setTrack("One");
+		return track;
 	}
 
 	public SongDTO songDTO() {
-		SongDTO obj = new SongDTO();
-		obj.setId(100);
-		obj.setMusic("The Great Gig in the Sky");
-		obj.setArtist("Pink Floyd");
-		obj.setKindOfMusic("Rock");
-		obj.setSongAlbum("The Dark Side of the Moon");
-		obj.setSongDuration("4430000");
-		return obj;
+		SongDTO songDTO = new SongDTO();
+		songDTO.setId(100);
+		songDTO.setMusic("The Great Gig in the Sky");
+		songDTO.setArtist("Pink Floyd");
+		songDTO.setKindOfMusic("Rock");
+		songDTO.setSongAlbum("The Dark Side of the Moon");
+		songDTO.setSongDuration("4430000");
+		return songDTO;
 	}
 
 	public PlaylistDTO playlistDTO() {
-		PlaylistDTO obj = new PlaylistDTO();
-		obj.setPlaylistId(null);
-		obj.setPlaylistName("Best Songs");
-		return obj;
+		PlaylistDTO playlistDTO = new PlaylistDTO();
+		playlistDTO.setPlaylistId(null);
+		playlistDTO.setPlaylistName("Best Songs");
+		return playlistDTO;
 	}
 
 //success finding a song in the external API
@@ -84,12 +84,12 @@ public class SongResourceTest {
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
-		TrackForm songAp = apiData();
-		songAp.setTrack("null");
+		TrackForm songApi = apiData();
+		songApi.setTrack("null");
 		Song song = webTestClient
 				.post()
 				.uri("/songs/findSong" )
-				.bodyValue(songAp)
+				.bodyValue(songApi)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
@@ -153,13 +153,13 @@ public class SongResourceTest {
 	@Test
 	@Order(6)
 	public void givenAPostOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus200Ok() {
-		SongDTO sg = songDTO();
-		sg.setId(1);
-		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(1);//leave an existing playlist set
+		SongDTO song = songDTO();
+		song.setId(1);
+		PlaylistDTO playlist = playlistDTO();
+		playlist.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
+				.uri("/songs/addSongAtPlaylist?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
 				.exchange()
 				.expectStatus()
 				.isOk()
@@ -170,14 +170,14 @@ public class SongResourceTest {
 	@Test
 	@Order(7)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistIdAndOrAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
-		SongDTO sg = songDTO();
-		sg.setId(0);
-		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(0);
+		SongDTO song = songDTO();
+		song.setId(0);
+		PlaylistDTO playlist = playlistDTO();
+		playlist.setPlaylistId(0);
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
-				.bodyValue(pl)
+				.uri("/songs/addSongAtPlaylist?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
+				.bodyValue(playlist)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
@@ -187,13 +187,13 @@ public class SongResourceTest {
 	@Test
 	@Order(8)
 	public void givenADeleteOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus204NoContent() {
-		SongDTO sg = songDTO();
-		sg.setId(1);
-		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(1);//leave an existing playlist set
+		SongDTO song = songDTO();
+		song.setId(1);
+		PlaylistDTO playlist = playlistDTO();
+		playlist.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.delete()
-				.uri("/songs/removeSong?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
+				.uri("/songs/removeSong?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
 				.exchange()
 				.expectStatus()
 				.isNoContent()
@@ -204,13 +204,13 @@ public class SongResourceTest {
 	@Test
 	@Order(9)
 	public void givenADeleteOrder_WhenInsertAInvalidPlaylistIdAndAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
-		SongDTO sg = songDTO();
-		sg.setId(0);
-		PlaylistDTO pl = playlistDTO();
-		pl.setPlaylistId(0);
+		SongDTO song = songDTO();
+		song.setId(0);
+		PlaylistDTO playlist = playlistDTO();
+		playlist.setPlaylistId(0);
 		webTestClient
 				.delete()
-				.uri("/songs/removeSong?playlistId=" + pl.getPlaylistId() +"&songId=" + sg.getId())
+				.uri("/songs/removeSong?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
 				.exchange()
 				.expectStatus()
 				.isNotFound()

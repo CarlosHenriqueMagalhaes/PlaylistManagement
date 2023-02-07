@@ -44,8 +44,8 @@ public class SongResource {
 	 */
 	@GetMapping ("/song")
 	public ResponseEntity<Song> find(@RequestParam Integer id) {
-		Song obj = songService.find(id);
-		return ResponseEntity.ok().body(obj);
+		Song song = songService.find(id);
+		return ResponseEntity.ok().body(song);
 	}
 
 	/**
@@ -69,8 +69,8 @@ public class SongResource {
 	public ResponseEntity<?> insert(@Valid @PathVariable  Integer songId,
 									@PathVariable Integer playlistId) {
 		songService.addSongToPlaylist(songId, playlistId);
-		Playlist pl = playlistService.find(playlistId);
-		return ResponseEntity.ok().body(pl);
+		Playlist playlist = playlistService.find(playlistId);
+		return ResponseEntity.ok().body(playlist);
 	}
 
 	/**

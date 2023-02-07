@@ -46,8 +46,8 @@ public class SongService {
 	 * @return one song by id
 	 */
 	public Song find(Integer id) {
-		Optional<Song> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + id
+		Optional<Song> song = repo.findById(id);
+		return song.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + id
 		+ ", does not exist or is not registered! "));
 		//+ ", does not exist or is not registered! " + "Type: " + Song.class.getName()));
 	}

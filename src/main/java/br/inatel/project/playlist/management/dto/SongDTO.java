@@ -34,13 +34,13 @@ public class SongDTO implements Serializable {
 
 	// Constructors
 
-	public SongDTO(Song obj) {
-		id = obj.getId();
-		music = obj.getMusic();
-		artist = obj.getArtist();
-		songDuration= obj.getSongDuration();
-		songAlbum= obj.getSongAlbum();
-		kindOfMusic = obj.getKindOfMusic();
+	public SongDTO(Song song) {
+		id = song.getId();
+		music = song.getMusic();
+		artist = song.getArtist();
+		songDuration= song.getSongDuration();
+		songAlbum= song.getSongAlbum();
+		kindOfMusic = song.getKindOfMusic();
 	}
 
 }

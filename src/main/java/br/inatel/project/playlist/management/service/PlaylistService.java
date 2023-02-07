@@ -31,8 +31,8 @@ public class PlaylistService {
 	 * @return A Playlist
 	 */
 	public Playlist find(Integer id) {
-		Optional<Playlist> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
+		Optional<Playlist> playlist = repo.findById(id);
+		return playlist.orElseThrow(() -> new ObjectNotFoundException(
 				"ObjectNotFound! This Playlist Id:" + id + ", does not exist!"));
 	}
 
@@ -46,45 +46,45 @@ public class PlaylistService {
 
 	/**
 	 * Insert a new Playlist (POST)
-	 * @param obj
+	 * @param playlist
 	 * @return Create a new Playlist
 	 */
-	public Playlist insert(Playlist obj) {
-			return repo.save(obj);
+	public Playlist insert(Playlist playlist) {
+			return repo.save(playlist);
 	}
 
 	/**
 	 * Method PATCH - Change a customer's Playlist name by ID
-	 * @param obj
+	 * @param playlist
 	 * @return Rename a PlaylistName
 	 */
-		public Playlist update(Playlist obj) {
+		public Playlist update(Playlist playlist) {
 			try {
-				Playlist newObj = find(obj.getId());
-				updateData(newObj, obj);
-				return repo.save(newObj);
+				Playlist newPlaylist = find(playlist.getId());
+				updateData(newPlaylist, playlist);
+				return repo.save(newPlaylist);
 			} catch (Exception e) {
-				throw new NullObjectNotFoundException("The playlist id:" + obj.getId() +" does not exist");
+				throw new NullObjectNotFoundException("The playlist id:" + playlist.getId() +" does not exist");
 			}
 		}
 
 
 	/**
 	 * PATCH helper method (allows changing Playlist name)
-	 * @param newObj
-	 * @param obj
+	 * @param newPlaylist
+	 * @param playlist
 	 */
-		private void updateData(Playlist newObj, Playlist obj) {
-				newObj.setPlaylistName(obj.getPlaylistName());
+		private void updateData(Playlist newPlaylist, Playlist playlist) {
+				newPlaylist.setPlaylistName(playlist.getPlaylistName());
 		}
 
 	/**
 	 * helper method that instantiates a playlist from a DTO (used in the POST method)
-	 * @param objDto
-	 * @return objDto
+	 * @param playlistDto
+	 * @return playlistDto
 	 */
-	public Playlist fromDTO(PlaylistDTO objDto) {
-		return new Playlist(objDto.getPlaylistId(), objDto.getPlaylistName());
+	public Playlist fromDTO(PlaylistDTO playlistDto) {
+		return new Playlist(playlistDto.getPlaylistId(), playlistDto.getPlaylistName());
 	}
 
 	/**

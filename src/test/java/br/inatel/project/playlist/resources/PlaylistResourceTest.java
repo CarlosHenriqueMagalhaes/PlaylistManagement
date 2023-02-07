@@ -20,39 +20,39 @@ public class PlaylistResourceTest {
 	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public PlaylistDTO createPlaylistDTO() {
-		PlaylistDTO obj = new PlaylistDTO();
-		obj.setPlaylistId(null);
-		obj.setPlaylistName("Ada's Playlist");
-		return obj;
+		PlaylistDTO playlistDTO = new PlaylistDTO();
+		playlistDTO.setPlaylistId(null);
+		playlistDTO.setPlaylistName("Ada's Playlist");
+		return playlistDTO;
 	}
 
 	//create a new valid playlist
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created() {
-		PlaylistDTO obj = createPlaylistDTO();
+		PlaylistDTO playlistDTO = createPlaylistDTO();
 		webTestClient
 				.post()
 				.uri("/playlists")
-				.bodyValue(obj)
+				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus()
 				.isCreated()
 				.expectBody();
 
-		assertEquals(obj.getPlaylistName(),"Ada's Playlist");
+		assertEquals(playlistDTO.getPlaylistName(),"Ada's Playlist");
 	}
 
 	//try to create a new playlist with the name null
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
-		PlaylistDTO obj = createPlaylistDTO();
-		obj.setPlaylistName(null);
+		PlaylistDTO playlistDTO = createPlaylistDTO();
+		playlistDTO.setPlaylistName(null);
 		webTestClient
 				.post()
 				.uri("/playlists")
-				.bodyValue(obj)
+				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus()
 				.isBadRequest()
@@ -95,31 +95,31 @@ public class PlaylistResourceTest {
 	@Test
 	@Order(5)
 	public void givenAPutOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus200Ok() {
-		PlaylistDTO obj = createPlaylistDTO();
-		obj.setPlaylistId(1);
-		obj.setPlaylistName("Test Playlist Order five");
+		PlaylistDTO playlistDTO = createPlaylistDTO();
+		playlistDTO.setPlaylistId(1);
+		playlistDTO.setPlaylistName("Test Playlist Order five");
 		webTestClient
 				.put()
 				.uri("/playlists")
-				.bodyValue(obj)
+				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus()
 				.isOk()
 				.expectBody();
-		assertEquals(obj.getPlaylistName(),"Test Playlist Order five");
+		assertEquals(playlistDTO.getPlaylistName(),"Test Playlist Order five");
 	}
 
 	//Error when changing the name of a playlist leaving the field null
 	@Test
 	@Order(6)
 	public void givenAPutOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
-		PlaylistDTO obj = createPlaylistDTO();
-		obj.setPlaylistId(1);
-		obj.setPlaylistName(null);
+		PlaylistDTO playlistDTO = createPlaylistDTO();
+		playlistDTO.setPlaylistId(1);
+		playlistDTO.setPlaylistName(null);
 		webTestClient
 				.put()
 				.uri("/playlists")
-				.bodyValue(obj)
+				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus().isBadRequest()
 				.expectBody();
@@ -129,13 +129,13 @@ public class PlaylistResourceTest {
 	@Test
 	@Order(7)
 	public void givenAPutOrder_WhenInsertInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
-		PlaylistDTO obj = createPlaylistDTO();
-		obj.setPlaylistId(0);
-		obj.setPlaylistName("Never Be");
+		PlaylistDTO playlistDTO = createPlaylistDTO();
+		playlistDTO.setPlaylistId(0);
+		playlistDTO.setPlaylistName("Never Be");
 		webTestClient
 				.put()
 				.uri("/playlists")
-				.bodyValue(obj)
+				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus().isNotFound()
 				.expectBody();

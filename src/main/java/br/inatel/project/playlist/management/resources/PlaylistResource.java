@@ -29,8 +29,8 @@ public class PlaylistResource {
 	 */
 	@GetMapping ("/playlist")
 	public ResponseEntity<Playlist> find(@RequestParam Integer id) {
-		Playlist obj = playlistService.find(id);
-		return ResponseEntity.ok().body(obj);
+		Playlist playlist = playlistService.find(id);
+		return ResponseEntity.ok().body(playlist);
 	}
 
 	/**
@@ -49,11 +49,11 @@ public class PlaylistResource {
 	 * @return a new Playlist (endpoint)
 	 */
 	@PostMapping
-	public ResponseEntity<Playlist> insert(@Valid @RequestBody PlaylistDTO objDto) {
-		Playlist obj = playlistService.fromDTO(objDto);
-		obj = playlistService.insert(obj);
+	public ResponseEntity<Playlist> insert(@Valid @RequestBody PlaylistDTO playlistDTO) {
+		Playlist playlist = playlistService.fromDTO(playlistDTO);
+		playlist = playlistService.insert(playlist);
 
-		return ResponseEntity.created(null).body(obj);
+		return ResponseEntity.created(null).body(playlist);
 	}
 
 	/**
@@ -61,10 +61,10 @@ public class PlaylistResource {
 	 * @return Change a customer's name of playlist (endpoint)
 	 */
 	@PatchMapping
-	public ResponseEntity<Playlist> update(@Valid @RequestBody PlaylistDTO objDto)throws Exception {
-		Playlist obj = playlistService.fromDTO(objDto);
-		obj = playlistService.update(obj);
-		return ResponseEntity.ok(obj);
+	public ResponseEntity<Playlist> update(@Valid @RequestBody PlaylistDTO playlistDTO)throws Exception {
+		Playlist playlist = playlistService.fromDTO(playlistDTO);
+		playlist = playlistService.update(playlist);
+		return ResponseEntity.ok(playlist);
 		}
 
 //	@PatchMapping("/{playlistId}")

@@ -29,8 +29,8 @@ public class PlaylistSongService {
 	 * @return relationship between Playlist and Song
 	 */
 	public PlaylistSong findByPlayIdAndSongId(Integer idPlaylist, Integer idSong) {
-		Optional<PlaylistSong> obj = repo.findByPlaylistIdAndSongId(idPlaylist, idSong);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("This Song does not exist in this Playlist"));
+		Optional<PlaylistSong> playlistSong = repo.findByPlaylistIdAndSongId(idPlaylist, idSong);
+		return playlistSong.orElseThrow(() -> new ObjectNotFoundException("This Song does not exist in this Playlist"));
 	}
 
 }
