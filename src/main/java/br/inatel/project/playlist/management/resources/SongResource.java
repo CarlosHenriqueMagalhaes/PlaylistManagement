@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.TrackDTO;
@@ -64,9 +65,9 @@ public class SongResource {
 	 * @param playlistId
 	 * @return add a song to a playlist (endpoint)
 	 */
-	@PostMapping("/addSongAtPlaylist")
-	public ResponseEntity<?> insert(@Valid @RequestParam Integer songId,
-									   @RequestParam Integer playlistId) {
+	@PostMapping("/song/{songId}/playlist/{playlistId}")
+	public ResponseEntity<?> insert(@Valid @PathVariable  Integer songId,
+									@PathVariable Integer playlistId) {
 		songService.addSongToPlaylist(songId, playlistId);
 		Playlist pl = playlistService.find(playlistId);
 		return ResponseEntity.ok().body(pl);
@@ -79,9 +80,9 @@ public class SongResource {
 	 * @return Remove a song in a playlist (endpoint)
 	 * @throws Exception
 	 */
-	@DeleteMapping("/removeSong")
-	public ResponseEntity<?> delete(@RequestParam("playlistId") Integer playlistId,
-									@RequestParam("songId") Integer songId) throws Exception {
+	@DeleteMapping("/song/{songId}/playlist/{playlistId}")
+	public ResponseEntity<?> delete(@PathVariable Integer playlistId,
+									@PathVariable Integer songId) throws Exception {
 		songService.removeSongToPlaylist(playlistId, songId);
 		return ResponseEntity.noContent().build();
 	}

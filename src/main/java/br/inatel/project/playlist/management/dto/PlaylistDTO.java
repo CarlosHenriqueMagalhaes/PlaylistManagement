@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class PlaylistDTO implements Serializable {
 	@NotNull(message = "filling in this field is mandatory")
 	@NotEmpty(message = "filling in this field is mandatory")
 	@Length(min = 2, max = 50, message = "The length of your playlist name must be between 2 and 50 characters")
+//	@JsonView({View.Patch.class})
 	private String playlistName;
 
 	// Constructors
