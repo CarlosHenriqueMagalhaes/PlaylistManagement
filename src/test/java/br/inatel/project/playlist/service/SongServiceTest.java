@@ -28,22 +28,15 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class SongServiceTest {
-
 	private Playlist playlist;
-
 	private Song song;
-
 	private PlaylistSong playlistSong;
-
 	@InjectMocks
 	private SongService service;
-
 	@Mock
 	private SongRepository repo;
-
 	@Mock
 	private PlaylistRepository playlistRepository;
-
 	@Mock
 	private PlaylistSongRepository plSgRepo;
 
@@ -69,7 +62,6 @@ public class SongServiceTest {
 				songId(1).
 				playlistId(1)
 				.build();
-
 	}
 
 	@Test
@@ -102,10 +94,8 @@ public class SongServiceTest {
 
 	@Test
 	public void givenInsertASongAtAPlaylist_WhenPostInvalidPlaylistIdAndOrAInvalidSongId_ShouldReturnPlaylistList() {
-//		when(plSgRepo.findByPlaylistIdAndSongId(2, 1)).thenReturn(Optional.of(playlistSong));
 		plSgRepo.findByPlaylistIdAndSongId(2, 1);
 		assertNotEquals(List.of(), playlistSong);
 	}
-
 }
 

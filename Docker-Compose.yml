@@ -26,8 +26,6 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     networks:
       - inatel
-    depends_on:
-      - mysql
 
 networks:
   inatel:

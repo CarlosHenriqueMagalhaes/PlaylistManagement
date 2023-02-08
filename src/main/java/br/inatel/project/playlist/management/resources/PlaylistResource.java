@@ -2,6 +2,7 @@ package br.inatel.project.playlist.management.resources;
 
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
+import br.inatel.project.playlist.management.dto.PlaylistManagerDTO;
 import br.inatel.project.playlist.management.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,6 @@ public class PlaylistResource {
 	public ResponseEntity<Playlist> insert(@Valid @RequestBody PlaylistDTO playlistDTO) {
 		Playlist playlist = playlistService.fromDTO(playlistDTO);
 		playlist = playlistService.insert(playlist);
-
 		return ResponseEntity.created(null).body(playlist);
 	}
 
@@ -60,23 +60,10 @@ public class PlaylistResource {
 	 * Method Patch - Change a customer's name of playlist
 	 * @return Change a customer's name of playlist (endpoint)
 	 */
-	@PatchMapping
-	public ResponseEntity<Playlist> update(@Valid @RequestBody PlaylistDTO playlistDTO)throws Exception {
-		Playlist playlist = playlistService.fromDTO(playlistDTO);
-		playlist = playlistService.update(playlist);
-		return ResponseEntity.ok(playlist);
-		}
-
-//	@PatchMapping("/{playlistId}")
-//	@JsonView(View.Patch.class)
-//	public ResponseEntity<?> update (@PathVariable Integer playlistId, @RequestBody String playlistName) throws Exception{
-//		PlaylistDTO playDTO = new PlaylistDTO();
-//		playDTO.setPlaylistId(playlistId);
-//		playDTO.setPlaylistName(playlistName);
-//		Playlist obj = playlistService.fromDTO(playDTO);
-//		obj = playlistService.update(obj);
-//		return ResponseEntity.ok(obj);
-//	}
+	@PatchMapping("playlist/{playlistId}")
+	public ResponseEntity<Playlist> update(@Valid @PathVariable Integer playlistId,@Valid @RequestBody PlaylistManagerDTO playlistDTO)throws Exception {
+		return ResponseEntity.ok(playlistService.update(playlistId, playlistDTO));
+	}
 
 	/**
 	 * Delete a playlist
@@ -88,5 +75,4 @@ public class PlaylistResource {
 		playlistService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
 }

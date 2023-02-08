@@ -18,5 +18,4 @@ import lombok.NoArgsConstructor;
 public class TrackForm {
 	private String artist;
 	private String track;
-
 }

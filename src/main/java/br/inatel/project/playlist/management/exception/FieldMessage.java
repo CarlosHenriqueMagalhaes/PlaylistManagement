@@ -13,17 +13,13 @@ import java.io.Serializable;
 public class FieldMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// these are the fields I want to display when giving the error...
-
 	private String fieldName;
 	private String message;
 
 	// Constructors
-
 	public FieldMessage() {
 		super();
 	}
-
 	public FieldMessage(String fieldName, String message) {
 		super();
 		this.fieldName = fieldName;
@@ -31,21 +27,16 @@ public class FieldMessage implements Serializable {
 	}
 
 	// Getters and setters
-
 	public String getFieldName() {
 		return fieldName;
 	}
-
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 }

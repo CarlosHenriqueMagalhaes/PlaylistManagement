@@ -12,5 +12,4 @@ import br.inatel.project.playlist.management.domain.Playlist;
  */
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
-
 }

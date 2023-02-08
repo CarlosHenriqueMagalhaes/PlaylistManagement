@@ -2,6 +2,7 @@ package br.inatel.project.playlist.management.service;
 
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
+import br.inatel.project.playlist.management.dto.PlaylistManagerDTO;
 import br.inatel.project.playlist.management.exception.NullObjectNotFoundException;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.repository.PlaylistRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Service class. Project logic implemented here.
  *
@@ -19,7 +21,6 @@ import java.util.Optional;
  */
 @Service
 public class PlaylistService {
-
 	@Autowired
 	private PlaylistRepository repo;
 	@Autowired
@@ -55,27 +56,21 @@ public class PlaylistService {
 
 	/**
 	 * Method PATCH - Change a customer's Playlist name by ID
-	 * @param playlist
+	 * @param playlistId
 	 * @return Rename a PlaylistName
 	 */
-		public Playlist update(Playlist playlist) {
+		public Playlist update(Integer playlistId, PlaylistManagerDTO playlistDTO) {
+			Playlist playlist = null;
 			try {
-				Playlist newPlaylist = find(playlist.getId());
-				updateData(newPlaylist, playlist);
-				return repo.save(newPlaylist);
+				playlist = find(playlistId);
+				if(playlist != null){
+					playlist.setPlaylistName(playlistDTO.getPlaylistName());
+					return repo.save(playlist);
+				}
 			} catch (Exception e) {
-				throw new NullObjectNotFoundException("The playlist id:" + playlist.getId() +" does not exist");
+				throw new NullObjectNotFoundException("The playlist id:" + playlistId +" does not exist");
 			}
-		}
-
-
-	/**
-	 * PATCH helper method (allows changing Playlist name)
-	 * @param newPlaylist
-	 * @param playlist
-	 */
-		private void updateData(Playlist newPlaylist, Playlist playlist) {
-				newPlaylist.setPlaylistName(playlist.getPlaylistName());
+			return playlist;
 		}
 
 	/**
@@ -96,7 +91,7 @@ public class PlaylistService {
 		find(id);
 		plSgRepo.deleteAllInBatch();
 		repo.deleteById(id);
-		return ("The playlist id: " + id + " is successfully deleted");//rever
+		return ("The playlist id: " + id + " is successfully deleted");
 	}
 //A linha : plSgRepo.deleteAllInBatch(); ensures that by the associative list I remove the songs from the playlist before
 // to delete it, so the songs are not deleted from the database, and only from the playlist
@@ -109,5 +104,4 @@ public class PlaylistService {
 	public Playlist saveAndFlush(Playlist playInsert) {
 		return repo.saveAndFlush(playInsert);
 	}
-
 }

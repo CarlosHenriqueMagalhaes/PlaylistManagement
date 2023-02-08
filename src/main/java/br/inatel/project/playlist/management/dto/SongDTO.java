@@ -33,7 +33,6 @@ public class SongDTO implements Serializable {
 	private String songDuration;
 
 	// Constructors
-
 	public SongDTO(Song song) {
 		id = song.getId();
 		music = song.getMusic();
@@ -42,5 +41,4 @@ public class SongDTO implements Serializable {
 		songAlbum= song.getSongAlbum();
 		kindOfMusic = song.getKindOfMusic();
 	}
-
 }

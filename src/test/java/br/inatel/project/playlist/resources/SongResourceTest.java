@@ -29,10 +29,8 @@ import java.util.List;
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
-
 	@Autowired
 	private SongRepository repo;
-
 	@Autowired
 	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
@@ -183,6 +181,7 @@ public class SongResourceTest {
 				.isNotFound()
 				.expectBody();
 	}
+
 	//success in removing a song from a playlist
 	@Test
 	@Order(8)

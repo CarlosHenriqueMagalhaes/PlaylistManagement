@@ -17,16 +17,15 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
 /**
  * Service class. Project logic implemented here.
  *
  * @author Carlos Magalhães
  * @since 1.0
  */
-
 @Service
 public class SongService {
-
 	@Autowired
 	private SongRepository repo;
 	@Autowired
@@ -78,7 +77,6 @@ public class SongService {
 				+ ", does not exist or is not registered!"));
 		// check if the relationship exists
 		Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
-
 		if (verif.isEmpty()){
 			Song song = songOptional.get();
 			Playlist playlist = playlistOptional.get();
@@ -89,7 +87,6 @@ public class SongService {
 				}
 		}
 
-
 	/**
 	 * Remove a song in a playlist
 	 * @param playlistId
@@ -97,7 +94,6 @@ public class SongService {
 	 * @return playlist without the song that was removed
 	 * @throws Exception
 	 */
-
 	public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
 		try {
 			// Call playlistSongService
@@ -106,12 +102,9 @@ public class SongService {
 			Song song = find(songId);
 			playlist.getSongs().remove(song);
 			song.getPlaylists().remove(playlist);
-
 			playlist = playService.saveAndFlush(playlist);
 			song = repo.saveAndFlush(song);
-
 			return ("The song id: " + songId + " has been successfully removed from the playlist id: " + playlistId);
-
 		} catch (Exception e) {
 			throw new NullObjectNotFoundException("This song is not in this playlist or this playlist does not exist");
 		}
@@ -153,5 +146,4 @@ public class SongService {
 			saveSong(trackDTO);
 		}
 	}
-
 }

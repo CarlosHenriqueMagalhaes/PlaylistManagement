@@ -12,9 +12,7 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 public class Mapper {
-
     public static TrackDTO convertRestToDto(FilterTrack track){
-
         return TrackDTO.builder()
                 .title(track.getTrack().getName())
                 .artist(track.getTrack().getAlbum().getArtist())

@@ -37,11 +37,9 @@ public class Playlist implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-
 	@NotEmpty(message = "filling in this field is mandatory")
 	@Column(name = "playlistName") //(unique = true) 
 	private String playlistName;
-
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
 

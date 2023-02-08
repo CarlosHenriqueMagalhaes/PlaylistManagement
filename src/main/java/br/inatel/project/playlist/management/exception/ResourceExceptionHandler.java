@@ -2,6 +2,7 @@ package br.inatel.project.playlist.management.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,6 +55,12 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(NullObjectNotFoundException.class)
 	public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
 		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+
+	@ExceptionHandler(CommunicationsException.class)
+	public ResponseEntity<StandardError> communicationException(CommunicationsException e, HttpServletRequest request){
+		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), "Communications link failure");
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 }

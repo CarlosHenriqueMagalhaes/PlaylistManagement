@@ -34,12 +34,8 @@ public class PlaylistSong implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-
 	@Column(name = "song_id")
 	private Integer songId;
-
 	@Column(name = "playlist_id")
 	private Integer playlistId;
-
-
 }

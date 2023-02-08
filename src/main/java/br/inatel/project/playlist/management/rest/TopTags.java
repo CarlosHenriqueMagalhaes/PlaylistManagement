@@ -11,9 +11,5 @@ import java.util.List;
  */
 @Data
 public class TopTags {
-
     private List<Tag> tag;
-
-
-
 }

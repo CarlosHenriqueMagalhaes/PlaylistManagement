@@ -8,15 +8,12 @@ import lombok.Data;
  * @author Carlos Magalhães
  * @since 1.0
  */
-
 @Data
 public class Track {
-
 	private String name;
 	private String mbid;
 	private String duration;
 	private Album album;
 	@JsonProperty("toptags")
 	private TopTags topTags;
-
 }

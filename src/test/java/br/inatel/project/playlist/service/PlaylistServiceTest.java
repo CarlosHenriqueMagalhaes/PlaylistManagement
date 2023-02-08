@@ -24,20 +24,15 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class PlaylistServiceTest {
-
 	private Playlist playlist;
-	
 	@InjectMocks
 	private PlaylistService service;
-	
 	@Mock
 	private PlaylistRepository repo;
-
 	@Mock
 	private PlaylistSongRepository plSgRepo;
 
 	List<Playlist> plList = new ArrayList<>();
-
 	@Before
 	public void init() {
 		playlist = Playlist.builder()
@@ -105,6 +100,7 @@ public class PlaylistServiceTest {
 		playlist.setPlaylistName(null);
 		assertNotEquals(playlist.getPlaylistName(),"The Best");
 	}
+
 	// Failed to rename a playlist when reporting a playlist that does not exist
 	@Test
 	public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistId_ShouldReturnAPlaylist(){

@@ -12,7 +12,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TrackDTO {
-
     private String title;
     private String artist;
     private String duration;

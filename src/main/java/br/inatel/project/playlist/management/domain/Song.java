@@ -39,7 +39,6 @@ public class Song implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-
 	@Column(name = "music")
 	private String music;
 	@Column(name = "artist")
@@ -50,13 +49,11 @@ public class Song implements Serializable {
 	private String songAlbum;
 	@Column(name = "kindOfMusic")
 	private String kindOfMusic;
-
 	@ManyToMany
 	@JoinTable(name = "Song_Playlist", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists = new ArrayList<>();
 
 	// Constructors
-
 	public Song(Integer id, String music,String artist,String songDuration, String songAlbum, String kindOfMusic) {
 		this.id = id;
 		this.music = music;

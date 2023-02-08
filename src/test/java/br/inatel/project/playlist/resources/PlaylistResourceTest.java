@@ -15,7 +15,6 @@ import static org.junit.Assert.assertNotNull;
 //Integration Tests
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PlaylistResourceTest {
-
 	@Autowired
 	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 

@@ -9,9 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
-
-
 /**
  * This class consumes the external API.
  *
@@ -21,10 +18,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @Service
 public class Adapter {
-
 	@Value("${API-Key}")
 	private String key;
-
 	@Value("${API-Url}")
 	private String url;
 
@@ -53,5 +48,4 @@ public class Adapter {
 	public void deleteCache(){
 		log.info("Cache cleared");
 	}
-
 }

@@ -29,13 +29,10 @@ import br.inatel.project.playlist.management.service.SongService;
 @RestController
 @RequestMapping("/songs")
 public class SongResource {
-
 	@Autowired
 	private SongService songService;
-
 	@Autowired
 	private PlaylistService playlistService;
-
 
 	/**
 	 * Find a song by id
@@ -99,5 +96,4 @@ public class SongResource {
 		songService.addSongToBase(trackDTO);
 		return ResponseEntity.created(null).body(trackDTO);
 	}
-
 }
