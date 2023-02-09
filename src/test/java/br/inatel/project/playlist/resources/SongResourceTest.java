@@ -1,9 +1,5 @@
 package br.inatel.project.playlist.resources;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.repository.SongRepository;
@@ -25,6 +21,9 @@ import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
+
+import static org.junit.Assert.*;
+
 //Integration Tests
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -74,7 +73,6 @@ public class SongResourceTest {
 				.expectBody(Song.class)
 				.returnResult()
 				.getResponseBody();
-
 		assertEquals(songAp.getArtist(),"Metallica");
 	}
 
@@ -94,6 +92,7 @@ public class SongResourceTest {
 				.expectBody(Song.class)
 				.returnResult()
 				.getResponseBody();
+		assertEquals(songApi.getTrack(),"null");
 	}
 
 	//success listing all songs
@@ -102,7 +101,7 @@ public class SongResourceTest {
 	public void givenAReadOrder_WhenReceivingAllTheSongs_ThenItShouldReturnStatus200Ok() {
 		webTestClient
 				.get()
-				.uri("/songs/listAll")
+				.uri("/songs")
 				.exchange()
 				.expectHeader()
 				.contentType(MediaType.APPLICATION_JSON).expectStatus().isOk();
@@ -113,17 +112,15 @@ public class SongResourceTest {
 	@Order(4)
 	public void givenAReadOrder_WhenInsertAValidSongId_ThenItShouldReturnStatus200Ok() {
 		Integer id = 1;
-
 		Song song = webTestClient
 				.get()
-				.uri("/songs?id=" + id)
+				.uri("/songs/song?id=" + id)
 				.exchange()
 				.expectStatus()
 				.isOk()
 				.expectBody(Song.class)
 				.returnResult()
 				.getResponseBody();
-
 		assertNotNull(song);
 		assertEquals(song.getId(), id);
 	}
@@ -133,17 +130,15 @@ public class SongResourceTest {
 	@Order(5)
 	public void givenAReadOrder_WhenInsertAInvalidId_ThenItShouldReturnStatus404NotFound() {
 		int id = 0;// if I change it to an ID that contains Song registered, the test does not pass (proves that the method works)
-
 		Song result = webTestClient
 				.get()
-				.uri("/songs?id=" + id)
+				.uri("/songs/song?id=" + id)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
 				.expectBody(Song.class)
 				.returnResult()
 				.getResponseBody();
-
 		assertEquals(result, result);
 	}
 
@@ -157,11 +152,12 @@ public class SongResourceTest {
 		playlist.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
+				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.exchange()
 				.expectStatus()
 				.isOk()
 				.expectBody();
+		assertEquals(song.getArtist(),"Pink Floyd" );
 	}
 
 	//Failed to add a song to a playlist
@@ -174,12 +170,13 @@ public class SongResourceTest {
 		playlist.setPlaylistId(0);
 		webTestClient
 				.post()
-				.uri("/songs/addSongAtPlaylist?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
+				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.bodyValue(playlist)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
 				.expectBody();
+		assertNotEquals(song.getArtist(),"Iron Maiden" );
 	}
 
 	//success in removing a song from a playlist
@@ -192,11 +189,12 @@ public class SongResourceTest {
 		playlist.setPlaylistId(1);//leave an existing playlist set
 		webTestClient
 				.delete()
-				.uri("/songs/removeSong?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
+				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.exchange()
 				.expectStatus()
 				.isNoContent()
 				.expectHeader();
+		assertEquals(song.getArtist(),"Pink Floyd" );
 	}
 
 	//failed to remove a song from a playlist
@@ -209,10 +207,11 @@ public class SongResourceTest {
 		playlist.setPlaylistId(0);
 		webTestClient
 				.delete()
-				.uri("/songs/removeSong?playlistId=" + playlist.getPlaylistId() +"&songId=" + song.getId())
+				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.exchange()
 				.expectStatus()
 				.isNotFound()
 				.expectHeader();
+		assertNotEquals(song.getArtist(),"Iron Maiden" );
 	}
 }

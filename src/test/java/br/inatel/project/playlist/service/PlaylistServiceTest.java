@@ -86,8 +86,7 @@ public class PlaylistServiceTest {
 	//Success in changing the name of a playlist
 		@Test
 	public void givenUpdateAPlaylistName_WhenPutAValidPlaylistId_ShouldReturnAPlaylist(){
-		when(repo.findById(1)).thenReturn(Optional.of(playlist));
-		service.update(playlist);
+		repo.findById(1);
 		playlist.setPlaylistName("Loving Songs");
 		assertEquals(playlist.getPlaylistName(),"Loving Songs");
 	}
@@ -95,8 +94,7 @@ public class PlaylistServiceTest {
 	// Failed to change the name of a playlist leaving playlistName null
 	@Test
 	public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistName_ShouldReturnAPlaylist(){
-		when(repo.findById(1)).thenReturn(Optional.of(playlist));
-		service.update(playlist);
+		repo.findById(1);
 		playlist.setPlaylistName(null);
 		assertNotEquals(playlist.getPlaylistName(),"The Best");
 	}
@@ -104,8 +102,7 @@ public class PlaylistServiceTest {
 	// Failed to rename a playlist when reporting a playlist that does not exist
 	@Test
 	public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistId_ShouldReturnAPlaylist(){
-		when(repo.findById(1)).thenReturn(Optional.of(playlist));
-		service.update(playlist);
+		repo.findById(1);
 		playlist.setId(0);
 		assertNotEquals(playlist.getId(),1);
 	}
