@@ -65,7 +65,7 @@ public class SongResourceTest {
 		TrackForm songAp = apiData();
 		Song song = webTestClient
 				.post()
-				.uri("/songs/findSong" )
+				.uri("/songs/newSong" )
 				.bodyValue(songAp)
 				.exchange()
 				.expectStatus()
@@ -84,7 +84,7 @@ public class SongResourceTest {
 		songApi.setTrack("null");
 		Song song = webTestClient
 				.post()
-				.uri("/songs/findSong" )
+				.uri("/songs/newSong" )
 				.bodyValue(songApi)
 				.exchange()
 				.expectStatus()

@@ -90,7 +90,7 @@ public class SongResource {
 	 * @return A Playlist
 	 * @throws Exception
 	 */
-	@PostMapping("/findSong")
+	@PostMapping("/newSong")
 	public ResponseEntity<?> getTrack (@RequestBody TrackForm form)throws Exception{
 		TrackDTO trackDTO =  songService.getTrack(form);
 		songService.addSongToBase(trackDTO);
