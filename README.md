@@ -1,4 +1,4 @@
-# PlaylistManagement
+# 🎧PlaylistManagement🎧
 
 In PlaylistManagement the user can create playlists searching for their music, through the name of the song and the artist.
 
@@ -123,22 +123,23 @@ body:
 }
 ```
 - #### Find a Playlist by ID
-GET ``` http://localhost:8070/playlists?id= ```
+GET ``` http://localhost:8070/playlists?id={id} ```
 
 Requires Query Params:  id
 
 - #### List All Playlists
-GET ``` http://localhost:8070/playlists/listAll ```
+GET ``` http://localhost:8070/playlists ```
 
 - #### Change a PlaylistName
-PUT  ``` http://localhost:8070/playlists ```
+PATCH  ``` http://localhost:8070/playlists/playlist/{id} ```
+
+insert ID on URL
 
 body:
 ```
 {
 
-  "playlistId": 1,
-  "playlistName": "Cool Songs"
+  "playlistName": "70's Songs"
   
 }
 ```
@@ -148,7 +149,7 @@ DELETE ``` http://localhost:8070/playlists/{id} ```
 insert ID on URL
 
 - #### Find A Song in API External and persist in my database
-POST ``` http://localhost:8070/songs/findSong ```
+POST ``` http://localhost:8070/songs/newSong ```
 
 body:
 ```
@@ -160,15 +161,15 @@ body:
 }
 ```
 - #### List All Songs
-GET ``` http://localhost:8070/songs/listAll ```
+GET ``` http://localhost:8070/songs ```
 
 - #### Find a Song by id
-GET ``` http://localhost:8070/songs?id= ```
+GET ``` http://localhost:8070/songs?id={id} ```
 
 Requires Query Params:  id
 
 - #### Insert a Song at a playlist
-POST ``` http://localhost:8070/songs/addSongAtPlaylist?playlistId=_&songId=_  ```
+POST ``` http://localhost:8070/songs/song/{songId}/playlist/{playlistId} ```
 
 Requires Query Params:
 
@@ -177,7 +178,7 @@ playlistId
 songId
 
 - #### Remove a Song at a playlist
-POST ``` http://localhost:8070/songs/removeSong?playlistId=_&songId=_ ```
+DELETE ``` http://localhost:8070/songs/song/{songId}/playlist/{playlistId} ```
 
 Requires Query Params:
 
@@ -187,7 +188,7 @@ songId
 
 - #### Delete Cach:
 
-DELETE ``` http://localhost:8070/songs/cache ```
+DELETE ``` http://localhost:8070/cache ```
 
 -----------------------------------------------------------------------------
 ### 🎶 Tests:
