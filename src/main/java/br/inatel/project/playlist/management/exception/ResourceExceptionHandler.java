@@ -60,7 +60,7 @@ public class ResourceExceptionHandler {
 
 	@ExceptionHandler(CommunicationsException.class)
 	public ResponseEntity<StandardError> communicationException(CommunicationsException e, HttpServletRequest request){
-		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), "Communications link failure");
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+		StandardError err = new StandardError(HttpStatus.SERVICE_UNAVAILABLE.value(), "Communications link failure, Unable to acquire JDBC Connection");
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(err);
 	}
 }

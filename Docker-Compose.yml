@@ -10,6 +10,11 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=bootdb
+    healthcheck:
+      test: "/usr/bin/mysql --user --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
     networks:
       - inatel
 
@@ -24,6 +29,9 @@ services:
       - API_URL=http://ws.audioscrobbler.com/2.0/?method=track.getInfo
       - API_KEY=3b761fedd45ea9749401d7f2edbdae44
       - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - inatel
 
