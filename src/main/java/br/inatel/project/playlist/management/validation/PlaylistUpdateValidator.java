@@ -17,7 +17,6 @@ import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.exception.FieldMessage;
 import br.inatel.project.playlist.management.repository.PlaylistRepository;
 
-
 /**
  * Annotation Validator Class:
  *
@@ -25,13 +24,10 @@ import br.inatel.project.playlist.management.repository.PlaylistRepository;
  * @since 1.0
  */
 public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpdate, PlaylistDTO> {
-
 	@Autowired
 	private HttpServletRequest request;
-
 	@Autowired
 	private PlaylistRepository repo;
-
 	@Override
 	public void initialize(PlaylistUpdate ann) {
 	}
@@ -45,7 +41,6 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
 	 */
 	@Override
 	public boolean isValid(PlaylistDTO objDto, ConstraintValidatorContext context) {
-		
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request
 				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
@@ -60,13 +55,11 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
 		}
 
 		// class method
-
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
 		return list.isEmpty();
-
 	}
 }

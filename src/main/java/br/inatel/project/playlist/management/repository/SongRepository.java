@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SongRepository extends JpaRepository<Song, Integer> {
-//    select * from song where song.music = :music and song.artist = :artist;
+    /**
+     *select * from song where song.music = :music and song.artist = :artist;
+     */
     Song findByMusicAndArtist (String music, String artist);
 }

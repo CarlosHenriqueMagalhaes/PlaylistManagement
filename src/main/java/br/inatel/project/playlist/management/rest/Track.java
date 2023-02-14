@@ -2,6 +2,7 @@ package br.inatel.project.playlist.management.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
 /**
  * Class with the information provided by the external API.
  *

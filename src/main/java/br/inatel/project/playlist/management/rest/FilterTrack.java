@@ -1,6 +1,7 @@
 package br.inatel.project.playlist.management.rest;
 
 import lombok.Data;
+
 /**
  * Class with the information provided by the external API.
  *

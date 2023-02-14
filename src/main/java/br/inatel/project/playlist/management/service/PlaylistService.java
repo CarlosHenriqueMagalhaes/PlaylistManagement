@@ -93,8 +93,9 @@ public class PlaylistService {
 		repo.deleteById(id);
 		return ("The playlist id: " + id + " is successfully deleted");
 	}
-//A linha : plSgRepo.deleteAllInBatch(); ensures that by the associative list I remove the songs from the playlist before
-// to delete it, so the songs are not deleted from the database, and only from the playlist
+	/** ABOUT the line : plSgRepo.deleteAllInBatch(); ensures that by the associative list I remove the songs from the playlist before
+	* to delete it, so the songs are not deleted from the database, and only from the playlist
+	*/
 
 	/**
 	 * saveAndFlush

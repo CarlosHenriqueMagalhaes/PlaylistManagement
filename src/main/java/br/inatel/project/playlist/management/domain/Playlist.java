@@ -32,24 +32,27 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Playlist implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 	@NotEmpty(message = "filling in this field is mandatory")
-	@Column(name = "playlistName") //(unique = true) 
+	@Column(name = "playlistName")
 	private String playlistName;
 	@ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
 	private List<Song> songs = new ArrayList<>();
 
-	// Constructors
+	/**
+	 *Constructors
+	 */
 	public Playlist(Integer id, String playlistName) {
 		this.id = id;
 		this.playlistName = playlistName;
 	}
 
-	// create a playlist through a DTO object
+	/**
+	*create a playlist through a DTO object
+ 	*/
 	public Playlist(PlaylistDTO playlistDTO) {
 		this.playlistName = playlistDTO.getPlaylistName();
 	}

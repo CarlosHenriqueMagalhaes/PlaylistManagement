@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SongDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Valid
 	private Integer id;
 	private String music;
@@ -32,7 +31,9 @@ public class SongDTO implements Serializable {
 	private String songAlbum;
 	private String songDuration;
 
-	// Constructors
+	/**
+	 *Constructors
+	 */
 	public SongDTO(Song song) {
 		id = song.getId();
 		music = song.getMusic();

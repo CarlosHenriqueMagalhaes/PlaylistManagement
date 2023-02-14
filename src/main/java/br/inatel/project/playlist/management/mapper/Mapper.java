@@ -5,6 +5,7 @@ import br.inatel.project.playlist.management.rest.FilterTrack;
 import br.inatel.project.playlist.management.rest.Tag;
 
 import java.util.stream.Collectors;
+
 /**
  * This class maps Entity to Dto
  *

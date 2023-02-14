@@ -29,7 +29,6 @@ import javax.persistence.Table;
 @Table(name = "Song_Playlist")
 public class PlaylistSong implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

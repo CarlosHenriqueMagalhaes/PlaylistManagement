@@ -18,7 +18,6 @@ import java.util.List;
  */
 @SpringBootApplication
 public class PlaylistManagerApplication implements CommandLineRunner {
-
 	@Autowired
 	private SongRepository songRepository;
 	@Autowired

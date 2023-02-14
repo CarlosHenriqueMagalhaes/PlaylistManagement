@@ -30,8 +30,7 @@ import static org.junit.Assert.*;
 public class SongResourceTest {
 	@Autowired
 	private SongRepository repo;
-	@Autowired
-	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
+	private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public TrackForm apiData() {
 		TrackForm track = new TrackForm();

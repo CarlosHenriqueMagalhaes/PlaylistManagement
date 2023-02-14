@@ -4,18 +4,18 @@ import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
 //Integration Tests
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class PlaylistResourceTest {
-	@Autowired
-	private WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
+	private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public PlaylistDTO createPlaylistDTO() {
 		PlaylistDTO playlistDTO = new PlaylistDTO();
@@ -175,7 +175,7 @@ public class PlaylistResourceTest {
 	//Tries to delete a playlist that doesn't exist by its id
 	@Test
 	@Order(10)
-	public void givenADeleteOrder_WWhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
+	public void givenADeleteOrder_WhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
 		int id = 0;
 		webTestClient
 				.delete()

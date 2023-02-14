@@ -1,41 +1,43 @@
 
 This information is also present in Swagger
 link: http://localhost:8070/swagger-ui.html
+(The application must be running)
 ---------------------------------------------------------------------------
-See EndPoints and examples in PostMan:
+See EndPoints, Use in PostMan:
 ---------------------------------------------------------------------------
 Create a new Playlist:
 POST  http://localhost:8070/playlists
 
-body: 
+body:
 {
-    "playlistName":  "New Playlist"  
+    "playlistName":  "New Playlist"
 }
 ---------------------------------------------------------------------------
 Find a Playlist by id
-GET http://localhost:8070/playlists?id=1
+GET http://localhost:8070/playlists?id={id}
 
 Query Params  id
 ---------------------------------------------------------------------------
 List All Playlists
-GET http://localhost:8070/playlists/listAll
+GET http://localhost:8070/playlists
 ---------------------------------------------------------------------------
 Change a PlaylistName
-PUT http://localhost:8070/playlists
+PATCH http://localhost:8070/playlists/playlist/{id}
+
+Query Params  id
 
 body:
 {
-  "playlistId": 1,
   "playlistName": "Top five"
 }
 ---------------------------------------------------------------------------
 Delete a Playlist
 DELETE http://localhost:8070/playlists/{id}
 
-pass id in URL
+Query Params  id
 ---------------------------------------------------------------------------
 Find A Song in API External and persist in my database
-POST http://localhost:8070/songs/findSong
+POST http://localhost:8070/songs/newSong
 
 body:
 {
@@ -44,22 +46,22 @@ body:
 }
 ---------------------------------------------------------------------------
 List All Songs
-GET http://localhost:8070/songs/listAll
+GET http://localhost:8070/songs
 ---------------------------------------------------------------------------
 Find a Song by id
-GET http://localhost:8070/songs?id=1
+GET http://localhost:8070/songs?id={id}}
 
 Query Params  id
 ---------------------------------------------------------------------------
 Add a Song at a playlist
-POST http://localhost:8070/songs/addSongAtPlaylist?playlistId=1&songId=2
+POST http://localhost:8070/songs/song/{songId}/playlist/{playlistId}
 
 Query Params
 playlistId
 songId
 ---------------------------------------------------------------------------
 Remove a Song at a playlist
-POST http://localhost:8070/songs/removeSong?playlistId=1&songId=2
+DELETE http://localhost:8070/songs/song/{songId}/playlist/{playlistId}
 
 Query Params
 playlistId
@@ -67,4 +69,4 @@ songId
 ---------------------------------------------------------------------------
 Delete Cach:
 
-http://localhost:8070/songs/cache
+http://localhost:8070/cache

@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -53,7 +52,9 @@ public class Song implements Serializable {
 	@JoinTable(name = "Song_Playlist", joinColumns = @JoinColumn(name = "song_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"))
 	private List<Playlist> playlists = new ArrayList<>();
 
-	// Constructors
+	/**
+	 *Constructors
+	 */
 	public Song(Integer id, String music,String artist,String songDuration, String songAlbum, String kindOfMusic) {
 		this.id = id;
 		this.music = music;
@@ -62,7 +63,6 @@ public class Song implements Serializable {
 		this.songAlbum = songAlbum;
 		this.kindOfMusic = kindOfMusic;
 	}
-
 	public Song(TrackDTO trackDTO) {
 		this.id = null;
 		this.music = trackDTO.getTitle();
@@ -71,7 +71,10 @@ public class Song implements Serializable {
 		this.songAlbum =trackDTO.getAlbum();
 		this.kindOfMusic = trackDTO.getGenre();
 	}
-//Getters and setters
+
+	/**
+	 *Getters and setters
+	 */
 	@JsonIgnore
 	public List<Playlist> getPlaylists() {
 		return playlists;

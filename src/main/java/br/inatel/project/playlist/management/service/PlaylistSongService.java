@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.inatel.project.playlist.management.domain.PlaylistSong;
 import br.inatel.project.playlist.management.exception.ObjectNotFoundException;
 import br.inatel.project.playlist.management.repository.PlaylistSongRepository;
+
 /**
  * Service class. Project logic implemented here.
  *

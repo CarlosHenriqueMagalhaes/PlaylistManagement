@@ -18,21 +18,20 @@ import java.io.Serializable;
  * @author Carlos Magalhães
  * @since 1.0
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class PlaylistManagerDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@NotNull(message = "filling in this field is mandatory")
 	@NotEmpty(message = "filling in this field is mandatory")
 	@Length(min = 2, max = 50, message = "The length of your playlist name must be between 2 and 50 characters")
-	//	@JsonView({View.Patch.class})
 	private String playlistName;
 
-	// Constructors
+	/**
+	 *Constructors
+	 */
 	public PlaylistManagerDTO(Playlist playlist) {
 		playlistName = playlist.getPlaylistName();
 	}
