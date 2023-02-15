@@ -24,7 +24,6 @@ public class PlaylistResourceTest {
 		return playlistDTO;
 	}
 
-	//create a new valid playlist
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created() {
@@ -37,24 +36,27 @@ public class PlaylistResourceTest {
 				.expectStatus()
 				.isCreated()
 				.expectBody();
+		assertNull(playlistDTO.getPlaylistId());
 		assertEquals(playlistDTO.getPlaylistName(),"Ada's Playlist");
 	}
 
-	//try to create a new playlist with the name null
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
 		PlaylistDTO playlistDTO = createPlaylistDTO();
 		playlistDTO.setPlaylistName(null);
-		webTestClient
+		 String result = webTestClient
 				.post()
 				.uri("/playlists")
 				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus()
 				.isBadRequest()
-				.expectBody();
+				 .expectBody(String.class).returnResult().getResponseBody();
 		assertNotEquals(playlistDTO.getPlaylistName(),"Ada's Playlist");
+		assertNull(playlistDTO.getPlaylistId());
+		assert result != null;
+		assertTrue(result.contains("validation error"));
 	}
 
 	//List all playlists
@@ -68,29 +70,11 @@ public class PlaylistResourceTest {
 				.expectHeader()
 				.contentType(MediaType.APPLICATION_JSON)
 				.expectStatus().isOk();
+		assertNotEquals(createPlaylistDTO(),null);
 	}
 
-	//Returns a playlist with a valid id
 	@Test
 	@Order(4)
-	public void givenAReadOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus200Ok() {
-		Integer id = 1;
-
-		Playlist playlist = webTestClient
-				.get().uri("/playlists/playlist?id=" + id)
-				.exchange()
-				.expectStatus()
-				.isOk()
-				.expectBody(Playlist.class)
-				.returnResult()
-				.getResponseBody();
-		assertNotNull(playlist);
-		assertEquals(playlist.getId(), id);
-	}
-
-	//change the name of a playlist
-	@Test
-	@Order(5)
 	public void givenAPatchOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus200Ok() {
 		int id = 1;
 		PlaylistDTO playlistDTO = createPlaylistDTO();
@@ -107,41 +91,60 @@ public class PlaylistResourceTest {
 		assertEquals(playlistDTO.getPlaylistName(),"Test Playlist Order five");
 	}
 
-	//Error when changing the name of a playlist leaving the field null
+	@Test
+	@Order(5)
+	public void givenAReadOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus200Ok() {
+		Integer id = 1;
+		Playlist playlist = webTestClient
+				.get().uri("/playlists/playlist?id=" + id)
+				.exchange()
+				.expectStatus()
+				.isOk()
+				.expectBody(Playlist.class)
+				.returnResult()
+				.getResponseBody();
+		assertNotNull(playlist);
+		assertEquals(playlist.getId(), id);
+		assertEquals(playlist.getPlaylistName(),"Test Playlist Order five");
+	}
+
 	@Test
 	@Order(6)
 	public void givenAPatchOrder_WhenInsertAInvalidPlaylistName_ThenItShouldReturnStatus400BadRequest() {
 		int id = 1;
 		PlaylistDTO playlistDTO = createPlaylistDTO();
 		playlistDTO.setPlaylistName(null);
-		webTestClient
+		String result = webTestClient
 				.patch()
 				.uri("/playlists/playlist/"+id)
 				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus().isBadRequest()
-				.expectBody();
+				.expectBody(String.class).returnResult().getResponseBody();
 		assertNotEquals(playlistDTO.getPlaylistName(),"Test Playlist Order five");
+		assert result != null;
+		assertTrue(result.contains("validation error"));
 	}
 
-	// Try to rename a playlist that doesn't exist
 	@Test
 	@Order(7)
 	public void givenAPatchOrder_WhenInsertInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
 		int id = 0;
 		PlaylistDTO playlistDTO = createPlaylistDTO();
 		playlistDTO.setPlaylistName("Never Be");
-		webTestClient
+		String result = webTestClient
 				.patch()
 				.uri("/playlists/playlist/"+id)
 				.bodyValue(playlistDTO)
 				.exchange()
 				.expectStatus().isNotFound()
-				.expectBody();
+				.expectBody(String.class).returnResult().getResponseBody();
+		assertNull(playlistDTO.getPlaylistId());
 		assertNotNull(playlistDTO);
+		assert result != null;
+		assertTrue(result.contains("The playlist id:0 does not exist"));
 	}
 
-	//delete a playlist
 	@Test
 	@Order(8)
 	public void givenADeleteOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus204NoContent() {
@@ -155,24 +158,22 @@ public class PlaylistResourceTest {
 		assertEquals(id,2);
 	}
 
-	//search for a playlist by id that does not exist
 	@Test
 	@Order(9)
 	public void givenAReadOrder_WhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {
-		int id = 0;// if I change it to an ID that contains a registered Playlist, the test does not pass (proves that the method works)
-		Playlist result = webTestClient
+		int id = 0;
+		String result = webTestClient
 				.get()
 				.uri("/playlists/playlist?id=" + id)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
-				.expectBody(Playlist.class)
-				.returnResult()
-				.getResponseBody();
+				.expectBody(String.class).returnResult().getResponseBody();
 		assertEquals(result, result);
+		assert result != null;
+		assertTrue(result.contains("ObjectNotFound! This Playlist Id:0, does not exist!"));
 	}
 
-	//Tries to delete a playlist that doesn't exist by its id
 	@Test
 	@Order(10)
 	public void givenADeleteOrder_WhenInsertAInvalidPlaylistId_ThenItShouldReturnStatus404NotFound() {

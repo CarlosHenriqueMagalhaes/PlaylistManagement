@@ -144,5 +144,13 @@ public class SongService {
 		if ( song == null){
 			saveSong(trackDTO);
 		}
+
+//		public void houseKeeping() {
+//			Optional<PlaylistSong> verif = plSgRepo.findAll(playlistId, songId);
+//			if (verif.isEmpty()){
+//				Song song = songOptional.get();
+//				song = repo.delete();
+//			}
+//		}
 	}
 }

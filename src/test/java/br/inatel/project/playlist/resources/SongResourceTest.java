@@ -1,26 +1,15 @@
 package br.inatel.project.playlist.resources;
 
+import br.inatel.project.playlist.management.domain.Song;
+import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.form.TrackForm;
-import br.inatel.project.playlist.management.repository.SongRepository;
-import br.inatel.project.playlist.management.rest.Track;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import br.inatel.project.playlist.management.domain.Song;
-import br.inatel.project.playlist.management.dto.PlaylistDTO;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.reactive.function.BodyInserter;
-import org.springframework.web.reactive.function.BodyInserters;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -28,8 +17,7 @@ import static org.junit.Assert.*;
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
-	@Autowired
-	private SongRepository repo;
+
 	private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
 	public TrackForm apiData() {
@@ -57,7 +45,6 @@ public class SongResourceTest {
 		return playlistDTO;
 	}
 
-//success finding a song in the external API
 	@Test
 	@Order(1)
 	public void givenAPostOrder_WhenInsertAValidTrackAndAValidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus201Created() {
@@ -73,28 +60,29 @@ public class SongResourceTest {
 				.returnResult()
 				.getResponseBody();
 		assertEquals(songAp.getArtist(),"Metallica");
+		assertEquals(songAp.getTrack(),"One");
 	}
 
-	//Failed to find a song in the external API
 	@Test
 	@Order(2)
 	public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
 		TrackForm songApi = apiData();
 		songApi.setTrack("null");
-		Song song = webTestClient
+		String result = webTestClient
 				.post()
 				.uri("/songs/newSong" )
 				.bodyValue(songApi)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
-				.expectBody(Song.class)
+				.expectBody(String.class)
 				.returnResult()
 				.getResponseBody();
 		assertEquals(songApi.getTrack(),"null");
+		assert result != null;
+		assertTrue(result.contains("The artist and track fields must exist and cannot be null."));
 	}
 
-	//success listing all songs
 	@Test
 	@Order(3)
 	public void givenAReadOrder_WhenReceivingAllTheSongs_ThenItShouldReturnStatus200Ok() {
@@ -104,9 +92,9 @@ public class SongResourceTest {
 				.exchange()
 				.expectHeader()
 				.contentType(MediaType.APPLICATION_JSON).expectStatus().isOk();
+		assertNotEquals(songDTO(),null);
 	}
 
-	//success finding a song by id
 	@Test
 	@Order(4)
 	public void givenAReadOrder_WhenInsertAValidSongId_ThenItShouldReturnStatus200Ok() {
@@ -122,26 +110,28 @@ public class SongResourceTest {
 				.getResponseBody();
 		assertNotNull(song);
 		assertEquals(song.getId(), id);
+		assertEquals(song.getArtist(),"Tim Maia");
+		assertEquals(song.getMusic(),"O caminho do bem");
 	}
 
-	//failed to find a song by id
 	@Test
 	@Order(5)
 	public void givenAReadOrder_WhenInsertAInvalidId_ThenItShouldReturnStatus404NotFound() {
 		int id = 0;// if I change it to an ID that contains Song registered, the test does not pass (proves that the method works)
-		Song result = webTestClient
+		String result = webTestClient
 				.get()
 				.uri("/songs/song?id=" + id)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
-				.expectBody(Song.class)
+				.expectBody(String.class)
 				.returnResult()
 				.getResponseBody();
 		assertEquals(result, result);
+		assert result != null;
+		assertTrue(result.contains("ObjectNotFound! This Song Id:0, does not exist or is not registered! "));
 	}
 
-//success in adding a song to a playlist
 	@Test
 	@Order(6)
 	public void givenAPostOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus200Ok() {
@@ -157,9 +147,11 @@ public class SongResourceTest {
 				.isOk()
 				.expectBody();
 		assertEquals(song.getArtist(),"Pink Floyd" );
+		assertEquals(song.getMusic(),"The Great Gig in the Sky");
+		assertEquals(playlist.getPlaylistName(),"Best Songs");
+		assertNotNull(playlist);
 	}
 
-	//Failed to add a song to a playlist
 	@Test
 	@Order(7)
 	public void givenAPostOrder_WhenInsertAInvalidPlaylistIdAndOrAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
@@ -167,18 +159,21 @@ public class SongResourceTest {
 		song.setId(0);
 		PlaylistDTO playlist = playlistDTO();
 		playlist.setPlaylistId(0);
-		webTestClient
+		String result = webTestClient
 				.post()
 				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.bodyValue(playlist)
 				.exchange()
 				.expectStatus()
 				.isNotFound()
-				.expectBody();
+				.expectBody(String.class).returnResult().getResponseBody();
 		assertNotEquals(song.getArtist(),"Iron Maiden" );
+		assert result != null;
+		assertTrue(result.contains("ObjectNotFound! This Song Id:0, does not exist or is not registered!"));
+		assertEquals(playlist.getPlaylistName(),"Best Songs");
+		assertNotNull(playlist);
 	}
 
-	//success in removing a song from a playlist
 	@Test
 	@Order(8)
 	public void givenADeleteOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus204NoContent() {
@@ -194,9 +189,11 @@ public class SongResourceTest {
 				.isNoContent()
 				.expectHeader();
 		assertEquals(song.getArtist(),"Pink Floyd" );
+		assertEquals(song.getMusic(),"The Great Gig in the Sky");
+		assertNotNull(playlist);
+		assertEquals(playlist.getPlaylistName(),"Best Songs");
 	}
 
-	//failed to remove a song from a playlist
 	@Test
 	@Order(9)
 	public void givenADeleteOrder_WhenInsertAInvalidPlaylistIdAndAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
@@ -204,13 +201,15 @@ public class SongResourceTest {
 		song.setId(0);
 		PlaylistDTO playlist = playlistDTO();
 		playlist.setPlaylistId(0);
-		webTestClient
+		String result = webTestClient
 				.delete()
 				.uri("/songs/song/" + song.getId()+"/playlist/"+playlist.getPlaylistId())
 				.exchange()
 				.expectStatus()
 				.isNotFound()
-				.expectHeader();
+				.expectBody(String.class).returnResult().getResponseBody();
 		assertNotEquals(song.getArtist(),"Iron Maiden" );
+		assert result != null;
+		assertTrue(result.contains("This song is not in this playlist or this playlist does not exist"));
 	}
 }
