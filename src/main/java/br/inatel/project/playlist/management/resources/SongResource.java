@@ -74,7 +74,7 @@ public class SongResource {
 	 * @throws Exception
 	 */
 	@DeleteMapping("/song/{songId}/playlist/{playlistId}")
-	public ResponseEntity<?> delete(@PathVariable Integer playlistId,
+	public ResponseEntity<Void> delete(@PathVariable Integer playlistId,
 									@PathVariable Integer songId) throws Exception {
 		songService.removeSongToPlaylist(playlistId, songId);
 		return ResponseEntity.noContent().build();

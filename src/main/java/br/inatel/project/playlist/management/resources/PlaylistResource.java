@@ -47,7 +47,7 @@ public class PlaylistResource {
 		return ResponseEntity.ok().body( playlistService.findAllPlaylistsPageable(page));
 	}
 
-	 /**
+	/**
 	 * Insert a new Playlist (POST)
 	 * @return a new Playlist (endpoint)
 	 */
@@ -73,7 +73,7 @@ public class PlaylistResource {
 	 * @return Delete a playlist (endpoint)
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		playlistService.delete(id);
 		return ResponseEntity.noContent().build();
 	}

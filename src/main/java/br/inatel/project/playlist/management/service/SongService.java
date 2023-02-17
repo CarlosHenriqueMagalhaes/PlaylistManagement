@@ -104,7 +104,7 @@ public class SongService {
      * @return playlist without the song that was removed
      * @throws Exception
      */
-    public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
+    public void removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
         try {
             playlistSongService.findByPlayIdAndSongId(playlistId, songId);
             Playlist playlist = playService.find(playlistId);
@@ -113,7 +113,6 @@ public class SongService {
             song.getPlaylists().remove(playlist);
             playlist = playService.saveAndFlush(playlist);
             song = repo.saveAndFlush(song);
-            return ("The song id: " + songId + " has been successfully removed from the playlist id: " + playlistId);
         } catch (Exception e) {
             throw new NullObjectNotFoundException("This song is not in this playlist or this playlist does not exist");
         }

@@ -50,7 +50,7 @@ public class PlaylistService {
     }
 
     /**
-     * find all Songs in my bank (GET) with Pageable
+     * find all Playlists in my bank (GET) with Pageable
      *
      * @param page
      * @return
@@ -106,13 +106,11 @@ public class PlaylistService {
      * to delete it, so the songs are not deleted from the database, and only from the playlist
      *
      * @param id
-     * @return msg "The playlist id:-- is successfully deleted"
      */
-    public String delete(Integer id) {
+    public void delete(Integer id) {
         find(id);
         plSgRepo.deleteAllInBatch();
         repo.deleteById(id);
-        return ("The playlist id: " + id + " is successfully deleted");
     }
 
     /**
