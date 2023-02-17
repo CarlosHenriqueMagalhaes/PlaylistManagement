@@ -79,17 +79,12 @@ public class SongService {
      * @param playlistId
      */
     public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
-        // search for music by id:
         Optional<Song> songOptional = repo.findById(songId);
-        // make sure the music exists
         songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
                 + ", does not exist or is not registered!"));
-        // search for Playlist by id:
         Optional<Playlist> playlistOptional = plRepo.findById(playlistId);
-        //       make sure the music exists
         playlistOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Playlist Id:" + playlistId
                 + ", does not exist or is not registered!"));
-        // check if the relationship exists
         Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
         if (verif.isEmpty()) {
             Song song = songOptional.get();
@@ -111,7 +106,6 @@ public class SongService {
      */
     public String removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
         try {
-            // Call playlistSongService
             playlistSongService.findByPlayIdAndSongId(playlistId, songId);
             Playlist playlist = playService.find(playlistId);
             Song song = find(songId);

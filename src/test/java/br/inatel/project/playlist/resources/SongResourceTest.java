@@ -13,11 +13,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
-//Integration Tests
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SongResourceTest {
-
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
     public TrackForm apiData() {

@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 
-//unitary tests
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class PlaylistServiceTest {
@@ -42,7 +41,6 @@ public class PlaylistServiceTest {
                 .build();
     }
 
-    //Find All Playlists
     @Test
     public void givenAllPlaylists_WhenGetListAllPlaylist_ShouldReturnListOfPlaylist() {
         when(repo.findAll()).thenReturn(plList);
@@ -50,7 +48,6 @@ public class PlaylistServiceTest {
         assertEquals(List.of(), plList);
     }
 
-    //Success to find a playlist
     @Test
     public void givenAPlaylist_WhenGetAPlaylistById_ShouldReturnAPlaylist() {
         when(repo.findById(1)).thenReturn(Optional.of(playlist));
@@ -58,7 +55,6 @@ public class PlaylistServiceTest {
         assertEquals(playlist.getId(), 1);
     }
 
-    //Failed to find a playlist
     @Test
     public void givenAPlaylist_WhenGetAPlaylistByAInvalidId() {
         when(repo.findById(3)).thenReturn(Optional.of(playlist));
@@ -66,7 +62,6 @@ public class PlaylistServiceTest {
         assertNotEquals(playlist.getId(), 3);
     }
 
-    // Success to create a playlist
     @Test
     public void givenInsertANewPlaylists_WhenPostANewPlaylist_ShouldReturnANewPlaylist() {
         when(repo.save(playlist)).thenReturn(playlist);
@@ -75,7 +70,6 @@ public class PlaylistServiceTest {
         assertEquals(playlist.getPlaylistName(), "Zoom Total");
     }
 
-    //Failed to create a playlist
     @Test
     public void givenInsertANewPlaylists_WhenPostAInvalidPlaylistName() {
         when(repo.save(playlist)).thenReturn(playlist);
@@ -84,7 +78,6 @@ public class PlaylistServiceTest {
         assertNotEquals(playlist.getPlaylistName(), "Sleep Songs");
     }
 
-    //Success in changing the name of a playlist
     @Test
     public void givenUpdateAPlaylistName_WhenPutAValidPlaylistId_ShouldReturnAPlaylist() {
         repo.findById(1);
@@ -92,7 +85,6 @@ public class PlaylistServiceTest {
         assertEquals(playlist.getPlaylistName(), "Loving Songs");
     }
 
-    // Failed to change the name of a playlist leaving playlistName null
     @Test
     public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistName_ShouldReturnAPlaylist() {
         repo.findById(1);
@@ -100,7 +92,6 @@ public class PlaylistServiceTest {
         assertNotEquals(playlist.getPlaylistName(), "The Best");
     }
 
-    // Failed to rename a playlist when reporting a playlist that does not exist
     @Test
     public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistId_ShouldReturnAPlaylist() {
         repo.findById(1);
@@ -108,7 +99,6 @@ public class PlaylistServiceTest {
         assertNotEquals(playlist.getId(), 1);
     }
 
-    //Success to delete a playlist
     @Test
     public void givenDeleteAPlaylist_WhenDeleteAValidPlaylistById() {
         when(repo.findById(1)).thenReturn(Optional.of(playlist));
@@ -117,7 +107,6 @@ public class PlaylistServiceTest {
         assertEquals(playlist.getId(), 1);
     }
 
-    //Failed to delete a playlist
     @Test
     public void givenDeleteAPlaylist_WhenDeleteAInvalidPlaylistById() {
         when(repo.findById(1)).thenReturn(Optional.of(playlist));

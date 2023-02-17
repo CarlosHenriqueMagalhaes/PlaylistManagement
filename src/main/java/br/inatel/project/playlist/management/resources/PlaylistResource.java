@@ -40,12 +40,6 @@ public class PlaylistResource {
 	 * find all registered playlists (GET)
 	 * @return all registered playlists (endpoint)
 	 */
-//	@GetMapping
-//	public ResponseEntity<List<PlaylistDTO>> findAll() {
-//		List<Playlist> list = playlistService.findAllPlaylist();
-//		List<PlaylistDTO> listDTO = list.stream().map(PlaylistDTO::new).collect(Collectors.toList());
-//		return ResponseEntity.ok().body(listDTO);
-//	}
 	@GetMapping
 	public ResponseEntity<Page<Playlist>> findAll(
 			@PageableDefault(sort= "id", direction= Sort.Direction.ASC, page = 0, size = 5)

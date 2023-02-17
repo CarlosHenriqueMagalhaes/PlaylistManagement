@@ -11,7 +11,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
-//Integration Tests
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class PlaylistResourceTest {

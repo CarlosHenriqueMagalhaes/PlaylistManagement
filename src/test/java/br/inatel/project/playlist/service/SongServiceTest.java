@@ -24,7 +24,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-//unitary tests
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class SongServiceTest {
@@ -87,7 +86,6 @@ public class SongServiceTest {
 
     @Test
     public void givenInsertASongAtAPlaylist_WhenPostValidPlaylistIdAndAValidSongId_ShouldReturnPlaylistList() {
-        //when(plSgRepo.findByPlaylistIdAndSongId(1, 1)).thenReturn(Optional.of(playlistSong));
         plSgRepo.findByPlaylistIdAndSongId(1, 1);
         assertThat(song.getId()).isEqualTo(playlist.getId());
     }

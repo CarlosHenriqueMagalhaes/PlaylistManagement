@@ -46,16 +46,11 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
         Map<String, String> map = (Map<String, String>) request
                 .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Integer uriId = Integer.parseInt(map.get("id"));
-
-
         List<FieldMessage> list = new ArrayList<>();
-
         Optional<Playlist> playlistOptional = repo.findById(objDto.getPlaylistId());
         if (playlistOptional != null && playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
             list.add(new FieldMessage("id", "already existing id"));
         }
-
-        // class method
         for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
