@@ -24,42 +24,43 @@ import br.inatel.project.playlist.management.repository.PlaylistRepository;
  * @since 1.0
  */
 public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpdate, PlaylistDTO> {
-	@Autowired
-	private HttpServletRequest request;
-	@Autowired
-	private PlaylistRepository repo;
-	@Override
-	public void initialize(PlaylistUpdate ann) {
-	}
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private PlaylistRepository repo;
 
-	/**
-	 * Validator
-	 * @param objDto object to validate
-	 * @param context context in which the constraint is evaluated
-	 *
-	 * @return message with exception handling
-	 */
-	@Override
-	public boolean isValid(PlaylistDTO objDto, ConstraintValidatorContext context) {
-		@SuppressWarnings("unchecked")
-		Map<String, String> map = (Map<String, String>) request
-				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		Integer uriId = Integer.parseInt(map.get("id"));
-	
-		
-		List<FieldMessage> list = new ArrayList<>();
+    @Override
+    public void initialize(PlaylistUpdate ann) {
+    }
 
-		Optional<Playlist> playlistOptional = repo.findById(objDto.getPlaylistId());
-		if (playlistOptional != null && playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
-			list.add(new FieldMessage("id", "already existing id"));
-		}
+    /**
+     * Validator
+     *
+     * @param objDto  object to validate
+     * @param context context in which the constraint is evaluated
+     * @return message with exception handling
+     */
+    @Override
+    public boolean isValid(PlaylistDTO objDto, ConstraintValidatorContext context) {
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) request
+                .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Integer uriId = Integer.parseInt(map.get("id"));
 
-		// class method
-		for (FieldMessage e : list) {
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
-					.addConstraintViolation();
-		}
-		return list.isEmpty();
-	}
+
+        List<FieldMessage> list = new ArrayList<>();
+
+        Optional<Playlist> playlistOptional = repo.findById(objDto.getPlaylistId());
+        if (playlistOptional != null && playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
+            list.add(new FieldMessage("id", "already existing id"));
+        }
+
+        // class method
+        for (FieldMessage e : list) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
+                    .addConstraintViolation();
+        }
+        return list.isEmpty();
+    }
 }

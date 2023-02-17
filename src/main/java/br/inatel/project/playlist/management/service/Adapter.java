@@ -18,34 +18,35 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Slf4j
 @Service
 public class Adapter {
-	@Value("${API-Key}")
-	private String key;
-	@Value("${API-Url}")
-	private String url;
+    @Value("${API-Key}")
+    private String key;
+    @Value("${API-Url}")
+    private String url;
 
-	/**
-	 * this method returns a Song instance with all its information
-	 * @param track
-	 * @param artist
-	 * @return A Song innstace with all informations
-	 */
-	@Cacheable(value = "songsList")
-	public FilterTrack getLastFm(String track, String artist) {
-		return WebClient.builder().baseUrl(url).build().get()
-				.uri(uriBuilder -> uriBuilder
-						.queryParam("api_key", key)
-						.queryParam("artist", artist)
-						.queryParam("track", track)
-						.queryParam("format", "json")
-						.build())
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(FilterTrack.class)
-				.block();
-	}
+    /**
+     * this method returns a Song instance with all its information
+     *
+     * @param track
+     * @param artist
+     * @return A Song innstace with all informations
+     */
+    @Cacheable(value = "songsList")
+    public FilterTrack getLastFm(String track, String artist) {
+        return WebClient.builder().baseUrl(url).build().get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("api_key", key)
+                        .queryParam("artist", artist)
+                        .queryParam("track", track)
+                        .queryParam("format", "json")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(FilterTrack.class)
+                .block();
+    }
 
-	@CacheEvict(value = "songsList")
-	public void deleteCache(){
-		log.info("Cache cleared");
-	}
+    @CacheEvict(value = "songsList")
+    public void deleteCache() {
+        log.info("Cache cleared");
+    }
 }

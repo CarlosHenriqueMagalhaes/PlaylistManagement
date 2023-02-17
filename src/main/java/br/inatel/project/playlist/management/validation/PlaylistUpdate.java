@@ -15,12 +15,10 @@ import javax.validation.Payload;
  * @since 1.0
  */
 @Constraint(validatedBy = PlaylistUpdateValidator.class)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PlaylistUpdate {
-String message() default "validation error";
-
-Class<?>[] groups() default {};
-
-Class<? extends Payload>[] payload() default {};
+    String message() default "validation error";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }

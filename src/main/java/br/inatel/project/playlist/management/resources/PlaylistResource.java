@@ -5,12 +5,14 @@ import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.PlaylistManagerDTO;
 import br.inatel.project.playlist.management.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Controller Playlist class. All endpoints of Playlist are built here.
@@ -38,11 +40,17 @@ public class PlaylistResource {
 	 * find all registered playlists (GET)
 	 * @return all registered playlists (endpoint)
 	 */
+//	@GetMapping
+//	public ResponseEntity<List<PlaylistDTO>> findAll() {
+//		List<Playlist> list = playlistService.findAllPlaylist();
+//		List<PlaylistDTO> listDTO = list.stream().map(PlaylistDTO::new).collect(Collectors.toList());
+//		return ResponseEntity.ok().body(listDTO);
+//	}
 	@GetMapping
-	public ResponseEntity<List<PlaylistDTO>> findAll() {
-		List<Playlist> list = playlistService.findAllPlaylist();
-		List<PlaylistDTO> listDTO = list.stream().map(PlaylistDTO::new).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+	public ResponseEntity<Page<Playlist>> findAll(
+			@PageableDefault(sort= "id", direction= Sort.Direction.ASC, page = 0, size = 5)
+			Pageable page) {
+		return ResponseEntity.ok().body( playlistService.findAllPlaylistsPageable(page));
 	}
 
 	 /**

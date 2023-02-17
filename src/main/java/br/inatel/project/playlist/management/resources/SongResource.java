@@ -1,24 +1,20 @@
 package br.inatel.project.playlist.management.resources;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-
 import br.inatel.project.playlist.management.domain.Playlist;
+import br.inatel.project.playlist.management.domain.Song;
 import br.inatel.project.playlist.management.dto.TrackDTO;
-import br.inatel.project.playlist.management.service.Adapter;
+import br.inatel.project.playlist.management.form.TrackForm;
 import br.inatel.project.playlist.management.service.PlaylistService;
+import br.inatel.project.playlist.management.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.inatel.project.playlist.management.domain.Song;
-import br.inatel.project.playlist.management.dto.PlaylistDTO;
-import br.inatel.project.playlist.management.dto.SongDTO;
-import br.inatel.project.playlist.management.form.TrackForm;
-import br.inatel.project.playlist.management.service.SongService;
+import javax.validation.Valid;
 
 /**
  * Controller Song class. All endpoints of Song are built here.
@@ -50,10 +46,10 @@ public class SongResource {
 	 * @return all Songs in my bank (endpoint)
 	 */
 	@GetMapping
-	public ResponseEntity<List<SongDTO>> findAll() {
-		List<Song> list = songService.findAllSongs();
-		List<SongDTO> listDTO = list.stream().map(SongDTO::new).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+	public ResponseEntity<Page<Song>> findAll(
+			@PageableDefault(sort= "id", direction= Sort.Direction.ASC, page = 0, size = 5)
+			Pageable page) {
+		return ResponseEntity.ok().body(songService.findAllSongsPageable(page));
 	}
 
 	/**

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.inatel.project.playlist.management.domain.PlaylistSong;
+
 /**
  * Repository of the entity which is being saved in the database.
  *

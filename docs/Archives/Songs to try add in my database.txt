@@ -22,3 +22,103 @@
     "artist":"Linkin Park",
     "track":"Final Masquerade"
 }
+------------------------------
+{
+    "artist":"Deep purple",
+    "track":"Perfect Strangers"
+}
+------------------------------
+{
+    "artist":"Kiss",
+    "track":"Do you love me"
+}
+------------------------------
+{
+    "artist":"Raul Seixas",
+    "track":"O dia em que a terra parou"
+}
+------------------------------
+{
+    "artist":"Os Paralamas do sucesso",
+    "track":"Ela disse Adeus"
+}
+-----------------------------
+{
+    "artist":"Pearl Jam",
+    "track":"Daughter"
+}
+------------------------------
+{
+    "artist":"Pearl Jam",
+    "track":"Yellow Ledbetter"
+}
+------------------------------
+{
+    "artist":"Pearl Jam",
+    "track":"Jeremy"
+}
+------------------------------
+{
+    "artist":"Gorillaz",
+    "track":"Aries"
+}
+------------------------------
+{
+    "artist":"Gorillaz",
+    "track":"Rhinestone Eyes"
+}
+------------------------------
+{
+    "artist":"Post Malone",
+    "track":"Better now"
+}
+------------------------------
+{
+    "artist":"Pink Floyd",
+    "track":"High Hopes"
+}
+------------------------------
+{
+    "artist":"Pink Floyd",
+    "track":"Comfortably Numb"
+}
+-----------------------------
+{
+    "artist":"ACDC",
+    "track":"TNT"
+}
+-----------------------------
+{
+    "artist":"Metallica",
+    "track":"Enter Sandman"
+}
+-----------------------------
+{
+    "artist":"Metallica",
+    "track":"Orion"
+}
+-----------------------------
+{
+    "artist":"AudioSlave",
+    "track":"Gasoline"
+}
+-----------------------------
+{
+    "artist":"Linkin Park",
+    "track":"One more light"
+}
+-----------------------------
+{
+    "artist":"Linkin Park",
+    "track":"Fait"
+}
+-----------------------------
+{
+    "artist":"Bob Dylan",
+    "track":"Hurricane"
+}
+-----------------------------
+{
+    "artist":"Jimy Hendrix",
+    "track":"All Along the Watchtower"
+}

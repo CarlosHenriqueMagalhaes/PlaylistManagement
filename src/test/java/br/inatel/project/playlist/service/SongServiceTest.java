@@ -28,74 +28,74 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class SongServiceTest {
-	private Playlist playlist;
-	private Song song;
-	private PlaylistSong playlistSong;
-	@InjectMocks
-	private SongService service;
-	@Mock
-	private SongRepository repo;
-	@Mock
-	private PlaylistRepository playlistRepository;
-	@Mock
-	private PlaylistSongRepository plSgRepo;
+    private Playlist playlist;
+    private Song song;
+    private PlaylistSong playlistSong;
+    @InjectMocks
+    private SongService service;
+    @Mock
+    private SongRepository repo;
+    @Mock
+    private PlaylistRepository playlistRepository;
+    @Mock
+    private PlaylistSongRepository plSgRepo;
 
-	List<Song> songList = new ArrayList<>();
+    List<Song> songList = new ArrayList<>();
 
-	@Before
-	public void init() {
-		song = Song.builder()
-				.id(1)
-				.music("Ticket To Ride")
-				.artist("Beatles")
-				.kindOfMusic("Rock")
-				.songAlbum("Help!")
-				.songDuration("30000")
-				.build();
+    @Before
+    public void init() {
+        song = Song.builder()
+                .id(1)
+                .music("Ticket To Ride")
+                .artist("Beatles")
+                .kindOfMusic("Rock")
+                .songAlbum("Help!")
+                .songDuration("30000")
+                .build();
 
-		playlist = Playlist.builder()
-				.id(1)
-				.playlistName("The Best")
-				.build();
+        playlist = Playlist.builder()
+                .id(1)
+                .playlistName("The Best")
+                .build();
 
-		playlistSong = PlaylistSong.builder().
-				songId(1).
-				playlistId(1)
-				.build();
-	}
+        playlistSong = PlaylistSong.builder().
+                songId(1).
+                playlistId(1)
+                .build();
+    }
 
-	@Test
-	public void givenSong_WhenGetValidSongById_ShouldReturnSong() {
-		when(repo.findById(1)).thenReturn(Optional.of(song));
-		service.find(1);
-		assertEquals(song.getArtist(), "Beatles");
-	}
+    @Test
+    public void givenSong_WhenGetValidSongById_ShouldReturnSong() {
+        when(repo.findById(1)).thenReturn(Optional.of(song));
+        service.find(1);
+        assertEquals(song.getArtist(), "Beatles");
+    }
 
-	@Test
-	public void givenSong_WhenGetInvalidSongById() {
-		when(repo.findById(1)).thenReturn(Optional.of(song));
-		service.find(1);
-		assertNotEquals(song.getArtist(), "Bob Marley");
-	}
+    @Test
+    public void givenSong_WhenGetInvalidSongById() {
+        when(repo.findById(1)).thenReturn(Optional.of(song));
+        service.find(1);
+        assertNotEquals(song.getArtist(), "Bob Marley");
+    }
 
-	@Test
-	public void givenAllSongs_WhenGetListAllSongs_ShouldReturnListOfSongs() {
-		when(repo.findAll()).thenReturn(songList);
-		service.findAllSongs();
-		assertEquals(List.of(), songList);
-	}
+    @Test
+    public void givenAllSongs_WhenGetListAllSongs_ShouldReturnListOfSongs() {
+        when(repo.findAll()).thenReturn(songList);
+        service.findAllSongs();
+        assertEquals(List.of(), songList);
+    }
 
-	@Test
-	public void givenInsertASongAtAPlaylist_WhenPostValidPlaylistIdAndAValidSongId_ShouldReturnPlaylistList() {
-		//when(plSgRepo.findByPlaylistIdAndSongId(1, 1)).thenReturn(Optional.of(playlistSong));
-		plSgRepo.findByPlaylistIdAndSongId(1, 1);
-		assertThat(song.getId()).isEqualTo(playlist.getId());
-	}
+    @Test
+    public void givenInsertASongAtAPlaylist_WhenPostValidPlaylistIdAndAValidSongId_ShouldReturnPlaylistList() {
+        //when(plSgRepo.findByPlaylistIdAndSongId(1, 1)).thenReturn(Optional.of(playlistSong));
+        plSgRepo.findByPlaylistIdAndSongId(1, 1);
+        assertThat(song.getId()).isEqualTo(playlist.getId());
+    }
 
-	@Test
-	public void givenInsertASongAtAPlaylist_WhenPostInvalidPlaylistIdAndOrAInvalidSongId_ShouldReturnPlaylistList() {
-		plSgRepo.findByPlaylistIdAndSongId(2, 1);
-		assertNotEquals(List.of(), playlistSong);
-	}
+    @Test
+    public void givenInsertASongAtAPlaylist_WhenPostInvalidPlaylistIdAndOrAInvalidSongId_ShouldReturnPlaylistList() {
+        plSgRepo.findByPlaylistIdAndSongId(2, 1);
+        assertNotEquals(List.of(), playlistSong);
+    }
 }
 
