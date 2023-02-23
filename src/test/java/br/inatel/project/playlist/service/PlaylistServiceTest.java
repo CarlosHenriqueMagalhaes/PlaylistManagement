@@ -25,13 +25,13 @@ import static org.mockito.Mockito.when;
 public class PlaylistServiceTest {
     private Playlist playlist;
     @InjectMocks
-    private PlaylistService service;
+    private PlaylistService playlistService;
     @Mock
-    private PlaylistRepository repo;
+    private PlaylistRepository playlistRepository;
     @Mock
-    private PlaylistSongRepository plSgRepo;
+    private PlaylistSongRepository playlistSongRepository;
 
-    List<Playlist> plList = new ArrayList<>();
+    List<Playlist> playlistList = new ArrayList<>();
 
     @Before
     public void init() {
@@ -43,75 +43,75 @@ public class PlaylistServiceTest {
 
     @Test
     public void givenAllPlaylists_WhenGetListAllPlaylist_ShouldReturnListOfPlaylist() {
-        when(repo.findAll()).thenReturn(plList);
-        service.findAllPlaylist();
-        assertEquals(List.of(), plList);
+        when(playlistRepository.findAll()).thenReturn(playlistList);
+        playlistService.findAllPlaylist();
+        assertEquals(List.of(), playlistList);
     }
 
     @Test
     public void givenAPlaylist_WhenGetAPlaylistById_ShouldReturnAPlaylist() {
-        when(repo.findById(1)).thenReturn(Optional.of(playlist));
-        service.find(1);
+        when(playlistRepository.findById(1)).thenReturn(Optional.of(playlist));
+        playlistService.find(1);
         assertEquals(playlist.getId(), 1);
     }
 
     @Test
     public void givenAPlaylist_WhenGetAPlaylistByAInvalidId() {
-        when(repo.findById(3)).thenReturn(Optional.of(playlist));
-        service.find(3);
+        when(playlistRepository.findById(3)).thenReturn(Optional.of(playlist));
+        playlistService.find(3);
         assertNotEquals(playlist.getId(), 3);
     }
 
     @Test
     public void givenInsertANewPlaylists_WhenPostANewPlaylist_ShouldReturnANewPlaylist() {
-        when(repo.save(playlist)).thenReturn(playlist);
-        service.insert(playlist);
+        when(playlistRepository.save(playlist)).thenReturn(playlist);
+        playlistService.insert(playlist);
         playlist.setPlaylistName("Zoom Total");
         assertEquals(playlist.getPlaylistName(), "Zoom Total");
     }
 
     @Test
     public void givenInsertANewPlaylists_WhenPostAInvalidPlaylistName() {
-        when(repo.save(playlist)).thenReturn(playlist);
-        service.insert(playlist);
+        when(playlistRepository.save(playlist)).thenReturn(playlist);
+        playlistService.insert(playlist);
         playlist.setPlaylistName(null);
         assertNotEquals(playlist.getPlaylistName(), "Sleep Songs");
     }
 
     @Test
     public void givenUpdateAPlaylistName_WhenPutAValidPlaylistId_ShouldReturnAPlaylist() {
-        repo.findById(1);
+        playlistRepository.findById(1);
         playlist.setPlaylistName("Loving Songs");
         assertEquals(playlist.getPlaylistName(), "Loving Songs");
     }
 
     @Test
     public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistName_ShouldReturnAPlaylist() {
-        repo.findById(1);
+        playlistRepository.findById(1);
         playlist.setPlaylistName(null);
         assertNotEquals(playlist.getPlaylistName(), "The Best");
     }
 
     @Test
     public void givenUpdateAPlaylistName_WhenPutAInvalidPlaylistId_ShouldReturnAPlaylist() {
-        repo.findById(1);
+        playlistRepository.findById(1);
         playlist.setId(0);
         assertNotEquals(playlist.getId(), 1);
     }
 
     @Test
     public void givenDeleteAPlaylist_WhenDeleteAValidPlaylistById() {
-        when(repo.findById(1)).thenReturn(Optional.of(playlist));
-        plSgRepo.deleteAllInBatch();
-        service.delete(1);
+        when(playlistRepository.findById(1)).thenReturn(Optional.of(playlist));
+        playlistSongRepository.deleteAllInBatch();
+        playlistService.delete(1);
         assertEquals(playlist.getId(), 1);
     }
 
     @Test
     public void givenDeleteAPlaylist_WhenDeleteAInvalidPlaylistById() {
-        when(repo.findById(1)).thenReturn(Optional.of(playlist));
-        plSgRepo.deleteAllInBatch();
-        service.delete(1);
+        when(playlistRepository.findById(1)).thenReturn(Optional.of(playlist));
+        playlistSongRepository.deleteAllInBatch();
+        playlistService.delete(1);
         assertNotEquals(playlist.getId(), 3);
     }
 }

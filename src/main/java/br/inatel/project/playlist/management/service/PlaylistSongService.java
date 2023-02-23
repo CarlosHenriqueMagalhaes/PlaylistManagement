@@ -18,7 +18,7 @@ import br.inatel.project.playlist.management.repository.PlaylistSongRepository;
 @Service
 public class PlaylistSongService {
     @Autowired
-    private PlaylistSongRepository repo;
+    private PlaylistSongRepository playlistSongRepository;
 
     /**
      * find one song by id (GET)
@@ -28,7 +28,7 @@ public class PlaylistSongService {
      * @return relationship between Playlist and Song
      */
     public PlaylistSong findByPlayIdAndSongId(Integer idPlaylist, Integer idSong) {
-        Optional<PlaylistSong> playlistSong = repo.findByPlaylistIdAndSongId(idPlaylist, idSong);
+        Optional<PlaylistSong> playlistSong = playlistSongRepository.findByPlaylistIdAndSongId(idPlaylist, idSong);
         return playlistSong.orElseThrow(() -> new ObjectNotFoundException("This Song does not exist in this Playlist"));
     }
 }

@@ -30,10 +30,10 @@ public class PlaylistManagerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Song sgn1 = new Song(null, "O caminho do bem", "Tim Maia", "30000", "Tim Maia Racional", "Nacional, soul, 70s");
-        songRepository.saveAll(List.of(sgn1));
-        Playlist pl1 = new Playlist(null, "Default Playlist");
-        playlistRepository.saveAll(List.of(pl1));
+        Song song = new Song(null, "O caminho do bem", "Tim Maia", "30000", "Tim Maia Racional", "Nacional, soul, 70s");
+        songRepository.saveAll(List.of(song));
+        Playlist playlist = new Playlist(null, "Default Playlist");
+        playlistRepository.saveAll(List.of(playlist));
     }
 }
 	

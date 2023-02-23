@@ -24,9 +24,9 @@ import java.util.Optional;
 @Service
 public class PlaylistService {
     @Autowired
-    private PlaylistRepository repo;
+    private PlaylistRepository playlistRepository;
     @Autowired
-    private PlaylistSongRepository plSgRepo;
+    private PlaylistSongRepository playlistSongRepository;
 
     /**
      * find one playlist for id (GET)
@@ -35,7 +35,7 @@ public class PlaylistService {
      * @return A Playlist
      */
     public Playlist find(Integer id) {
-        Optional<Playlist> playlist = repo.findById(id);
+        Optional<Playlist> playlist = playlistRepository.findById(id);
         return playlist.orElseThrow(() -> new ObjectNotFoundException(
                 "ObjectNotFound! This Playlist Id:" + id + ", does not exist!"));
     }
@@ -46,7 +46,7 @@ public class PlaylistService {
      * @return All Playlist
      */
     public List<Playlist> findAllPlaylist() {
-        return repo.findAll();
+        return playlistRepository.findAll();
     }
 
     /**
@@ -56,7 +56,7 @@ public class PlaylistService {
      * @return
      */
     public Page<Playlist> findAllPlaylistsPageable(Pageable page) {
-        return (repo.findAll(page));
+        return (playlistRepository.findAll(page));
     }
 
     /**
@@ -66,7 +66,7 @@ public class PlaylistService {
      * @return Create a new Playlist
      */
     public Playlist insert(Playlist playlist) {
-        return repo.save(playlist);
+        return playlistRepository.save(playlist);
     }
 
     /**
@@ -81,7 +81,7 @@ public class PlaylistService {
             playlist = find(playlistId);
             if (playlist != null) {
                 playlist.setPlaylistName(playlistDTO.getPlaylistName());
-                return repo.save(playlist);
+                return playlistRepository.save(playlist);
             }
         } catch (Exception e) {
             throw new NullObjectNotFoundException("The playlist id:" + playlistId + " does not exist");
@@ -109,8 +109,8 @@ public class PlaylistService {
      */
     public void delete(Integer id) {
         find(id);
-        plSgRepo.deleteAllInBatch();
-        repo.deleteById(id);
+        playlistSongRepository.deleteAllInBatch();
+        playlistRepository.deleteById(id);
     }
 
     /**
@@ -120,6 +120,6 @@ public class PlaylistService {
      * @return Help to save Playlist In repository
      */
     public Playlist saveAndFlush(Playlist playInsert) {
-        return repo.saveAndFlush(playInsert);
+        return playlistRepository.saveAndFlush(playInsert);
     }
 }

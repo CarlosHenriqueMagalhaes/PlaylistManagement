@@ -29,17 +29,17 @@ import java.util.Optional;
 @Service
 public class SongService {
     @Autowired
-    private SongRepository repo;
+    private SongRepository songRepository;
     @Autowired
-    private PlaylistService playService;
+    private PlaylistService playlistService;
     @Autowired
     private PlaylistSongService playlistSongService;
     @Autowired
     private Adapter adapterService;
     @Autowired
-    private PlaylistSongRepository plSgRepo;
+    private PlaylistSongRepository playlistSongRepository;
     @Autowired
-    private PlaylistRepository plRepo;
+    private PlaylistRepository playlistRepository;
 
     /**
      * find one song by id (GET)
@@ -48,7 +48,7 @@ public class SongService {
      * @return one song by id
      */
     public Song find(Integer id) {
-        Optional<Song> song = repo.findById(id);
+        Optional<Song> song = songRepository.findById(id);
         return song.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + id
                 + ", does not exist or is not registered! "));
     }
@@ -59,7 +59,7 @@ public class SongService {
      * @return All Songs present in my bank
      */
     public List<Song> findAllSongs() {
-        return repo.findAll();
+        return songRepository.findAll();
     }
 
     /**
@@ -69,7 +69,7 @@ public class SongService {
      * @return
      */
     public Page<Song> findAllSongsPageable(Pageable page) {
-        return repo.findAll(page);
+        return songRepository.findAll(page);
     }
 
     /**
@@ -79,20 +79,20 @@ public class SongService {
      * @param playlistId
      */
     public void addSongToPlaylist(@Valid Integer songId, Integer playlistId) {
-        Optional<Song> songOptional = repo.findById(songId);
+        Optional<Song> songOptional = songRepository.findById(songId);
         songOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Song Id:" + songId
                 + ", does not exist or is not registered!"));
-        Optional<Playlist> playlistOptional = plRepo.findById(playlistId);
+        Optional<Playlist> playlistOptional = playlistRepository.findById(playlistId);
         playlistOptional.orElseThrow(() -> new ObjectNotFoundException("ObjectNotFound! This Playlist Id:" + playlistId
                 + ", does not exist or is not registered!"));
-        Optional<PlaylistSong> verif = plSgRepo.findByPlaylistIdAndSongId(playlistId, songId);
+        Optional<PlaylistSong> verif = playlistSongRepository.findByPlaylistIdAndSongId(playlistId, songId);
         if (verif.isEmpty()) {
             Song song = songOptional.get();
             Playlist playlist = playlistOptional.get();
             song.getPlaylists().add(playlist);
             playlist.getSongs().add(song);
-            playlist = playService.saveAndFlush(playlist);
-            song = repo.save(song);
+            playlist = playlistService.saveAndFlush(playlist);
+            song = songRepository.save(song);
         }
     }
 
@@ -107,12 +107,12 @@ public class SongService {
     public void removeSongToPlaylist(Integer playlistId, Integer songId) throws Exception {
         try {
             playlistSongService.findByPlayIdAndSongId(playlistId, songId);
-            Playlist playlist = playService.find(playlistId);
+            Playlist playlist = playlistService.find(playlistId);
             Song song = find(songId);
             playlist.getSongs().remove(song);
             song.getPlaylists().remove(playlist);
-            playlist = playService.saveAndFlush(playlist);
-            song = repo.saveAndFlush(song);
+            playlist = playlistService.saveAndFlush(playlist);
+            song = songRepository.saveAndFlush(song);
         } catch (Exception e) {
             throw new NullObjectNotFoundException("This song is not in this playlist or this playlist does not exist");
         }
@@ -143,7 +143,7 @@ public class SongService {
      */
     public Song saveSong(TrackDTO trackDTO) {
         Song song = new Song(trackDTO);
-        return repo.save(song);
+        return songRepository.save(song);
     }
 
     /**
@@ -152,7 +152,7 @@ public class SongService {
      * @param trackDTO
      */
     public void addSongToBase(TrackDTO trackDTO) {
-        Song song = repo.findByMusicAndArtist(trackDTO.getTitle(), trackDTO.getArtist());
+        Song song = songRepository.findByMusicAndArtist(trackDTO.getTitle(), trackDTO.getArtist());
         if (song == null) {
             saveSong(trackDTO);
         }

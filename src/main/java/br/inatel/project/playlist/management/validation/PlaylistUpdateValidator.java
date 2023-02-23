@@ -27,7 +27,7 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
     @Autowired
     private HttpServletRequest request;
     @Autowired
-    private PlaylistRepository repo;
+    private PlaylistRepository playlistRepository;
 
     @Override
     public void initialize(PlaylistUpdate ann) {
@@ -36,26 +36,26 @@ public class PlaylistUpdateValidator implements ConstraintValidator<PlaylistUpda
     /**
      * Validator
      *
-     * @param objDto  object to validate
+     * @param playlistDTO  object to validate
      * @param context context in which the constraint is evaluated
      * @return message with exception handling
      */
     @Override
-    public boolean isValid(PlaylistDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(PlaylistDTO playlistDTO, ConstraintValidatorContext context) {
         @SuppressWarnings("unchecked")
-        Map<String, String> map = (Map<String, String>) request
+        Map<String, String> uriParameters = (Map<String, String>) request
                 .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        Integer uriId = Integer.parseInt(map.get("id"));
-        List<FieldMessage> list = new ArrayList<>();
-        Optional<Playlist> playlistOptional = repo.findById(objDto.getPlaylistId());
-        if (playlistOptional != null && playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
-            list.add(new FieldMessage("id", "already existing id"));
+        Integer uriId = Integer.parseInt(uriParameters.get("id"));
+        List<FieldMessage> fieldMessageList = new ArrayList<>();
+        Optional<Playlist> playlistOptional = playlistRepository.findById(playlistDTO.getPlaylistId());
+        if (playlistOptional.isPresent() && !playlistOptional.get().getId().equals(uriId)) {
+            fieldMessageList.add(new FieldMessage("id", "already existing id"));
         }
-        for (FieldMessage e : list) {
+        for (FieldMessage e : fieldMessageList) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
                     .addConstraintViolation();
         }
-        return list.isEmpty();
+        return fieldMessageList.isEmpty();
     }
 }

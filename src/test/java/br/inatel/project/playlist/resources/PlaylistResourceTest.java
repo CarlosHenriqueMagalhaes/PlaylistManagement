@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class PlaylistResourceTest {
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
-    public PlaylistDTO createPlaylistDTO() {
+    private PlaylistDTO createPlaylistDTO() {
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setPlaylistId(null);
         playlistDTO.setPlaylistName("Ada's Playlist");

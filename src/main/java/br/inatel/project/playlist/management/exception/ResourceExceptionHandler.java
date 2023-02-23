@@ -25,8 +25,8 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
-		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 
 	/**
@@ -39,11 +39,11 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
-		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "validation error");
-		for (FieldError x : e.getBindingResult().getFieldErrors()) {
-			err.addError(x.getField(), x.getDefaultMessage());
+		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "validation error");
+		for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+			error.addError(fieldError.getField(), fieldError.getDefaultMessage());
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 	/**
@@ -54,8 +54,8 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(NullObjectNotFoundException.class)
 	public ResponseEntity<StandardError> nullObjectNotFound(NullObjectNotFoundException e, HttpServletRequest request) {
-		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(CommunicationsException.class)
 	public ResponseEntity<StandardError> communicationException(CommunicationsException e, HttpServletRequest request){
-		StandardError err = new StandardError(HttpStatus.SERVICE_UNAVAILABLE.value(), "Communications link failure, Unable to acquire JDBC Connection");
-		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(err);
+		StandardError error = new StandardError(HttpStatus.SERVICE_UNAVAILABLE.value(), "Communications link failure, Unable to acquire JDBC Connection");
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
 	}
 }

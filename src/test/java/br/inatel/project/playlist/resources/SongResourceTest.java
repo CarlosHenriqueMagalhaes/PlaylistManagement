@@ -18,14 +18,14 @@ import static org.junit.Assert.*;
 public class SongResourceTest {
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
-    public TrackForm apiData() {
+    private TrackForm buildApiData() {
         TrackForm track = new TrackForm();
         track.setArtist("Metallica");
         track.setTrack("One");
         return track;
     }
 
-    public SongDTO songDTO() {
+    private SongDTO buildSongDTO() {
         SongDTO songDTO = new SongDTO();
         songDTO.setId(100);
         songDTO.setMusic("The Great Gig in the Sky");
@@ -36,7 +36,7 @@ public class SongResourceTest {
         return songDTO;
     }
 
-    public PlaylistDTO playlistDTO() {
+    private PlaylistDTO createPlaylistDTO() {
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setPlaylistId(null);
         playlistDTO.setPlaylistName("Best Songs");
@@ -46,7 +46,7 @@ public class SongResourceTest {
     @Test
     @Order(1)
     public void givenAPostOrder_WhenInsertAValidTrackAndAValidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus201Created() {
-        TrackForm songAp = apiData();
+        TrackForm songAp = buildApiData();
         Song song = webTestClient
                 .post()
                 .uri("/songs/newSong")
@@ -64,7 +64,7 @@ public class SongResourceTest {
     @Test
     @Order(2)
     public void givenAPostOrder_WhenInsertAInvalidTrackAndOrAInvalidArtistToFindAndSaveASongFromAPIExternal_ThenItShouldReturnStatus404NotFound() {
-        TrackForm songApi = apiData();
+        TrackForm songApi = buildApiData();
         songApi.setTrack("null");
         String result = webTestClient
                 .post()
@@ -90,7 +90,7 @@ public class SongResourceTest {
                 .exchange()
                 .expectHeader()
                 .contentType(MediaType.APPLICATION_JSON).expectStatus().isOk();
-        assertNotEquals(songDTO(), null);
+        assertNotEquals(buildSongDTO(), null);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class SongResourceTest {
     @Test
     @Order(5)
     public void givenAReadOrder_WhenInsertAInvalidId_ThenItShouldReturnStatus404NotFound() {
-        int id = 0;// if I change it to an ID that contains Song registered, the test does not pass (proves that the method works)
+        int id = 0;
         String result = webTestClient
                 .get()
                 .uri("/songs/song?id=" + id)
@@ -133,10 +133,10 @@ public class SongResourceTest {
     @Test
     @Order(6)
     public void givenAPostOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus200Ok() {
-        SongDTO song = songDTO();
+        SongDTO song = buildSongDTO();
         song.setId(1);
-        PlaylistDTO playlist = playlistDTO();
-        playlist.setPlaylistId(1);//leave an existing playlist set
+        PlaylistDTO playlist = createPlaylistDTO();
+        playlist.setPlaylistId(1);
         webTestClient
                 .post()
                 .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
@@ -153,9 +153,9 @@ public class SongResourceTest {
     @Test
     @Order(7)
     public void givenAPostOrder_WhenInsertAInvalidPlaylistIdAndOrAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
-        SongDTO song = songDTO();
+        SongDTO song = buildSongDTO();
         song.setId(0);
-        PlaylistDTO playlist = playlistDTO();
+        PlaylistDTO playlist = createPlaylistDTO();
         playlist.setPlaylistId(0);
         String result = webTestClient
                 .post()
@@ -175,10 +175,10 @@ public class SongResourceTest {
     @Test
     @Order(8)
     public void givenADeleteOrder_WhenInsertAValidPlaylistIdAndAValidSongId_ThenItShouldReturnStatus204NoContent() {
-        SongDTO song = songDTO();
+        SongDTO song = buildSongDTO();
         song.setId(1);
-        PlaylistDTO playlist = playlistDTO();
-        playlist.setPlaylistId(1);//leave an existing playlist set
+        PlaylistDTO playlist = createPlaylistDTO();
+        playlist.setPlaylistId(1);
         webTestClient
                 .delete()
                 .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
@@ -195,9 +195,9 @@ public class SongResourceTest {
     @Test
     @Order(9)
     public void givenADeleteOrder_WhenInsertAInvalidPlaylistIdAndAInvalidSongId_ThenItShouldReturnStatus404NotFound() {
-        SongDTO song = songDTO();
+        SongDTO song = buildSongDTO();
         song.setId(0);
-        PlaylistDTO playlist = playlistDTO();
+        PlaylistDTO playlist = createPlaylistDTO();
         playlist.setPlaylistId(0);
         String result = webTestClient
                 .delete()
