@@ -1,14 +1,13 @@
 package br.inatel.project.playlist.management.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.http.HttpServletRequest;
 /**
  * Principal Exception handling class
  * @author Carlos Magalhães
@@ -39,10 +38,7 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
-		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "validation error");
-		for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-			error.addError(fieldError.getField(), fieldError.getDefaultMessage());
-		}
+		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 

@@ -1,7 +1,6 @@
 package br.inatel.project.playlist.management.dto;
 
 import br.inatel.project.playlist.management.domain.Playlist;
-import br.inatel.project.playlist.management.validation.PlaylistUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

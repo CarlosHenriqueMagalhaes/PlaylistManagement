@@ -21,18 +21,4 @@ public class ValidationError extends StandardError {
 	public ValidationError(Integer status, String msg) {
 		super(status, msg);
 	}
-
-	/**
-	 *Getters and Setters
-	 */
-	public List<FieldMessage> getErrors() {
-		return errors;
-	}
-	/** adulterated setter:
-	 * was changed because we don't want to add an entire list at once,
-	 * but one error at a time
-	 */
-	public void addError(String fieldName, String message) {
-		errors.add(new FieldMessage(fieldName, message));
-	}
 }
