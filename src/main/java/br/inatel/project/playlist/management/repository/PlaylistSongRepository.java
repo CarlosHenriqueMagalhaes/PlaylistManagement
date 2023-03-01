@@ -1,13 +1,10 @@
 package br.inatel.project.playlist.management.repository;
 
-import java.util.Optional;
-
+import br.inatel.project.playlist.management.domain.PlaylistSong;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.inatel.project.playlist.management.domain.PlaylistSong;
+import java.util.Optional;
 
 /**
  * Repository of the entity which is being saved in the database.

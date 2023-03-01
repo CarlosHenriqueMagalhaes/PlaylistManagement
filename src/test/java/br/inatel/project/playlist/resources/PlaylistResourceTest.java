@@ -55,7 +55,7 @@ public class PlaylistResourceTest {
         assertNotEquals(playlistDTO.getPlaylistName(), "Ada's Playlist");
         assertNull(playlistDTO.getPlaylistId());
         assert result != null;
-        assertTrue(result.contains("validation error"));
+        assertTrue(result.contains("Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters"));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class PlaylistResourceTest {
                 .expectBody(String.class).returnResult().getResponseBody();
         assertNotEquals(playlistDTO.getPlaylistName(), "Test Playlist Order five");
         assert result != null;
-        assertTrue(result.contains("validation error"));
+        assertTrue(result.contains("Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters"));
     }
 
     @Test
