@@ -3,6 +3,8 @@ package br.inatel.project.playlist.management.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.inatel.project.playlist.management.domain.PlaylistSong;
@@ -16,4 +18,6 @@ import br.inatel.project.playlist.management.domain.PlaylistSong;
 @Repository
 public interface PlaylistSongRepository extends JpaRepository<PlaylistSong, Integer> {
 	Optional<PlaylistSong> findByPlaylistIdAndSongId(Integer playlistId, Integer songId);
+
+	void  deleteByPlaylistId(Integer playlistId);
 }

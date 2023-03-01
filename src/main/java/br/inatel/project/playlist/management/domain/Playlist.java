@@ -32,7 +32,7 @@ public class Playlist implements Serializable {
     @NotEmpty(message = "filling in this field is mandatory")
     @Column(name = "playlistName")
     private String playlistName;
-    @ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "playlists")
     private List<Song> songs = new ArrayList<>();
 
     /**

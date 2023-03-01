@@ -122,3 +122,33 @@
     "artist":"Jimy Hendrix",
     "track":"All Along the Watchtower"
 }
+-----------------------------
+{
+    "artist":"Pitty",
+    "track":"Admiravel chip novo"
+}
+-----------------------------
+{
+    "artist":"Michael Jackson",
+    "track":"Bad"
+}
+-----------------------------
+{
+    "artist":"Michael Jackson",
+    "track":"Thriller"
+}
+-----------------------------
+{
+    "artist":"Beatles",
+    "track":"love"
+}
+-----------------------------
+{
+    "artist":"Fifty Cent",
+    "track":"Disco Inferno"
+}
+----------------------------
+{
+    "artist":"Tim Maia",
+    "track":"Primavera"
+}

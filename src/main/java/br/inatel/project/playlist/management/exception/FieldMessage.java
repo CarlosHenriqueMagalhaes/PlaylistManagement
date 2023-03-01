@@ -28,8 +28,9 @@ public class FieldMessage implements Serializable {
         this.fieldName = fieldName;
         this.message = message;
     }
-
-    // Getters and setters
+    /**
+     * Getters and setters
+     */
     public String getFieldName() {
         return fieldName;
     }
