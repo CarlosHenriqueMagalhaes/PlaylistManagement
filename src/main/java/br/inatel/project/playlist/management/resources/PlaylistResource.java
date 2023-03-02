@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/playlists")
+@RequestMapping
 public class PlaylistResource {
 	@Autowired
 	private PlaylistService playlistService;
@@ -40,7 +40,7 @@ public class PlaylistResource {
 	 * find all registered playlists (GET)
 	 * @return all registered playlists (endpoint)
 	 */
-	@GetMapping
+	@GetMapping ("/playlists")
 	public ResponseEntity<Page<Playlist>> findAll(
 			@PageableDefault(sort= "id", direction= Sort.Direction.ASC, page = 0, size = 5)
 			Pageable page) {
@@ -51,7 +51,7 @@ public class PlaylistResource {
 	 * Insert a new Playlist (POST)
 	 * @return a new Playlist (endpoint)
 	 */
-	@PostMapping
+	@PostMapping ("/playlist")
 	public ResponseEntity<Playlist> insert(@Valid @RequestBody PlaylistDTO playlistDTO) {
 		Playlist playlist = playlistService.fromDTO(playlistDTO);
 		playlist = playlistService.insert(playlist);
@@ -72,7 +72,7 @@ public class PlaylistResource {
 	 * @param id
 	 * @return Delete a playlist (endpoint)
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping("playlist/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		playlistService.delete(id);
 		return ResponseEntity.noContent().build();

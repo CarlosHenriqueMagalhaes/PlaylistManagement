@@ -23,7 +23,7 @@ import javax.validation.Valid;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/songs")
+@RequestMapping
 public class SongResource {
 	@Autowired
 	private SongService songService;
@@ -45,7 +45,7 @@ public class SongResource {
 	 * find all Songs in my bank (GET)
 	 * @return all Songs in my bank (endpoint)
 	 */
-	@GetMapping
+	@GetMapping ("/songs")
 	public ResponseEntity<Page<Song>> findAll(
 			@PageableDefault(sort= "id", direction= Sort.Direction.ASC, page = 0, size = 5)
 			Pageable page) {

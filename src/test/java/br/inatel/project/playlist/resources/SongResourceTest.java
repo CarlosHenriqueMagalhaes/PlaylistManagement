@@ -5,16 +5,21 @@ import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import br.inatel.project.playlist.management.dto.SongDTO;
 import br.inatel.project.playlist.management.form.TrackForm;
 import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
+@SpringBootTest
+@ActiveProfiles ("test")
 public class SongResourceTest {
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
@@ -49,7 +54,7 @@ public class SongResourceTest {
         TrackForm songAp = buildApiData();
         Song song = webTestClient
                 .post()
-                .uri("/songs/newSong")
+                .uri("/newSong")
                 .bodyValue(songAp)
                 .exchange()
                 .expectStatus()
@@ -68,7 +73,7 @@ public class SongResourceTest {
         songApi.setTrack("null");
         String result = webTestClient
                 .post()
-                .uri("/songs/newSong")
+                .uri("/newSong")
                 .bodyValue(songApi)
                 .exchange()
                 .expectStatus()
@@ -99,7 +104,7 @@ public class SongResourceTest {
         Integer id = 1;
         Song song = webTestClient
                 .get()
-                .uri("/songs/song?id=" + id)
+                .uri("/song?id=" + id)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -118,7 +123,7 @@ public class SongResourceTest {
         int id = 0;
         String result = webTestClient
                 .get()
-                .uri("/songs/song?id=" + id)
+                .uri("/song?id=" + id)
                 .exchange()
                 .expectStatus()
                 .isNotFound()
@@ -139,7 +144,7 @@ public class SongResourceTest {
         playlist.setPlaylistId(1);
         webTestClient
                 .post()
-                .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
+                .uri("/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -159,7 +164,7 @@ public class SongResourceTest {
         playlist.setPlaylistId(0);
         String result = webTestClient
                 .post()
-                .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
+                .uri("/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
                 .bodyValue(playlist)
                 .exchange()
                 .expectStatus()
@@ -181,7 +186,7 @@ public class SongResourceTest {
         playlist.setPlaylistId(1);
         webTestClient
                 .delete()
-                .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
+                .uri("/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
                 .exchange()
                 .expectStatus()
                 .isNoContent()
@@ -201,7 +206,7 @@ public class SongResourceTest {
         playlist.setPlaylistId(0);
         String result = webTestClient
                 .delete()
-                .uri("/songs/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
+                .uri("/song/" + song.getId() + "/playlist/" + playlist.getPlaylistId())
                 .exchange()
                 .expectStatus()
                 .isNotFound()

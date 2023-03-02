@@ -3,17 +3,24 @@ package br.inatel.project.playlist.resources;
 import br.inatel.project.playlist.management.domain.Playlist;
 import br.inatel.project.playlist.management.dto.PlaylistDTO;
 import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
+@SpringBootTest
+@ActiveProfiles ("test")
 public class PlaylistResourceTest {
+
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
     private PlaylistDTO createPlaylistDTO() {
@@ -27,9 +34,9 @@ public class PlaylistResourceTest {
     @Order(1)
     public void givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created() {
         PlaylistDTO playlistDTO = createPlaylistDTO();
-        webTestClient
+       webTestClient
                 .post()
-                .uri("/playlists")
+                .uri("/playlist")
                 .bodyValue(playlistDTO)
                 .exchange()
                 .expectStatus()
@@ -46,7 +53,7 @@ public class PlaylistResourceTest {
         playlistDTO.setPlaylistName(null);
         String result = webTestClient
                 .post()
-                .uri("/playlists")
+                .uri("/playlist")
                 .bodyValue(playlistDTO)
                 .exchange()
                 .expectStatus()
@@ -55,7 +62,7 @@ public class PlaylistResourceTest {
         assertNotEquals(playlistDTO.getPlaylistName(), "Ada's Playlist");
         assertNull(playlistDTO.getPlaylistId());
         assert result != null;
-        assertTrue(result.contains("Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters"));
+        assertTrue(result.contains("Invalid request"));
     }
 
     @Test
@@ -80,7 +87,7 @@ public class PlaylistResourceTest {
         playlistDTO.setPlaylistName("Test Playlist Order five");
         webTestClient
                 .patch()
-                .uri("/playlists/playlist/" + id)
+                .uri("/playlist/" + id)
                 .bodyValue(playlistDTO)
                 .exchange()
                 .expectStatus()
@@ -94,7 +101,7 @@ public class PlaylistResourceTest {
     public void givenAReadOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus200Ok() {
         Integer id = 1;
         Playlist playlist = webTestClient
-                .get().uri("/playlists/playlist?id=" + id)
+                .get().uri("/playlist?id=" + id)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -114,14 +121,14 @@ public class PlaylistResourceTest {
         playlistDTO.setPlaylistName(null);
         String result = webTestClient
                 .patch()
-                .uri("/playlists/playlist/" + id)
+                .uri("/playlist/" + id)
                 .bodyValue(playlistDTO)
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody(String.class).returnResult().getResponseBody();
         assertNotEquals(playlistDTO.getPlaylistName(), "Test Playlist Order five");
         assert result != null;
-        assertTrue(result.contains("Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters"));
+        assertTrue(result.contains("Invalid request"));
     }
 
     @Test
@@ -132,7 +139,7 @@ public class PlaylistResourceTest {
         playlistDTO.setPlaylistName("Never Be");
         String result = webTestClient
                 .patch()
-                .uri("/playlists/playlist/" + id)
+                .uri("/playlist/" + id)
                 .bodyValue(playlistDTO)
                 .exchange()
                 .expectStatus().isNotFound()
@@ -148,7 +155,7 @@ public class PlaylistResourceTest {
     public void givenADeleteOrder_WhenInsertAValidPlaylistId_ThenItShouldReturnStatus204NoContent() {
         int id = 2;
         webTestClient
-                .delete().uri("/playlists/" + id)
+                .delete().uri("/playlist/" + id)
                 .exchange()
                 .expectStatus()
                 .isNoContent()
@@ -162,7 +169,7 @@ public class PlaylistResourceTest {
         int id = 0;
         String result = webTestClient
                 .get()
-                .uri("/playlists/playlist?id=" + id)
+                .uri("/playlist?id=" + id)
                 .exchange()
                 .expectStatus()
                 .isNotFound()
@@ -178,7 +185,7 @@ public class PlaylistResourceTest {
         int id = 0;
         webTestClient
                 .delete()
-                .uri("/playlists" + id)
+                .uri("/playlist" + id)
                 .exchange()
                 .expectStatus()
                 .isNotFound()

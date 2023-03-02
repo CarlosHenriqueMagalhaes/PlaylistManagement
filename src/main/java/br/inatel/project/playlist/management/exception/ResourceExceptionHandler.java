@@ -38,7 +38,7 @@ public class ResourceExceptionHandler {
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
-		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Filling in this field is mandatory! The length of your playlist name must be between 2 and 50 characters");
+		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Invalid request");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
