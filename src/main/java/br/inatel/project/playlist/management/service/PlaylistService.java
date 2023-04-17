@@ -70,7 +70,6 @@ public class PlaylistService {
         return playlistRepository.save(playlist);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Method PATCH - Change a customer's Playlist name by ID
      *
@@ -90,7 +89,7 @@ public class PlaylistService {
         }
         return playlist;
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * helper method that instantiates a playlist from a DTO (used in the POST method)
      *

@@ -14,13 +14,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.Assert.*;
 
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @SpringBootTest
 @ActiveProfiles ("test")
 public class PlaylistResourceTest {
-
     private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8070").build();
 
     private PlaylistDTO createPlaylistDTO() {
@@ -34,7 +32,7 @@ public class PlaylistResourceTest {
     @Order(1)
     public void givenAPostOrder_WhenInsertAValidPlaylistName_ThenItShouldReturnStatus201Created() {
         PlaylistDTO playlistDTO = createPlaylistDTO();
-       webTestClient
+        webTestClient
                 .post()
                 .uri("/playlist")
                 .bodyValue(playlistDTO)

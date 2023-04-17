@@ -63,7 +63,8 @@ public class PlaylistResource {
 	 * @return Change a customer's name of playlist (endpoint)
 	 */
 	@PatchMapping("playlist/{playlistId}")
-	public ResponseEntity<Playlist> update(@Valid @PathVariable Integer playlistId,@Valid @RequestBody PlaylistManagerDTO playlistDTO)throws Exception {
+	public ResponseEntity<Playlist> update(@Valid @PathVariable Integer playlistId,@Valid
+	@RequestBody PlaylistManagerDTO playlistDTO)throws Exception {
 		return ResponseEntity.ok(playlistService.update(playlistId, playlistDTO));
 	}
 
