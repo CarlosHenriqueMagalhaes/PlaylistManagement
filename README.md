@@ -112,7 +112,7 @@ So use Postman, examples:
 ---------------------------------------------------------------------------
 ### 🎶 End-Points:
 - #### Create a new Playlist:
-POST  ``` http://localhost:8070/playlists ```
+POST  ``` http://localhost:8070/playlist ```
 
 body: 
 ```
@@ -123,15 +123,17 @@ body:
 }
 ```
 - #### Find a Playlist by ID
-GET ``` http://localhost:8070/playlists?id={id} ```
+GET ``` http://localhost:8070/playlist?id={id} ```
 
 Requires Query Params:  id
 
-- #### List All Playlists
-GET ``` http://localhost:8070/playlists ```
+- #### List All Playlists with page (start in page 0)
+GET ``` http://localhost:8070/playlists?page={pageNumber} ```
+
+insert a pageNumber on URL
 
 - #### Change a PlaylistName
-PATCH  ``` http://localhost:8070/playlists/playlist/{id} ```
+PATCH  ``` http://localhost:8070/playlist/{id} ```
 
 insert ID on URL
 
@@ -144,12 +146,12 @@ body:
 }
 ```
 - #### Delete a Playlist
-DELETE ``` http://localhost:8070/playlists/{id} ```
+DELETE ``` http://localhost:8070/playlist/{id} ```
 
 insert ID on URL
 
 - #### Find A Song in API External and persist in my database
-POST ``` http://localhost:8070/songs/newSong ```
+POST ``` http://localhost:8070/newSong ```
 
 body:
 ```
@@ -160,16 +162,18 @@ body:
     
 }
 ```
-- #### List All Songs
-GET ``` http://localhost:8070/songs ```
+- #### List All Songs with page (start in page 0)
+GET ``` http://localhost:8070/songs?page={pageNumber} ```
+
+insert a pageNumber on URL
 
 - #### Find a Song by id
-GET ``` http://localhost:8070/songs?id={id} ```
+GET ``` http://localhost:8070/song?id={id} ```
 
 Requires Query Params:  id
 
 - #### Insert a Song at a playlist
-POST ``` http://localhost:8070/songs/song/{songId}/playlist/{playlistId} ```
+POST ``` http://localhost:8070/songs/{songId}/playlist/{playlistId} ```
 
 Requires Query Params:
 
@@ -178,7 +182,7 @@ playlistId
 songId
 
 - #### Remove a Song at a playlist
-DELETE ``` http://localhost:8070/songs/song/{songId}/playlist/{playlistId} ```
+DELETE ``` http://localhost:8070/song/{songId}/playlist/{playlistId} ```
 
 Requires Query Params:
 
