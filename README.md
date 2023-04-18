@@ -84,7 +84,7 @@ When creating a playlist:
 
 1 - The name of the Playlist cannot be null;
 
-2 - The name of the Playlist must contain between 2 and fifty characters;
+2 - The name of the Playlist must contain between 2 and 50 characters;
 
 3 - Following the model of other Streams services (like Spotify) Playlists can have the same name;
 
@@ -173,7 +173,7 @@ GET ``` http://localhost:8070/song?id={id} ```
 Requires Query Params:  id
 
 - #### Insert a Song at a playlist
-POST ``` http://localhost:8070/songs/{songId}/playlist/{playlistId} ```
+POST ``` http://localhost:8070/song/{songId}/playlist/{playlistId} ```
 
 Requires Query Params:
 
